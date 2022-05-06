@@ -29,4 +29,9 @@ public class FishLength
       return _units;
    }
 
+   public String valueString()
+   {
+      return "" + _length;
+   }
+
 }

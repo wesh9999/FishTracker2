@@ -3,7 +3,7 @@ package org.weshley.fishtracker2;
 public class Lure
 {
    private String _type = null;
-   private String _model = null;
+   private String _brand = null;
    private String _color = null;
    private String _size = null;
    private String _trailer = null;
@@ -18,7 +18,7 @@ public class Lure
    {
       Lure l = new Lure();
       l._type = _type;
-      l._model = _model;
+      l._brand = _brand;
       l._color = _color;
       l._size = _size;
       l._trailer = _trailer;
@@ -28,7 +28,7 @@ public class Lure
    }
 
    public String getType() { return _type; }
-   public String getModel() { return _model; }
+   public String getBrand() { return _brand; }
    public String getColor() { return _color; }
    public String getSize() { return _size; }
    public String getTrailer() { return _trailer; }
@@ -48,17 +48,23 @@ public class Lure
       }
    }
 
-   public void setModel(String s)
+   public void setBrand(String s)
    {
       if((null == s) || s.isEmpty())
       {
-         _model = null;
+         _brand = null;
       }
       else
       {
-         _model = s;
-         Config.addLureModel(s);
+         _brand = s;
+         Config.addLureBrand(s);
       }
+   }
+
+   public String description()
+   {
+      // FIXME - clean this up add all fields (?) to deal with optional fields not being populated...
+      return _type;
    }
 
    public void setSize(String s)

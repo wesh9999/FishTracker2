@@ -28,4 +28,6 @@ public class WaterDepth
    {
       return _units;
    }
+
+   public String valueString() { return "" + _depth; }
 }

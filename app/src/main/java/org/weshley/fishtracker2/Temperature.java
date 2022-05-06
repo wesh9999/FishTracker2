@@ -29,4 +29,5 @@ public class Temperature
       return _units;
    }
 
+   public String valueString() { return "" + _temp; }
 }

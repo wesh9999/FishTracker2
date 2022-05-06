@@ -29,4 +29,6 @@ public class Speed
       return _units;
    }
 
+   public String valueString() { return "" + _speed; }
+
 }

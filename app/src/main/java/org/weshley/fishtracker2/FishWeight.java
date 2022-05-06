@@ -29,4 +29,8 @@ public class FishWeight
       return _units;
    }
 
+   public String valueString()
+   {
+      return "" + _weight;
+   }
 }

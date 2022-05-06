@@ -1,7 +1,12 @@
 package org.weshley.fishtracker2;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+// TODO - Some fields are static enums (i.e. clarity) and others are strings that essentially model an editable enum
+//        (i.e. structure).  Should all of these be the editable?
 
 public class Config
 {
@@ -63,7 +68,7 @@ public class Config
 
    private static final String[] DEFAULT_LURE_SIZES = {};
    private static final String[] DEFAULT_TRAILER_SIZES = {};
-   private static final String[] DEFAULT_LURE_MODELS =
+   private static final String[] DEFAULT_LURE_BRANDS =
       { "Bandit", "Bobby Garland", "BugZ", "Fritside", "Jitterbug", "Nikko", "Powerbait", "Rattletrap", "Red Fin",
         "Rip Stop", "Road Runner", "Shad Rap", "Spook", "Steel Shad", "Swedish Pimple", "TicklerZ", "Whopper Plopper",
         "X-Rap", "Zoom"};
@@ -90,7 +95,7 @@ public class Config
    private static Set<String> _allStructures = new TreeSet<>();
    private static Set<String> _allCovers = new TreeSet<>();
    private static Set<String> _allLureTypes = new TreeSet<>();
-   private static Set<String> _allLureModels = new TreeSet<>();
+   private static Set<String> _allLureBrands = new TreeSet<>();
    private static Set<String> _allLureSizes = new TreeSet<>();
    private static Set<String> _allTrailerTypes = new TreeSet<>();
    private static Set<String> _allTrailerSizes = new TreeSet<>();
@@ -101,7 +106,7 @@ public class Config
       if(null == l)
          return;
       addLureType(l.getType());
-      addLureModel(l.getModel());
+      addLureBrand(l.getBrand());
       addLureSize(l.getSize());
       addLureColor(l.getColor());
       addTrailerType(l.getTrailer());
@@ -111,6 +116,9 @@ public class Config
    public static void addLureType(String s)
    {
       if((null != s) && !s.isEmpty() && !_allLureTypes.contains(s))
+      {
+         Log.i("Config", "ADDING LURE TYPE <<" + s + ">>");
+      }
          _allLureTypes.add(s);
    }
 
@@ -142,21 +150,21 @@ public class Config
       return _allLureSizes;
    }
 
-   public static void addLureModel(String s)
+   public static void addLureBrand(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allLureModels.contains(s))
-         _allLureModels.add(s);
+      if((null != s) && !s.isEmpty() && !_allLureBrands.contains(s))
+         _allLureBrands.add(s);
    }
 
-   public static Set<String> getAllLureModels()
+   public static Set<String> getAllLureBrands()
    {
-      if(_allLureModels.isEmpty())
+      if(_allLureBrands.isEmpty())
       {
          // TODO - restore list if it was previously saved to disk
-         for(String s : DEFAULT_LURE_MODELS)
-            _allLureModels.add(s);
+         for(String s : DEFAULT_LURE_BRANDS)
+            _allLureBrands.add(s);
       }
-      return _allLureModels;
+      return _allLureBrands;
    }
 
    public static void addLureColor(String s)

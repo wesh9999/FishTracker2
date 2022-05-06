@@ -1,26 +1,29 @@
 package org.weshley.fishtracker2;
 
+import android.util.Log;
+
 import java.util.Date;
 
 public class Catch
 {
    private Date _timestamp = null;
+   private LatLon _gpsLocation = null;
    private String _species = null;
    private FishLength _length = null;
    private FishWeight _weight = null;
+   private Lure _lure = null;
    private WaterDepth _depth = null;
    private Temperature _airTemp = null;
    private Temperature _waterTemp = null;
-   private Speed _windSpeed = null;
-   private Config.Direction _windDirection = null;  // TODO - add to UI
-   private Config.WindStrength _windStrength = null; // TODO - add to UI
-   private Config.Precipitation _precip = null; // TODO - add to UI
-   private Config.Clarity _waterClarity = null; // TODO - add to UI
-   private String _notes = null; // TODO - add to UI
-   private LatLon _gpsLocation = null; // TODO - add to UI
+   private Config.Clarity _waterClarity = null;
+   private WaterDepth _secchi = null;
    private String _structure = null;
    private String _cover = null;
-   private Lure _lure = null;
+   private Config.Precipitation _precip = null;
+   private Speed _windSpeed = null;
+   private Config.Direction _windDirection = null;
+   private Config.WindStrength _windStrength = null;
+   private String _notes = null;
 
    public Catch(Catch lastCatch)
    {
@@ -121,6 +124,9 @@ public class Catch
    public Config.Clarity getWaterClarity() { return _waterClarity; }
    public void setWaterClarity(Config.Clarity c) { _waterClarity = c; }
 
+   public WaterDepth getSecchi() { return _secchi; }
+   public void setSecchi(WaterDepth d) { _secchi = d; }
+
    public String getNotes() { return _notes; }
    public void setNotes(String s) { _notes = s; }
 
@@ -140,13 +146,14 @@ public class Catch
       if(null == _lure)
          _lure = new Lure();
       _lure.setType(s);
+      Log.i("Catch", "ADDED LURE TYPE <<" + s + ">>");
    }
 
-   public void setLureModel(String s)
+   public void setLureBrand(String s)
    {
       if(null == _lure)
          _lure = new Lure();
-      _lure.setModel(s);
+      _lure.setBrand(s);
    }
 
    public void setLureSize(String s)
@@ -199,6 +206,7 @@ public class Catch
       _windStrength = lastCatch.getWindStrength();
       _precip = lastCatch.getPrecip();
       _waterClarity = lastCatch.getWaterClarity();
+      _secchi = lastCatch.getSecchi();
       _notes = lastCatch.getNotes();
       _gpsLocation = lastCatch.getGpsLocation();
       _structure = lastCatch.getStructure();
@@ -207,6 +215,5 @@ public class Catch
          _lure = null;
       else
          _lure = lastCatch.getLure().copy();
-// TODO - add all the catch fields....
    }
 }
