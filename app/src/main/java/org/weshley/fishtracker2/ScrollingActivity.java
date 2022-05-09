@@ -1,13 +1,16 @@
 package org.weshley.fishtracker2;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
+import androidx.core.app.ActivityCompat;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import com.google.android.material.snackbar.Snackbar;
 import org.weshley.fishtracker2.databinding.ActivityScrollingBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,7 +30,9 @@ import java.util.List;
 public class ScrollingActivity
    extends AppCompatActivity
 {
-   private Trip _trip = null;
+   private int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
+
+   private List<Trip> _trips = new ArrayList<>();
    private HashMap<String,Integer> _speciesMap;
    private HashMap<String,Integer> _lureMap;
    private HashMap<String,Integer> _lureTypeMap;
@@ -100,18 +106,60 @@ public class ScrollingActivity
          endTrip();
          return true;
       }
+      else if(id == R.id.action_dump_trip)
+      {
+         dumpTripData();
+         return true;
+      }
       else
       {
          return super.onOptionsItemSelected(item);
       }
    }
 
+   private void dumpTripData()
+   {
+      ActivityCompat.requestPermissions(
+        this,
+         new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+         EXTERNAL_STORAGE_PERMISSION_CODE);
+
+      // NOTE:  These files are ending up in /Android/data/org.weshley.fishtracker2/files/Downloads/
+      TripLogger.instance().setDestinationFolder(
+         this.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+      try
+      {
+         for(Trip t : _trips)
+            TripLogger.instance().writeTrip(t);
+         Toast.makeText(this, "Trips stored successfully", Toast.LENGTH_SHORT).show();
+      }
+      catch(Exception ex)
+      {
+         ex.printStackTrace();
+         Toast.makeText(this, "FAILURE: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+      }
+      // TODO - dump this to a file or email or something?
+      // TODO - filter trips to dump
+   }
+
+   private Trip getCurrentTrip()
+   {
+      if(_trips.isEmpty())
+         return null;
+      Trip lastTrip = _trips.get(_trips.size() - 1);
+      if(lastTrip.isEnded())
+         return null;
+      else
+         return lastTrip;
+   }
+
    private void startTrip()
    {
-      if(null == _trip)
+      if(null == getCurrentTrip())
       {
-         _trip = Trip.createNewTrip();
-         _trip.setLocation("Lake Hartwell");
+         Trip t = Trip.createNewTrip();
+         _trips.add(t);
+         t.setLocation("Lake Hartwell");
          // FIXME - prompt for all trip data (location, transport, etc), defaulting to last trip values
          updateTripInfo();
          enableTripControls(true);
@@ -125,33 +173,34 @@ public class ScrollingActivity
 
    private void endTrip()
    {
-      if(null == _trip)
+      Trip t = getCurrentTrip();
+      if(null == t)
       {
          showMessage("No active trip");
          return;
       }
 
-      _trip.endTrip();
+      t.endTrip();
       clearCatchFields();
       enableCatchControls(false);
       enableTripControls(false);
-      _trip = null;
       updateTripInfo();
       updateMenuState();
    }
 
    private void updateTripInfo()
    {
-      if(null == _trip)
+      Trip t = getCurrentTrip();
+      if(null == t)
          getTripInfoField().setText(R.string.no_trip_message);
       else
-         getTripInfoField().setText(_trip.getMultilineLabel());
+         getTripInfoField().setText(t.getMultilineLabel());
    }
 
    private void newCatch()
    {
       startTrip();
-      updateCatchFields(_trip.newCatch());
+      updateCatchFields(getCurrentTrip().newCatch());
       enableCatchControls(true);
       updateTripInfo();
    }
@@ -305,17 +354,24 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(species))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Species", new DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getSpecies();
+               if(null != s)
+                  oldSelection = _speciesMap.get(s);
+               openCreateItemDialog(
+                  "Enter New Species",
+                  getSpeciesField(), oldSelection,
+                  new DialogInterface.OnClickListener()
+                  {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i)
                      {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i)
-                        {
-                           String newItem = getNewItemInputField().getText().toString();
-                           getCurrentCatch().setSpecies(newItem);
-                           initSpeciesEditorItems();
-                           setSpeciesSelection(getCurrentCatch());
-                        }
-                     });
+                        String newItem = getNewItemInputField().getText().toString();
+                        getCurrentCatch().setSpecies(newItem);
+                        initSpeciesEditorItems();
+                        setSpeciesSelection(getCurrentCatch());
+                     }
+                  });
             }
             else
             {
@@ -375,7 +431,14 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Lure Type", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getLureType();
+               if(null != s)
+                  oldSelection = _lureTypeMap.get(s);
+               openCreateItemDialog(
+               "Enter New Lure Type",
+                getLureTypeField(), oldSelection,
+                new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -418,7 +481,14 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Lure Brand", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getLureBrand();
+               if(null != s)
+                  oldSelection = _lureBrandMap.get(s);
+               openCreateItemDialog(
+             "Enter New Lure Brand",
+                  getLureBrandField(), oldSelection,
+                  new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -455,7 +525,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Color", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getLureColor();
+               if(null != s)
+                  oldSelection = _colorMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Color",
+                     getLureColorField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -498,7 +576,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Lure Size", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getLureSize();
+               if(null != s)
+                  oldSelection = _lureSizeMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Lure Size",
+                     getLureSizeField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -541,7 +627,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Trailer", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getTrailerType();
+               if(null != s)
+                  oldSelection = _trailerMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Trailer",
+                     getTrailerField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -585,7 +679,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Color", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getTrailerColor();
+               if(null != s)
+                  oldSelection = _colorMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Color",
+                     getTrailerColorField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -628,7 +730,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Trailer Size", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getTrailerSize();
+               if(null != s)
+                  oldSelection = _trailerSizeMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Trailer Size",
+                     getTrailerSizeField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -762,7 +872,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Structure", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getStructure();
+               if(null != s)
+                  oldSelection = _structureMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Structure",
+                     getStructureField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -805,7 +923,15 @@ public class ScrollingActivity
             if(Config.OTHER_LABEL.equals(selectedItem))
             {
                _newItemInputField = null;
-               openCreateItemDialog("Enter New Cover", new android.content.DialogInterface.OnClickListener()
+               int oldSelection = 0;
+               String s = getCurrentCatch().getCover();
+               if(null != s)
+                  oldSelection = _coverMap.get(s);
+
+               openCreateItemDialog(
+                     "Enter New Cover",
+                     getCoverField(), oldSelection,
+                     new DialogInterface.OnClickListener()
                {
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
@@ -864,14 +990,25 @@ public class ScrollingActivity
       return inputField;
    }
 
-   private void openCreateItemDialog(String title, android.content.DialogInterface.OnClickListener listener)
+   private void openCreateItemDialog(
+      String title, Spinner spinner, int oldSelection,
+      DialogInterface.OnClickListener okListener)
    {
+      DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener()
+       {
+         @Override
+         public void onClick(DialogInterface dialogInterface, int i)
+         {
+            spinner.setSelection(oldSelection);
+         }
+      };
+
       _createItemDialog = new AlertDialog.Builder(getContext())
             .setTitle(title)
-            .setView(initNewItemInputField(listener))
+            .setView(initNewItemInputField(okListener))
             .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(android.R.string.yes, listener)
-            .setNegativeButton(android.R.string.no, null)
+            .setPositiveButton(android.R.string.yes, okListener)
+            .setNegativeButton(android.R.string.no, cancelListener)
             .create();
       _createItemDialog.show();
    }
@@ -1148,10 +1285,10 @@ TODO - lure UI not done yet....
 
    private Catch getCurrentCatch()
    {
-      if(null == _trip)
+      if(null == getCurrentTrip())
          return null;
       else
-         return _trip.getLastCatch();
+         return getCurrentTrip().getLastCatch();
    }
 
    private Context getContext()

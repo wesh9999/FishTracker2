@@ -27,6 +27,18 @@ public class Trip
       _startTime = new Date();
    }
 
+   public void dumpData(StringBuilder sb)
+   {
+      // TODO - just dumping to stdout for now.  need to dump some structured data (xml?) to a file or email or something?
+      sb.append("--------- Trip ----------\n");
+      sb.append("   start: " + Config.formatTimestamp(_startTime) + "\n");
+      sb.append("   end: " + Config.formatTimestamp(_endTime) + "\n");
+      sb.append("   location: " + _location + "\n");
+      sb.append("   transport: " + _transport + "\n");
+      for(Catch c : _catches)
+         c.dumpData(sb);
+   }
+
    public void setLocation(String loc)
    {
       if((null == loc) || loc.isEmpty())

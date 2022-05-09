@@ -30,6 +30,13 @@ public class Catch
       updateFieldsFrom(lastCatch);
    }
 
+   public void dumpData(StringBuilder sb)
+   {
+      // TODO - create some formatted structure (xml?) and write to file or email or something
+      sb.append("   -- Catch --\n");
+      sb.append("        species: " + _species + "\n");
+   }
+
    public Date getTimestamp()
    {
       return _timestamp;
@@ -146,7 +153,14 @@ public class Catch
       if(null == _lure)
          _lure = new Lure();
       _lure.setType(s);
-      Log.i("Catch", "ADDED LURE TYPE <<" + s + ">>");
+   }
+
+   public String getLureType()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getType();
    }
 
    public void setLureBrand(String s)
@@ -156,11 +170,27 @@ public class Catch
       _lure.setBrand(s);
    }
 
+   public String getLureBrand()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getBrand();
+   }
+
    public void setLureSize(String s)
    {
       if(null == _lure)
          _lure = new Lure();
       _lure.setSize(s);
+   }
+
+   public String getLureSize()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getSize();
    }
 
    public void setLureColor(String s)
@@ -170,11 +200,27 @@ public class Catch
       _lure.setColor(s);
    }
 
+   public String getLureColor()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getColor();
+   }
+
    public void setTrailerType(String s)
    {
       if(null == _lure)
          _lure = new Lure();
       _lure.setTrailerType(s);
+   }
+
+   public String getTrailerType()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getTrailer();
    }
 
    public void setTrailerSize(String s)
@@ -184,11 +230,27 @@ public class Catch
       _lure.setTrailerSize(s);
    }
 
+   public String getTrailerSize()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getTrailerSize();
+   }
+
    public void setTrailerColor(String s)
    {
       if(null == _lure)
          _lure = new Lure();
       _lure.setTrailerColor(s);
+   }
+
+   public String getTrailerColor()
+   {
+      if(null == _lure)
+         return null;
+      else
+         return _lure.getTrailerColor();
    }
 
    private void updateFieldsFrom(Catch lastCatch)

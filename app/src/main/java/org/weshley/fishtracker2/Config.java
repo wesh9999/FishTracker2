@@ -304,17 +304,23 @@ public class Config
 
    public static String formatDate(Date dt)
    {
+      if(null == dt)
+         return "";
       SimpleDateFormat fmt = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
       return fmt.format(dt);
    }
 
    public static String formatTime(Date dt)
    {
+      if(null == dt)
+         return "";
       SimpleDateFormat fmt = new SimpleDateFormat(DEFAULT_TIME_FORMAT);
       return fmt.format(dt);
    }
    public static String formatTimestamp(Date dt)
    {
+      if(null == dt)
+         return "";
       SimpleDateFormat fmt = new SimpleDateFormat(DEFAULT_TIMESTAMP_FORMAT);
       return fmt.format(dt);
    }
