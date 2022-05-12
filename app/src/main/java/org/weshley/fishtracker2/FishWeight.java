@@ -33,4 +33,5 @@ public class FishWeight
    {
       return "" + _weight;
    }
+   public String toXmlValue() { return Utils.toXmlValue(valueString() + _units); }
 }

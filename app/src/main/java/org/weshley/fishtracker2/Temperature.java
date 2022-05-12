@@ -30,4 +30,5 @@ public class Temperature
    }
 
    public String valueString() { return "" + _temp; }
-}
+
+   public String toXmlValue() { return Utils.toXmlValue(valueString() + _units); }}

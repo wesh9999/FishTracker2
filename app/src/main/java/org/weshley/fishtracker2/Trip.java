@@ -6,13 +6,32 @@ import java.util.List;
 
 public class Trip
 {
+   // TODO - add code to store and retrieve trips from disk
    private static final List<Trip> _allTrips = new ArrayList<>();
 
-   // TODO - add details from Trips sheet....
+   // TODO - add fields to the UI
    private String _transport = null;
+   private Distance _distanceTraveled = null;
+
    private String _location = "";
    private Date _startTime = null;
    private Date _endTime = null;
+   private Temperature _airTempStart = null;
+   private Temperature _airTempEnd = null;
+
+   private Temperature _waterTemp = null;
+   private Config.Clarity _waterClarity = null;
+   private WaterDepth _secchi = null;
+   private String _waterLevel = null;
+     // NOTE - using string since this could be a number like ft above sea level, or something like "high"
+
+   private Config.Precipitation _precip = null;
+   private WindRange _wind = null;
+
+   private LatLon[] _track = null;  // TODO - Trip._track needs implementation
+
+   private String _notes = null;
+
    private List<Catch> _catches = new ArrayList<>();
 
    public static Trip createNewTrip()
@@ -30,6 +49,7 @@ public class Trip
    public void dumpData(StringBuilder sb)
    {
       // TODO - just dumping to stdout for now.  need to dump some structured data (xml?) to a file or email or something?
+/*
       sb.append("--------- Trip ----------\n");
       sb.append("   start: " + Config.formatTimestamp(_startTime) + "\n");
       sb.append("   end: " + Config.formatTimestamp(_endTime) + "\n");
@@ -37,7 +57,84 @@ public class Trip
       sb.append("   transport: " + _transport + "\n");
       for(Catch c : _catches)
          c.dumpData(sb);
+ */
+      sb.append(toXml());
    }
+
+   public String toXml()
+   {
+      // NOTE:  Tried a few ways to use std java libraries to format the xml nicely, but nothing seemed to
+      // work very well so doing it myself.
+      StringBuilder sb = new StringBuilder();
+      sb.append("<trip\n");
+      if(null != _startTime)
+         sb.append("   startTime=\"").append(Utils.toXmlValue(Config.formatTimestamp(_startTime))).append("\"\n");
+      if(null != _endTime)
+         sb.append("   endTime=\"").append(Utils.toXmlValue(Config.formatTimestamp(_endTime))).append("\"\n");
+      if(null != _location)
+         sb.append("   location=\"").append(Utils.toXmlValue(_location)).append("\"\n");
+      if(null != _transport)
+         sb.append("   transport=\"").append(Utils.toXmlValue(_transport)).append("\"\n");
+      if(null != _distanceTraveled)
+         sb.append("   distance=\"").append(_distanceTraveled.toXmlValue()).append("\"\n");
+      if(null != _airTempStart)
+         sb.append("   airTempStart=\"").append(_airTempStart.toXmlValue()).append("\"\n");
+      if(null != _airTempEnd)
+         sb.append("   airTempEnd=\"").append(_airTempEnd.toXmlValue()).append("\"\n");
+      if(null != _precip)
+         sb.append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
+      if(null != _wind)
+         sb.append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
+      if(null != _waterTemp)
+         sb.append("   waterTemp=\"").append(_waterTemp.toXmlValue()).append("\"\n");
+      if(null != _waterClarity)
+         sb.append("   waterClarity=\"").append(Utils.toXmlValue(_waterClarity.toString())).append("\"\n");
+      if(null != _secchi)
+         sb.append("   secchi=\"").append(_secchi.toXmlValue()).append("\"\n");
+      if(null != _waterLevel)
+         sb.append("   waterLevel=\"").append(Utils.toXmlValue(_waterLevel)).append("\"\n");
+      if(null != _notes)
+         sb.append("   notes=\"").append(Utils.toXmlValue(_notes)).append("\"\n");
+      sb.append("   >\n");
+
+      for(Catch c : _catches)
+         sb.append(c.toXml("   ")).append("\n\n");
+
+      // TODO - add track info
+      if(null != _track)
+         sb.append("   <track />").append("\n");
+
+      sb.append("</trip>\n");
+      return sb.toString();
+   }
+
+   // TODO - add fromXml()
+
+   public String getNotes() { return _notes; }
+   public void setNotes(String s) { _notes = s; }
+
+   public Temperature getAirTempStart() { return _airTempStart; }
+   public void setAirTempStart(Temperature t) { _airTempStart = t; }
+   public Temperature getAirTempEnd() { return _airTempEnd; }
+   public void setAirTempEnd(Temperature t) { _airTempEnd = t; }
+
+   public Temperature getWaterTemp() { return _waterTemp; }
+   public void setWaterTemp(Temperature t) { _waterTemp = t; }
+   public String getWaterLevel() { return _waterLevel; }
+   public void setWaterLevel(String s) { _waterLevel = s; }
+   public Config.Clarity getWaterClarity() { return _waterClarity; }
+   public void setWaterClarity(Config.Clarity c) { _waterClarity = c; }
+   public WaterDepth getSecchi() { return _secchi; }
+   public void setSecchi(WaterDepth d) { _secchi = d; }
+
+   public Distance getDistanceTraveled() { return _distanceTraveled; }
+   public void setDistanceTraveled(Distance d) { _distanceTraveled = d; }
+
+   public WindRange getWind() { return _wind; }
+   public void setWind(WindRange w) { _wind = w; }
+
+   public Config.Precipitation getPrecip() { return _precip; }
+   public void setPrecip(Config.Precipitation p) { _precip = p; }
 
    public void setLocation(String loc)
    {
@@ -110,7 +207,7 @@ public class Trip
 
    public Catch newCatch()
    {
-      Catch c = new Catch(getLastCatch());
+      Catch c = new Catch(this, getLastCatch());
       c.setTimestamp(new Date());
       _catches.add(c);
       return c;

@@ -8,6 +8,8 @@ import java.util.*;
 // TODO - Some fields are static enums (i.e. clarity) and others are strings that essentially model an editable enum
 //        (i.e. structure).  Should all of these be the editable?
 
+// <a href="https://www.flaticon.com/free-icons/fish" title="fish icons">Fish icons created by Freepik - Flaticon</a>
+
 public class Config
 {
    public static final String BLANK_LABEL= "";
@@ -16,7 +18,7 @@ public class Config
    public enum Direction
    {
       UNDEFINED { public String toString() { return BLANK_LABEL; }},
-      Variable, N, NE, E, SE, S, SW, W, NW
+      Variable, N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW
    }
 
    public enum WindStrength
@@ -345,8 +347,6 @@ public class Config
       return Speed.Units.mph;
    }
 
-   public static Temperature.Units getDefaultTempUnits()
-   {
-      return Temperature.Units.F;
-   }
+   public static Distance.Units getDefaultDistanceUnits() { return Distance.Units.km; }
+   public static Temperature.Units getDefaultTempUnits() { return Temperature.Units.F; }
 }

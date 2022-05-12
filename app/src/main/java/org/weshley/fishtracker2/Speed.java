@@ -31,4 +31,6 @@ public class Speed
 
    public String valueString() { return "" + _speed; }
 
+   public String valueWithUnits() { return "" + _speed + _units; }
+
 }

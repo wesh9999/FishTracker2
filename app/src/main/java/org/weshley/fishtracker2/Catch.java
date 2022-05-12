@@ -1,7 +1,5 @@
 package org.weshley.fishtracker2;
 
-import android.util.Log;
-
 import java.util.Date;
 
 public class Catch
@@ -20,21 +18,18 @@ public class Catch
    private String _structure = null;
    private String _cover = null;
    private Config.Precipitation _precip = null;
-   private Speed _windSpeed = null;
-   private Config.Direction _windDirection = null;
-   private Config.WindStrength _windStrength = null;
+   private Wind _wind = null;
    private String _notes = null;
 
-   public Catch(Catch lastCatch)
+   public Catch(Trip trip, Catch lastCatch)
    {
       updateFieldsFrom(lastCatch);
+      fillFieldsFromTrip(trip);
    }
 
    public void dumpData(StringBuilder sb)
    {
-      // TODO - create some formatted structure (xml?) and write to file or email or something
-      sb.append("   -- Catch --\n");
-      sb.append("        species: " + _species + "\n");
+      sb.append(toXml());
    }
 
    public Date getTimestamp()
@@ -116,14 +111,58 @@ public class Catch
    public void setDepth(WaterDepth d) { _depth = d; }
    public WaterDepth getDepth() { return _depth; }
 
-   public Speed getWindSpeed() { return _windSpeed; }
-   public void setWindSpeed(Speed s) { _windSpeed = s; }
+   public Wind getWind()
+   {
+      return _wind;
+   }
 
-   public Config.Direction getWindDirection() { return _windDirection; }
-   public void setWindDirection(Config.Direction d) { _windDirection = d; }
+   public void setWind(Wind w)
+   {
+      _wind = w;
+   }
 
-   public Config.WindStrength getWindStrength() { return _windStrength; }
-   public void setWindStrength(Config.WindStrength s) { _windStrength = s; }
+   public Speed getWindSpeed()
+   {
+      if(null == _wind)
+         return null;
+      else
+         return _wind.getSpeed();
+   }
+   public void setWindSpeed(Speed s)
+   {
+      if(null == _wind)
+         _wind = new Wind();
+      _wind.setSpeed(s);
+   }
+
+   public Config.Direction getWindDirection()
+   {
+      if(null == _wind)
+         return null;
+      else
+         return _wind.getDirection();
+   }
+
+   public void setWindDirection(Config.Direction d)
+   {
+      if(null == _wind)
+         _wind = new Wind();
+      _wind.setDirection(d);
+   }
+
+   public Config.WindStrength getWindStrength()
+   {
+      if(null == _wind)
+         return null;
+      return _wind.getStrength();
+   }
+
+   public void setWindStrength(Config.WindStrength s)
+   {
+      if(null == _wind)
+         _wind = new Wind();
+      _wind.setStrength(s);
+   }
 
    public Config.Precipitation getPrecip() { return _precip; }
    public void setPrecip(Config.Precipitation p) { _precip = p; }
@@ -253,6 +292,97 @@ public class Catch
          return _lure.getTrailerColor();
    }
 
+   public String toXml()
+   {
+      return toXml("");
+   }
+
+   public String toXml(String indent)
+   {
+      // NOTE:  Tried a few ways to use std java libraries to format the xml nicely, but nothing seemed to
+      // work very well so doing it myself.
+      StringBuilder sb = new StringBuilder();
+      sb.append(indent).append("<catch\n");
+      if(null != _timestamp)
+         sb.append(indent).append("   time=\"").append(Utils.toXmlValue(Config.formatTimestamp(_timestamp))).append("\"\n");
+      if(null != _gpsLocation)
+         sb.append(indent)
+           .append("   lat=\"").append(_gpsLocation.getLat()).append("\"\n")
+           .append("   lon=\"").append(_gpsLocation.getLon()).append("\"\n");
+      if(null != _species)
+         sb.append(indent).append("   species=\"").append(Utils.toXmlValue(_species)).append("\"\n");
+      if(null != _length)
+         sb.append(indent).append("   length=\"").append(_length.toXmlValue()).append("\"\n");
+      if(null != _weight)
+         sb.append(indent).append("   weight=\"").append(_weight.toXmlValue()).append("\"\n");
+      if(null != _depth)
+         sb.append(indent).append("   depth=\"").append(_depth.toXmlValue()).append("\"\n");
+      if(null != _airTemp)
+         sb.append(indent).append("   airTemp=\"").append(_airTemp.toXmlValue()).append("\"\n");
+      if(null != _precip)
+         sb.append(indent).append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
+      if(null != _wind)
+         sb.append(indent).append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
+      if(null != _waterTemp)
+         sb.append(indent).append("   waterTemp=\"").append(_waterTemp.toXmlValue()).append("\"\n");
+      if(null != _waterClarity)
+         sb.append(indent).append("   waterClarity=\"").append(Utils.toXmlValue(_waterClarity.toString())).append("\"\n");
+      if(null != _secchi)
+         sb.append(indent).append("   secchi=\"").append(_secchi.toXmlValue()).append("\"\n");
+      if(null != _structure)
+         sb.append(indent).append("   structure=\"").append(Utils.toXmlValue(_structure)).append("\"\n");
+      if(null != _cover)
+         sb.append(indent).append("   cover=\"").append(Utils.toXmlValue(_cover)).append("\"\n");
+      if(null != _lure)
+      {
+         if(null != _lure.getType())
+            sb.append(indent).append("   lureType=\"").append(Utils.toXmlValue(_lure.getType())).append("\"\n");
+         if(null != _lure.getBrand())
+            sb.append(indent).append("   lureBrand=\"").append(Utils.toXmlValue(_lure.getBrand())).append("\"\n");
+         if(null != _lure.getColor())
+            sb.append(indent).append("   lureColor=\"").append(Utils.toXmlValue(_lure.getColor())).append("\"\n");
+         if(null != _lure.getSize())
+            sb.append(indent).append("   lureSize=\"").append(Utils.toXmlValue(_lure.getSize())).append("\"\n");
+         if(null != _lure.getTrailer())
+            sb.append(indent).append("   lureTrailer=\"").append(Utils.toXmlValue(_lure.getTrailer())).append("\"\n");
+         if(null != _lure.getTrailerColor())
+            sb.append(indent).append("   trailerColor=\"").append(Utils.toXmlValue(_lure.getTrailerColor())).append("\"\n");
+         if(null != _lure.getTrailerSize())
+            sb.append(indent).append("   trailerSize=\"").append(Utils.toXmlValue(_lure.getTrailerSize())).append("\"\n");
+      }
+      if(null != _notes)
+         sb.append(indent).append("   notes=\"").append(Utils.toXmlValue(_notes)).append("\"\n");
+      sb.append(indent).append("/>\n");
+      return sb.toString();
+   }
+
+   public static Catch fromXml(String s)
+   {
+      // TODO - implement Catch.fromXml
+      return null;
+   }
+
+   private void fillFieldsFromTrip(Trip t)
+   {
+      // default any null fields to values from the trip
+
+      if(null == t)
+         return; // shouldn't happen, but just in case...
+
+      if(null == _waterTemp)
+         _waterTemp = t.getWaterTemp();
+      if(null == _airTemp)
+         _airTemp = t.getAirTempStart();
+      if((null == _wind) && (null != t.getWind()))
+         _wind = new Wind(t.getWind().getSpeedEnd(), t.getWind().getDirectionStart(), t.getWind().getStrength());
+      if(null == _precip)
+         _precip = t.getPrecip();
+      if(null == _waterClarity)
+         _waterClarity = t.getWaterClarity();
+      if(null == _secchi)
+         _secchi = t.getSecchi();
+   }
+
    private void updateFieldsFrom(Catch lastCatch)
    {
       if(null == lastCatch)
@@ -263,9 +393,10 @@ public class Catch
       _waterTemp = lastCatch.getWaterTemp();
       _airTemp = lastCatch.getAirTemp();
       _depth = lastCatch.getDepth();
-      _windSpeed = lastCatch.getWindSpeed();
-      _windDirection = lastCatch.getWindDirection();
-      _windStrength = lastCatch.getWindStrength();
+      if(null == lastCatch._wind)
+         _wind = null;
+      else
+         _wind = new Wind(lastCatch.getWind());
       _precip = lastCatch.getPrecip();
       _waterClarity = lastCatch.getWaterClarity();
       _secchi = lastCatch.getSecchi();

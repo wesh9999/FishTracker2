@@ -30,4 +30,7 @@ public class WaterDepth
    }
 
    public String valueString() { return "" + _depth; }
+
+   public String toXmlValue() { return Utils.toXmlValue(valueString() + _units); }
+
 }

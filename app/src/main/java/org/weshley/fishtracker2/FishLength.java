@@ -34,4 +34,5 @@ public class FishLength
       return "" + _length;
    }
 
+   public String toXmlValue() { return Utils.toXmlValue(valueString() + _units); }
 }
