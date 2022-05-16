@@ -18,10 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.google.android.material.snackbar.Snackbar;
 import org.weshley.fishtracker2.databinding.ActivityScrollingBinding;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,6 +31,8 @@ public class ScrollingActivity
    private int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
 
    private List<Trip> _trips = new ArrayList<>();
+   private HashMap<String,Integer> _tripLocationMap;
+   private HashMap<String,Integer> _tripTransportMap;
    private HashMap<String,Integer> _speciesMap;
    private HashMap<String,Integer> _lureMap;
    private HashMap<String,Integer> _lureTypeMap;
@@ -47,22 +47,22 @@ public class ScrollingActivity
    private EditText _newItemInputField = null;
    private AlertDialog _createItemDialog = null;
 
-   private ActivityScrollingBinding binding;
+   private ActivityScrollingBinding _binding;
 
    @Override
    protected void onCreate(Bundle savedInstanceState)
    {
       super.onCreate(savedInstanceState);
 
-      binding = ActivityScrollingBinding.inflate(getLayoutInflater());
-      setContentView(binding.getRoot());
-
-      Toolbar toolbar = binding.toolbar;
+      _binding = ActivityScrollingBinding.inflate(getLayoutInflater());
+      setContentView(_binding.getRoot());
+      
+      Toolbar toolbar = _binding.toolbar;
       setSupportActionBar(toolbar);
-      CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
+      CollapsingToolbarLayout toolBarLayout = _binding.toolbarLayout;
       toolBarLayout.setTitle(getTitle());
 
-      FloatingActionButton fab = binding.fab;
+      FloatingActionButton fab = _binding.fab;
       fab.setOnClickListener(new View.OnClickListener()
       {
          @Override
@@ -99,6 +99,7 @@ public class ScrollingActivity
       if(id == R.id.action_start_trip)
       {
          startTrip();
+         getTripLocationField().performClick();
          return true;
       }
       else if(id == R.id.action_end_trip)
@@ -157,11 +158,10 @@ public class ScrollingActivity
    {
       if(null == getCurrentTrip())
       {
-         Trip t = Trip.createNewTrip();
+         Trip t = Trip.createNewTrip(Trip.getMostRecentTrip());
          _trips.add(t);
-         t.setLocation("Lake Hartwell");
-         // FIXME - prompt for all trip data (location, transport, etc), defaulting to last trip values
-         updateTripInfo();
+         t.setLocation("Lake Hartwell");  // TODO - remove this
+         updateTripFields(t);
          enableTripControls(true);
       }
       else
@@ -182,15 +182,15 @@ public class ScrollingActivity
 
       t.endTrip();
       clearCatchFields();
+      clearTripFields();
       enableCatchControls(false);
       enableTripControls(false);
-      updateTripInfo();
+      updateTripSummary(null);
       updateMenuState();
    }
 
-   private void updateTripInfo()
+   private void updateTripSummary(Trip t)
    {
-      Trip t = getCurrentTrip();
       if(null == t)
          getTripInfoField().setText(R.string.no_trip_message);
       else
@@ -202,7 +202,41 @@ public class ScrollingActivity
       startTrip();
       updateCatchFields(getCurrentTrip().newCatch());
       enableCatchControls(true);
-      updateTripInfo();
+      updateTripSummary(getCurrentTrip()); // to update the catch counter...
+      getSpeciesField().performClick();
+   }
+
+   private void updateTripFields(Trip t)
+   {
+      if(null == t)
+      {
+         clearTripFields();
+         return;
+      }
+
+      // TODO - add fields here as the UI is updated
+      updateTripSummary(t);
+      setTripLocationSelection(t);
+      setTripStartField(t);
+      setTripEndField(t);
+      setTripTransportSelection(t);
+      setTripDistanceField(t);
+      setTripAirTempStartField(t);
+      setTripAirTempEndField(t);
+   }
+
+   private void clearTripFields()
+   {
+      getTripInfoField().setText(R.string.no_trip_message);
+      getTripLocationField().setSelection(0);
+      getTripStartField().setText("");
+      getTripEndField().setText("");
+      getTripTransportField().setSelection(0);
+      getTripDistanceField().setText("");
+      getTripAirTempStartField().setText("");
+      getTripAirTempEndField().setText("");
+
+      // TODO - add fields here as the UI is updated
    }
 
    private void updateCatchFields(Catch c)
@@ -213,8 +247,7 @@ public class ScrollingActivity
          return;
       }
 
-      setDateField(c);
-      setTimeField(c);
+      setWhenField(c);
       setGpsField(c);
       setSpeciesSelection(c);
       setLengthField(c);
@@ -236,9 +269,8 @@ public class ScrollingActivity
 
    private void clearCatchFields()
    {
-      getTripInfoField().setText("");
-      getDateField().setText("");
-      getTimeField().setText("");
+//      getTripInfoField().setText("");
+      getWhenField().setText("");
       getGpsField().setText("");
       getSpeciesField().setSelection(0);
       getLengthField().setText("");
@@ -273,6 +305,12 @@ public class ScrollingActivity
 
    private void initUnitsLabels()
    {
+      // trip units labels
+      getTripDistanceUnitsField().setText(Config.getDefaultDistanceUnits().toString());
+      getTripAirTempUnitsField().setText(Config.getDefaultTempUnits().toString());
+      // TODO - add more trip fields as the UI is updated
+
+      // catch units labels
       getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
       getWeightUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
       getDepthUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
@@ -284,6 +322,14 @@ public class ScrollingActivity
 
    private void initEditors()
    {
+      // TODO - configure datetime editors for trip & catch start/end fields
+
+      // trip fields
+      initTripLocationEditor();
+      initTripTransportEditor();
+      // TODO - add more trip fields as the UI is updated
+
+      // catch fields
       initSpeciesEditor();
       initLureEditor();
       initLureTypeEditor();
@@ -305,6 +351,8 @@ public class ScrollingActivity
    {
       // NOTE:  tripInfo, date, time, and gps fields are always not editable
 
+      getWhenField().setEnabled(enabled);
+      getGpsField().setEnabled(enabled);
       getSpeciesField().setEnabled(enabled);
       getLengthField().setEnabled(enabled);
       getWeightField().setEnabled(enabled);
@@ -332,7 +380,123 @@ public class ScrollingActivity
 
    private void enableTripControls(boolean enabled)
    {
-      // TODO - add controls here when trip info is added to UI
+      // TODO - add more controls here when trip info is added to UI
+      getTripLocationField().setEnabled(enabled);
+      getTripStartField().setEnabled(enabled);
+      getTripEndField().setEnabled(enabled);
+      getTripTransportField().setEnabled(enabled);
+      getTripDistanceField().setEnabled(enabled);
+      getTripAirTempStartField().setEnabled(enabled);
+      getTripAirTempEndField().setEnabled(enabled);
+   }
+
+   private void initTripLocationEditorItems()
+   {
+      // TODO - add most recent locations (maybe last 5 from all trips?) plus a separator at top of list
+      _tripLocationMap = new HashMap<>();
+      initSpinnerItems(getTripLocationField(), Config.getAllLocations(), _tripLocationMap);
+   }
+
+   private void initTripLocationEditor()
+   {
+      initTripLocationEditorItems();
+      getTripLocationField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      {
+         @Override
+         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+         {
+            final String selection = (String) parent.getItemAtPosition(pos);
+            if(Config.OTHER_LABEL.equals(selection))
+            {
+               _newItemInputField = null;
+               int oldSelection = 0;
+               String s = getCurrentTrip().getLocation();
+               if(null != s)
+                  oldSelection = _tripLocationMap.get(s);
+               openCreateItemDialog(
+                     "Enter New Location",
+                     getTripLocationField(), oldSelection,
+                     new DialogInterface.OnClickListener()
+                     {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                           String newItem = getNewItemInputField().getText().toString();
+                           Trip t = getCurrentTrip();
+                           t.setLocation(newItem);
+                           initTripLocationEditorItems();
+                           setTripLocationSelection(t);
+                           updateTripSummary(t);
+                        }
+                     });
+            }
+            else
+            {
+               Trip t = getCurrentTrip();
+               if(null != t)
+               {
+                  t.setLocation(selection);
+                  updateTripSummary(t);
+               }
+            }
+         }
+
+         @Override
+         public void onNothingSelected(AdapterView<?> parent) {}
+      });
+   }
+
+   private void initTripTransportEditorItems()
+   {
+      // TODO - add most recent transports (maybe last 5 from all trips?) plus a separator at top of list
+      _tripTransportMap = new HashMap<>();
+      initSpinnerItems(getTripTransportField(), Config.getAllTransports(), _tripTransportMap);
+   }
+
+   private void initTripTransportEditor()
+   {
+      initTripTransportEditorItems();
+      getTripTransportField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      {
+         @Override
+         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+         {
+            final String selection = (String) parent.getItemAtPosition(pos);
+            if(Config.OTHER_LABEL.equals(selection))
+            {
+               _newItemInputField = null;
+               int oldSelection = 0;
+               String s = getCurrentTrip().getTransport();
+               if(null != s)
+                  oldSelection = _tripTransportMap.get(s);
+               openCreateItemDialog(
+                     "Enter New Transport",
+                     getTripTransportField(), oldSelection,
+                     new DialogInterface.OnClickListener()
+                     {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                           String newItem = getNewItemInputField().getText().toString();
+                           getCurrentTrip().setTransport(newItem);
+                           initTripTransportEditorItems();
+                           setTripTransportSelection(getCurrentTrip());
+                        }
+                     });
+            }
+            else
+            {
+               Trip t = getCurrentTrip();
+               if(null != t)
+               {
+                  t.setTransport(selection);
+               }
+            }
+         }
+
+         @Override
+         public void onNothingSelected(AdapterView<?> parent) {}
+      });
    }
 
    private void initSpeciesEditorItems()
@@ -1013,20 +1177,84 @@ public class ScrollingActivity
       _createItemDialog.show();
    }
 
-   private void setDateField(Catch c)
+   private void setTripLocationSelection(Trip t)
    {
-      if((null == c) || (null == c.getTimestamp()))
-         getDateField().setText("");
+      String loc = null;
+      if(null != t)
+         loc = t.getLocation();
+      if((null == loc) || loc.isEmpty())
+      {
+         getTripLocationField().setSelection(0); // NOTE:  0 is blank element added first to the list
+      }
       else
-         getDateField().setText(Config.formatDate(c.getTimestamp()));
+      {
+         int pos = _tripLocationMap.get(loc);
+         getTripLocationField().setSelection(pos);
+      }
    }
 
-   private void setTimeField(Catch c)
+   private void setTripTransportSelection(Trip t)
+   {
+      String transport = null;
+      if(null != t)
+         transport = t.getTransport();
+      if((null == transport) || transport.isEmpty())
+      {
+         getTripTransportField().setSelection(0); // NOTE:  0 is blank element added first to the list
+      }
+      else
+      {
+         int pos = _tripTransportMap.get(transport);
+         getTripTransportField().setSelection(pos);
+      }
+   }
+
+   private void setTripStartField(Trip t)
+   {
+      if((null == t) || (null == t.getStartTime()))
+         getTripStartField().setText("");
+      else
+         getTripStartField().setText(Config.formatTimestamp(t.getStartTime()));
+   }
+
+   private void setTripEndField(Trip t)
+   {
+      if((null == t) || (null == t.getLocation()))
+         getTripEndField().setText("");
+      else
+         getTripEndField().setText(Config.formatTimestamp(t.getEndTime()));
+   }
+
+   private void setTripDistanceField(Trip t)
+   {
+      if((null == t) || (null == t.getDistanceTraveled()))
+         getTripDistanceField().setText("");
+      else
+         getTripDistanceField().setText(t.getDistanceTraveled().valueString());
+   }
+
+   private void setTripAirTempStartField(Trip t)
+   {
+      if((null == t) || (null == t.getAirTempStart()))
+         getTripAirTempStartField().setText("");
+      else
+         getTripAirTempStartField().setText(t.getAirTempStart().valueString());
+   }
+
+   private void setTripAirTempEndField(Trip t)
+   {
+      if((null == t) || (null == t.getAirTempEnd()))
+         getTripAirTempEndField().setText("");
+      else
+         getTripAirTempEndField().setText(t.getAirTempEnd().valueString());
+   }
+
+   private void setWhenField(Catch c)
    {
       if((null == c) || (null == c.getTimestamp()))
-         getTimeField().setText("");
+         getWhenField().setText("");
       else
-         getTimeField().setText(Config.formatTime(c.getTimestamp()));
+         getWhenField().setText(Config.formatTimestamp(c.getTimestamp()));
    }
 
    private void setGpsField(Catch c)
@@ -1038,7 +1266,7 @@ public class ScrollingActivity
    }
 
 
-   void setSpeciesSelection(Catch c)
+   private void setSpeciesSelection(Catch c)
    {
       String species = null;
       if(null != c)
@@ -1293,7 +1521,7 @@ TODO - lure UI not done yet....
 
    private Context getContext()
    {
-      return binding.getRoot().getContext();
+      return _binding.getRoot().getContext();
    }
 
    private void updateMenuState()
@@ -1314,9 +1542,20 @@ TODO - lure UI not done yet....
       //        .setAction("Action", null).show();
    }
 
+   // trip fields
    private EditText getTripInfoField() { return (EditText) findViewById(R.id.tripInfoField); }
-   private EditText getDateField() { return (EditText) findViewById(R.id.dateField); }
-   private EditText getTimeField() { return (EditText) findViewById(R.id.timeField); }
+   private Spinner getTripLocationField() { return (Spinner) findViewById(R.id.tripLocationField); }
+   private EditText getTripStartField() { return (EditText) findViewById(R.id.tripStartField); }
+   private EditText getTripEndField() { return (EditText) findViewById(R.id.tripEndField); }
+   private Spinner getTripTransportField() { return (Spinner) findViewById(R.id.tripTransportField); }
+   private EditText getTripDistanceField() { return (EditText) findViewById(R.id.tripDistanceField); }
+   private TextView getTripDistanceUnitsField() { return (TextView) findViewById(R.id.tripDistanceUnitsLabel); }
+   private EditText getTripAirTempStartField() { return (EditText) findViewById(R.id.tripAirTempStartField); }
+   private EditText getTripAirTempEndField() { return (EditText) findViewById(R.id.tripAirTempEndField); }
+   private TextView getTripAirTempUnitsField() { return (TextView) findViewById(R.id.tripAirTempUnitsLabel); }
+
+   // catch fields
+   private EditText getWhenField() { return (EditText) findViewById(R.id.whenField); }
    private EditText getGpsField() { return (EditText) findViewById(R.id.gpsField); }
    private Spinner getSpeciesField() { return (Spinner) findViewById(R.id.speciesField); }
    private EditText getLengthField() { return (EditText) findViewById(R.id.lengthField); }

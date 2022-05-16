@@ -12,6 +12,18 @@ public class WindRange
    {
    }
 
+   public WindRange(WindRange other)
+   {
+      if(null != other)
+      {
+         _speedStart = other._speedStart;
+         _speedEnd = other._speedEnd;
+         _dirStart = other._dirStart;
+         _dirEnd = other._dirEnd;
+         _strength = other._strength;
+      }
+   }
+
    public WindRange(Speed sp, Config.Direction dir, Config.WindStrength str)
    {
       _speedStart = sp;

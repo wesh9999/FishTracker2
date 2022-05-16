@@ -347,6 +347,6 @@ public class Config
       return Speed.Units.mph;
    }
 
-   public static Distance.Units getDefaultDistanceUnits() { return Distance.Units.km; }
+   public static Distance.Units getDefaultDistanceUnits() { return Distance.Units.m; }
    public static Temperature.Units getDefaultTempUnits() { return Temperature.Units.F; }
 }

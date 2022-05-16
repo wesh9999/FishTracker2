@@ -24,30 +24,33 @@
                 android:text="@string/no_trip_message"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" android:focusableInTouchMode="false" android:focusable="false"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Date:"
-                    android:ems="10"
-                    android:id="@+id/dateLabel"
-                    android:layout_weight="1"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
-            <EditText
+                android:layout_height="match_parent" android:layout_weight="1">
+            <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:ems="10"
-                    android:id="@+id/dateField"
-                    android:layout_weight="1"
-                    android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"/>
+                    android:layout_height="wrap_content">
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/purple_200"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:background="@android:color/white"
+                        android:layout_centerHorizontal="true"
+                        android:text="Trip"
+                        android:textSize="20sp"
+                        android:textColor="#9C27B0"
+                        android:textStyle="bold"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -58,22 +61,236 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="Time:"
+                    android:text="Location:"
                     android:ems="10"
-                    android:id="@+id/timeLabel"
+                    android:id="@+id/tripLocationLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tripLocationField"
+                    android:layout_weight="2"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Start:"
+                    android:ems="10"
+                    android:id="@+id/tripStartLabel"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:ems="10"
-                    android:id="@+id/timeField"
+                    android:id="@+id/tripStartField"
                     android:layout_weight="1"
                     android:editable="false"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"/>
         </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="End:"
+                    android:ems="10"
+                    android:id="@+id/tripEndLabel"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:ems="10"
+                    android:id="@+id/tripEndField"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Transport:"
+                    android:ems="10"
+                    android:id="@+id/tripTransportLabel"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tripTransportField"
+                    android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" android:layout_marginRight="10dp">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Distance:"
+                    android:ems="10"
+                    android:id="@+id/tripDistanceLabel"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/tripDistanceField"
+                    android:layout_weight="2" android:imeOptions="actionDone"/>
+            <TextView
+                    android:text="Units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripDistanceUnitsLabel"
+                    android:layout_weight="0"
+                    android:editable="false"
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Air Temp:"
+                    android:ems="10"
+                    android:id="@+id/tripAirTempLabel"
+                    android:layout_weight="0"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/tripAirTempStartField"
+                    android:layout_weight="2"
+                    android:imeOptions="actionDone"/>
+            <TextView
+                    android:text=" --> "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripAirTempDashLabel"
+                    android:layout_weight="0"
+                    android:editable="false"
+                    android:textSize="18sp"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/tripAirTempEndField"
+                    android:layout_weight="2"
+                    android:imeOptions="actionDone"/>
+            <TextView
+                    android:text="Units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripAirTempUnitsLabel"
+                    android:layout_weight="0"
+                    android:editable="false"
+                    android:textSize="18sp"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"/>
+        </LinearLayout>
+
+
+
+
+
+
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/purple_200"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:background="@android:color/white"
+                        android:layout_centerHorizontal="true"
+                        android:text="Catch"
+                        android:textSize="20sp"
+                        android:textColor="#9C27B0"
+                        android:textStyle="bold"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="When:"
+                    android:ems="10"
+                    android:id="@+id/whenLabel"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:ems="10"
+                    android:id="@+id/whenField"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"/>
+        </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -88,7 +305,7 @@
                     android:id="@+id/gpsLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,7 +357,7 @@
                     android:id="@+id/speciesLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -161,7 +378,7 @@
                     android:id="@+id/lengthLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,7 +393,7 @@
                     android:id="@+id/lengthUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -192,7 +409,7 @@
                     android:id="@+id/weightLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -207,7 +424,7 @@
                     android:id="@+id/weightUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -251,7 +468,7 @@
                     android:id="@+id/lureLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -272,7 +489,7 @@
                     android:id="@+id/lureTypeLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -293,7 +510,7 @@
                     android:id="@+id/lureBrandLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -314,7 +531,7 @@
                     android:id="@+id/lureColorLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -335,7 +552,7 @@
                     android:id="@+id/lureSizeLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -356,7 +573,7 @@
                     android:id="@+id/trailerLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -377,7 +594,7 @@
                     android:id="@+id/trailerColorLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -398,7 +615,7 @@
                     android:id="@+id/trailerSizeLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -447,7 +664,7 @@
                     android:id="@+id/depthLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -462,7 +679,7 @@
                     android:id="@+id/depthUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -478,7 +695,7 @@
                     android:id="@+id/airTempLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -493,7 +710,7 @@
                     android:id="@+id/airTempUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -509,7 +726,7 @@
                     android:id="@+id/waterTempLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -524,7 +741,7 @@
                     android:id="@+id/waterTempUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -540,7 +757,7 @@
                     android:id="@+id/waterClarityLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -561,7 +778,7 @@
                     android:id="@+id/secchiLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -576,7 +793,7 @@
                     android:id="@+id/secchiUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -592,7 +809,7 @@
                     android:id="@+id/structureLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -613,7 +830,7 @@
                     android:id="@+id/coverLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -634,7 +851,7 @@
                     android:id="@+id/precipLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -683,7 +900,7 @@
                     android:id="@+id/windSpeedLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -698,7 +915,7 @@
                     android:id="@+id/windSpeedUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -714,7 +931,7 @@
                     android:id="@+id/windDirectionLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -735,7 +952,7 @@
                     android:id="@+id/windStrengthLabel"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -12,7 +12,6 @@ public class Trip
    // TODO - add fields to the UI
    private String _transport = null;
    private Distance _distanceTraveled = null;
-
    private String _location = "";
    private Date _startTime = null;
    private Date _endTime = null;
@@ -34,11 +33,47 @@ public class Trip
 
    private List<Catch> _catches = new ArrayList<>();
 
+   public static Trip getMostRecentTrip()
+   {
+      // TODO - should probably sort _allTrips by start time, unless i sort them this way when loading them....
+      if(_allTrips.isEmpty())
+         return null;
+      else
+         return _allTrips.get(_allTrips.size() - 1);
+   }
+
    public static Trip createNewTrip()
    {
+      return createNewTrip(null);
+   }
+
+   public static Trip createNewTrip(Trip lastTrip)
+   {
       Trip t = new Trip();
+      t.setFieldsFrom(lastTrip);
       _allTrips.add(t);
       return t;
+   }
+
+   public void setFieldsFrom(Trip lastTrip)
+   {
+      if(null == lastTrip)
+         return;
+      _transport = lastTrip.getTransport();
+      _notes = lastTrip.getNotes();
+      _precip = lastTrip.getPrecip();
+      _secchi = lastTrip.getSecchi();
+      _distanceTraveled = lastTrip.getDistanceTraveled();
+      _airTempEnd = lastTrip.getAirTempEnd();
+      _airTempStart = lastTrip.getAirTempStart();
+      _endTime = lastTrip.getEndTime();
+      _startTime = lastTrip.getStartTime();
+      _waterClarity = lastTrip.getWaterClarity();
+      _waterLevel = lastTrip.getWaterLevel();
+      _waterTemp = lastTrip.getWaterTemp();
+      if(null != lastTrip.getWind())
+         _wind = new WindRange(lastTrip.getWind());
+      // TODO - deal with _track once i start logging gps data
    }
 
    private Trip()
