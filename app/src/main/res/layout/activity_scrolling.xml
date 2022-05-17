@@ -13,7 +13,7 @@
             android:fitsSystemWindows="true"
             android:layout_height="@dimen/app_bar_height"
             android:layout_width="match_parent"
-            android:theme="@style/Theme.FishTracker2.AppBarOverlay">
+            android:theme="@style/Theme.FishTracker2.AppBarOverlay" android:background="@color/app_banner_color">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
@@ -23,14 +23,15 @@
                 android:layout_height="match_parent"
                 app:toolbarId="@+id/toolbar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="?attr/colorPrimary">
+                app:contentScrim="@color/app_banner_color" android:background="@color/app_banner_color">
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/Theme.FishTracker2.PopupOverlay"/>
+                    app:popupTheme="@style/Theme.FishTracker2.PopupOverlay"
+                    android:background="@color/app_banner_color"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

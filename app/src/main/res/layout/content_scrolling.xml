@@ -35,7 +35,7 @@
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -48,7 +48,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Trip"
                         android:textSize="20sp"
-                        android:textColor="#9C27B0"
+                        android:textColor="@color/section_title_color"
                         android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
@@ -64,9 +64,10 @@
                     android:text="Location:"
                     android:ems="10"
                     android:id="@+id/tripLocationLabel"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -76,26 +77,27 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" android:background="#2262DADA">
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="Start:"
+                    android:text="When:"
                     android:ems="10"
                     android:id="@+id/tripStartLabel"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:ems="10"
                     android:id="@+id/tripStartField"
-                    android:layout_weight="1"
+                    android:layout_weight="0.8"
                     android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"/>
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -105,12 +107,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="End:"
+                    android:text="-->"
                     android:ems="10"
                     android:id="@+id/tripEndLabel"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"/>
+                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -119,7 +122,7 @@
                     android:id="@+id/tripEndField"
                     android:layout_weight="1"
                     android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"/>
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -128,44 +131,41 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="104dp"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:text="Transport:"
                     android:ems="10"
                     android:id="@+id/tripTransportLabel"
-                    android:layout_weight="1"
+                    android:layout_weight="0"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/tripTransportField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginRight="10dp">
+                    android:layout_weight="3"/>
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="Distance:"
+                    android:text="Dist:"
                     android:ems="10"
                     android:id="@+id/tripDistanceLabel"
-                    android:layout_weight="1"
+                    android:layout_weight="0"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
                     android:id="@+id/tripDistanceField"
-                    android:layout_weight="2" android:imeOptions="actionDone"/>
+                    android:layout_weight="4" android:imeOptions="actionDone" android:textSize="16sp"/>
             <TextView
                     android:text="Units"
                     android:layout_width="wrap_content"
@@ -173,7 +173,8 @@
                     android:id="@+id/tripDistanceUnitsLabel"
                     android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"
+                    android:paddingRight="5dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -183,7 +184,7 @@
                 android:layout_weight="1"
                 android:layout_marginEnd="10dp">
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="98dp"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:text="Air Temp:"
@@ -193,7 +194,8 @@
                     tools:ignore="TouchTargetSizeCheck"
                     android:editable="false"
                     android:focusableInTouchMode="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -201,7 +203,7 @@
                     android:ems="10"
                     android:id="@+id/tripAirTempStartField"
                     android:layout_weight="2"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionDone" android:textSize="16sp"/>
             <TextView
                     android:text=" --> "
                     android:layout_width="wrap_content"
@@ -219,7 +221,7 @@
                     android:ems="10"
                     android:id="@+id/tripAirTempEndField"
                     android:layout_weight="2"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionDone" android:textSize="16sp"/>
             <TextView
                     android:text="Units"
                     android:layout_width="wrap_content"
@@ -233,12 +235,6 @@
         </LinearLayout>
 
 
-
-
-
-
-
-
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -249,7 +245,7 @@
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -262,7 +258,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Catch"
                         android:textSize="20sp"
-                        android:textColor="#9C27B0"
+                        android:textColor="@color/section_title_color"
                         android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
@@ -325,8 +321,8 @@
                     android:layout_height="wrap_content">
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:layout_height="2dp"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -338,9 +334,9 @@
                         android:background="@android:color/white"
                         android:layout_centerHorizontal="true"
                         android:text="Fish"
-                        android:textSize="20sp"
-                        android:textColor="#9C27B0"
-                        android:textStyle="bold"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/section_title_color"
+                />
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -427,17 +423,17 @@
                     android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:layout_height="2dp"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -449,9 +445,8 @@
                         android:background="@android:color/white"
                         android:layout_centerHorizontal="true"
                         android:text="Lure"
-                        android:textSize="20sp"
-                        android:textColor="#9C27B0"
-                        android:textStyle="bold"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/section_title_color"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -632,8 +627,8 @@
                     android:layout_height="wrap_content">
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:layout_height="2dp"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -645,9 +640,8 @@
                         android:background="@android:color/white"
                         android:layout_centerHorizontal="true"
                         android:text="Environment"
-                        android:textSize="20sp"
-                        android:textColor="#9C27B0"
-                        android:textStyle="bold"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/section_title_color"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -868,8 +862,8 @@
                     android:layout_height="wrap_content">
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:layout_height="2dp"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -881,9 +875,8 @@
                         android:background="@android:color/white"
                         android:layout_centerHorizontal="true"
                         android:text="Wind"
-                        android:textSize="20sp"
-                        android:textColor="#9C27B0"
-                        android:textStyle="bold"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/section_title_color"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -970,8 +963,8 @@
                     android:layout_height="wrap_content">
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/purple_200"
+                        android:layout_height="2dp"
+                        android:background="@color/section_title_color"
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="6dp"
                         android:layout_marginEnd="6dp"
@@ -983,9 +976,8 @@
                         android:background="@android:color/white"
                         android:layout_centerHorizontal="true"
                         android:text="Notes"
-                        android:textSize="20sp"
-                        android:textColor="#9C27B0"
-                        android:textStyle="bold"/>
+                        android:textSize="16sp"
+                        android:textColor="@color/section_title_color"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
