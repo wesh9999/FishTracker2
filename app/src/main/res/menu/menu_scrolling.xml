@@ -7,5 +7,6 @@
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:title="@string/action_end_trip" android:id="@+id/action_end_trip" android:orderInCategory="101"/>
-    <item android:title="Dump Trip Info" android:id="@+id/action_dump_trip" android:orderInCategory="102"/>
+    <item android:title="New Catch" android:id="@+id/action_new_catch" android:orderInCategory="200"/>
+    <item android:title="Dump Trip Info" android:id="@+id/action_dump_trip" android:orderInCategory="300"/>
 </menu>

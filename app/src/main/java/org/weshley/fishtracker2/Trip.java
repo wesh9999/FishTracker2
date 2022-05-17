@@ -19,10 +19,10 @@ public class Trip
    private Temperature _airTempEnd = null;
 
    private Temperature _waterTemp = null;
+   private String _waterLevel = null;
+   // NOTE - using string since this could be a number like ft above sea level, or something like "high"
    private Config.Clarity _waterClarity = null;
    private WaterDepth _secchi = null;
-   private String _waterLevel = null;
-     // NOTE - using string since this could be a number like ft above sea level, or something like "high"
 
    private Config.Precipitation _precip = null;
    private WindRange _wind = null;
@@ -167,6 +167,27 @@ public class Trip
 
    public WindRange getWind() { return _wind; }
    public void setWind(WindRange w) { _wind = w; }
+
+   public void setWindStrength(Config.WindStrength s)
+   {
+      if(null == _wind)
+         _wind = new WindRange();
+      _wind.setStrength(s);
+   }
+
+   public void setWindStartDir(Config.Direction d)
+   {
+      if(null == _wind)
+         _wind = new WindRange();
+      _wind.setDirectionStart(d);
+   }
+
+   public void setWindEndDir(Config.Direction d)
+   {
+      if(null == _wind)
+         _wind = new WindRange();
+      _wind.setDirectionEnd(d);
+   }
 
    public Config.Precipitation getPrecip() { return _precip; }
    public void setPrecip(Config.Precipitation p) { _precip = p; }
