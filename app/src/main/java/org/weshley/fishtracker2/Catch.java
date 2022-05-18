@@ -130,9 +130,10 @@ public class Catch
    }
    public void setWindSpeed(Speed s)
    {
-      if(null == _wind)
+      if((null == _wind) && (null != s))
          _wind = new Wind();
-      _wind.setSpeed(s);
+      if(null != _wind)
+         _wind.setSpeed(s);
    }
 
    public Config.Direction getWindDirection()
@@ -145,9 +146,10 @@ public class Catch
 
    public void setWindDirection(Config.Direction d)
    {
-      if(null == _wind)
+      if((null == _wind) && (null != d))
          _wind = new Wind();
-      _wind.setDirection(d);
+      if(null != _wind)
+         _wind.setDirection(d);
    }
 
    public Config.WindStrength getWindStrength()
@@ -159,9 +161,10 @@ public class Catch
 
    public void setWindStrength(Config.WindStrength s)
    {
-      if(null == _wind)
+      if((null == _wind) && (null != s))
          _wind = new Wind();
-      _wind.setStrength(s);
+      if(null != _wind)
+         _wind.setStrength(s);
    }
 
    public Config.Precipitation getPrecip() { return _precip; }
@@ -315,24 +318,6 @@ public class Catch
          sb.append(indent).append("   length=\"").append(_length.toXmlValue()).append("\"\n");
       if(null != _weight)
          sb.append(indent).append("   weight=\"").append(_weight.toXmlValue()).append("\"\n");
-      if(null != _depth)
-         sb.append(indent).append("   depth=\"").append(_depth.toXmlValue()).append("\"\n");
-      if(null != _airTemp)
-         sb.append(indent).append("   airTemp=\"").append(_airTemp.toXmlValue()).append("\"\n");
-      if(null != _precip)
-         sb.append(indent).append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
-      if(null != _wind)
-         sb.append(indent).append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
-      if(null != _waterTemp)
-         sb.append(indent).append("   waterTemp=\"").append(_waterTemp.toXmlValue()).append("\"\n");
-      if(null != _waterClarity)
-         sb.append(indent).append("   waterClarity=\"").append(Utils.toXmlValue(_waterClarity.toString())).append("\"\n");
-      if(null != _secchi)
-         sb.append(indent).append("   secchi=\"").append(_secchi.toXmlValue()).append("\"\n");
-      if(null != _structure)
-         sb.append(indent).append("   structure=\"").append(Utils.toXmlValue(_structure)).append("\"\n");
-      if(null != _cover)
-         sb.append(indent).append("   cover=\"").append(Utils.toXmlValue(_cover)).append("\"\n");
       if(null != _lure)
       {
          if(null != _lure.getType())
@@ -350,6 +335,24 @@ public class Catch
          if(null != _lure.getTrailerSize())
             sb.append(indent).append("   trailerSize=\"").append(Utils.toXmlValue(_lure.getTrailerSize())).append("\"\n");
       }
+      if(null != _depth)
+         sb.append(indent).append("   depth=\"").append(_depth.toXmlValue()).append("\"\n");
+      if(null != _airTemp)
+         sb.append(indent).append("   airTemp=\"").append(_airTemp.toXmlValue()).append("\"\n");
+      if(null != _waterTemp)
+         sb.append(indent).append("   waterTemp=\"").append(_waterTemp.toXmlValue()).append("\"\n");
+      if(null != _waterClarity)
+         sb.append(indent).append("   waterClarity=\"").append(Utils.toXmlValue(_waterClarity.toString())).append("\"\n");
+      if(null != _secchi)
+         sb.append(indent).append("   secchi=\"").append(_secchi.toXmlValue()).append("\"\n");
+      if(null != _structure)
+         sb.append(indent).append("   structure=\"").append(Utils.toXmlValue(_structure)).append("\"\n");
+      if(null != _cover)
+         sb.append(indent).append("   cover=\"").append(Utils.toXmlValue(_cover)).append("\"\n");
+      if(null != _precip)
+         sb.append(indent).append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
+      if(null != _wind)
+         sb.append(indent).append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
       if(null != _notes)
          sb.append(indent).append("   notes=\"").append(Utils.toXmlValue(_notes)).append("\"\n");
       sb.append(indent).append("/>\n");

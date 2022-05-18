@@ -31,7 +31,6 @@ public class TripLogger
       _dest= dest;
       if(!_dest.exists())
          _dest.mkdirs();
-      System.out.println("+++++++ Set dest folder to [[" + _dest.getAbsolutePath() + "]] - exists=" + _dest.exists());
    }
 
    public void writeTrip(Trip t)
@@ -61,6 +60,7 @@ System.out.println("-------");
          if(null != os)
             os.close();
       }
+/*
 System.out.println(" +++++++++++ FILE EXISTS=" + file.exists());
 FileInputStream is = new FileInputStream(file);
 byte[] data = new byte[sb.toString().length()];
@@ -68,6 +68,7 @@ is.read(data, 0, sb.toString().length());
 is.close();
 System.out.println(new String(data));
 System.out.println("---------------");
+ */
    }
 
    private void checkCapabilities()

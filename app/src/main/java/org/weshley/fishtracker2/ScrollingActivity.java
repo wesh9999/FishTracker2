@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -351,14 +353,24 @@ public class ScrollingActivity
       // trip fields
       initTripLocationEditor();
       initTripTransportEditor();
+      initTripDistanceEditor();
+      initTripAirTempStartEditor();
+      initTripAirTempEndEditor();
+      initTripWaterTempEditor();
+      initTripWaterLevelEditor();
       initTripWaterClarityEditor();
+      initTripSecchiEditor();
       initTripWindStartDirEditor();
+      initTripWindStartSpeedEditor();
       initTripWindEndDirEditor();
+      initTripWindEndSpeedEditor();
       initTripWindStrengthEditor();
       initTripPrecipEditor();
 
       // catch fields
       initSpeciesEditor();
+      initLengthEditor();
+      initWeightEditor();
       initLureEditor();
       initLureTypeEditor();
       initLureBrandEditor();
@@ -367,10 +379,15 @@ public class ScrollingActivity
       initTrailerEditor();
       initTrailerColorEditor();
       initTrailerSizeEditor();
+      initDepthEditor();
+      initAirTempEditor();
+      initWaterTempEditor();
       initWaterClarityEditor();
+      initSecchiEditor();
       initStructureEditor();
       initCoverEditor();
       initPrecipEditor();
+      initWindSpeedEditor();
       initWindDirectionEditor();
       initWindStrengthEditor();
    }
@@ -472,10 +489,8 @@ public class ScrollingActivity
             {
                Trip t = getCurrentTrip();
                if(null != t)
-               {
                   t.setLocation(selection);
-                  updateTripSummary(t);
-               }
+               updateTripSummary(t);
             }
          }
 
@@ -499,7 +514,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Trip t = getCurrentTrip();
             if(null != t)
-               t.setWaterClarity(Config.Clarity.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  t.setWaterClarity(null);
+               else
+                  t.setWaterClarity(Config.Clarity.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -522,7 +542,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Trip t = getCurrentTrip();
             if(null != t)
-               t.setPrecip(Config.Precipitation.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  t.setPrecip(null);
+               else
+                  t.setPrecip(Config.Precipitation.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -545,7 +570,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Trip t = getCurrentTrip();
             if(null != t)
-               t.setWindStrength(Config.WindStrength.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  t.setWindStrength(null);
+               else
+                  t.setWindStrength(Config.WindStrength.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -568,7 +598,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Trip t = getCurrentTrip();
             if(null != t)
-               t.setWindStartDir(Config.Direction.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  t.setWindStartDir(null);
+               else
+                  t.setWindStartDir(Config.Direction.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -591,13 +626,231 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Trip t = getCurrentTrip();
             if(null != t)
-               t.setWindEndDir(Config.Direction.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  t.setWindEndDir(null);
+               else
+                  t.setWindEndDir(Config.Direction.valueOf(selectedItem));
+            }
          }
 
          @Override
          public void onNothingSelected(AdapterView<?> parent) {}
       });
    }
+
+   private void initTripDistanceEditor()
+   {
+      getTripDistanceField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            Distance d = null;
+            Distance.Units units = Config.getDefaultDistanceUnits();
+            if(null != t.getDistanceTraveled())
+               units = t.getDistanceTraveled().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               d = new Distance(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setDistanceTraveled(d);
+         }
+      });
+   }
+
+   private void initTripAirTempStartEditor()
+   {
+      getTripAirTempStartField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            Temperature temp = null;
+            Temperature.Units units = Config.getDefaultTempUnits();
+            if(null != t.getAirTempStart())
+               units = t.getAirTempStart().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               temp = new Temperature(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setAirTempStart(temp);
+         }
+      });
+   }
+
+   private void initTripAirTempEndEditor()
+   {
+      getTripAirTempEndField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            Temperature temp = null;
+            Temperature.Units units = Config.getDefaultTempUnits();
+            if(null != t.getAirTempEnd())
+               units = t.getAirTempEnd().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               temp = new Temperature(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setAirTempEnd(temp);
+         }
+      });
+   }
+
+   private void initTripWaterTempEditor()
+   {
+      getTripWaterTempField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            Temperature temp = null;
+            Temperature.Units units = Config.getDefaultTempUnits();
+            if(null != t.getWaterTemp())
+               units = t.getWaterTemp().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               temp = new Temperature(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setWaterTemp(temp);
+         }
+      });
+   }
+
+   private void initTripSecchiEditor()
+   {
+      getTripSecchiField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            WaterDepth d = null;
+            WaterDepth.Units units = Config.getDefaultWaterDepthUnits();
+            if(null != t.getSecchi())
+               units = t.getSecchi().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               d = new WaterDepth(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setSecchi(d);
+         }
+      });
+   }
+
+   private void initTripWindStartSpeedEditor()
+   {
+      getTripWindStartSpeedField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            Speed spd = null;
+            Speed.Units units = Config.getDefaultWindSpeedUnits();
+            if((null != t.getWind()) && (null != t.getWind().getSpeedStart()))
+               units = t.getWind().getSpeedStart().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               spd = new Speed(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setWindStartSpeed(spd);
+         }
+      });
+   }
+
+   private void initTripWindEndSpeedEditor()
+   {
+      getTripWindEndSpeedField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null == t)
+               return;
+
+            Speed spd = null;
+            Speed.Units units = Config.getDefaultWindSpeedUnits();
+            if((null != t.getWind()) && (null != t.getWind().getSpeedEnd()))
+               units = t.getWind().getSpeedEnd().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               spd = new Speed(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            t.setWindEndSpeed(spd);
+         }
+      });
+   }
+
+   private void initTripWaterLevelEditor()
+   {
+      getTripWaterLevelField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null != t)
+               t.setWaterLevel(s.toString());
+         }
+      });
+   }
+
 
    private void initTripTransportEditorItems()
    {
@@ -641,14 +894,208 @@ public class ScrollingActivity
             {
                Trip t = getCurrentTrip();
                if(null != t)
-               {
                   t.setTransport(selection);
-               }
             }
          }
 
          @Override
          public void onNothingSelected(AdapterView<?> parent) {}
+      });
+   }
+
+   private void initAirTempEditor()
+   {
+      getAirTempField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            Temperature temp = null;
+            Temperature.Units units = Config.getDefaultTempUnits();
+            if(null != c.getAirTemp())
+               units = c.getAirTemp().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               temp = new Temperature(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setAirTemp(temp);
+         }
+      });
+   }
+
+   private void initWaterTempEditor()
+   {
+      getWaterTempField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            Temperature temp = null;
+            Temperature.Units units = Config.getDefaultTempUnits();
+            if(null != c.getWaterTemp())
+               units = c.getWaterTemp().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               temp = new Temperature(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setWaterTemp(temp);
+         }
+      });
+   }
+
+   private void initSecchiEditor()
+   {
+      getSecchiField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            WaterDepth d = null;
+            WaterDepth.Units units = Config.getDefaultWaterDepthUnits();
+            if(null != c.getSecchi())
+               units = c.getSecchi().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               d = new WaterDepth(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setSecchi(d);
+         }
+      });
+   }
+
+   private void initWindSpeedEditor()
+   {
+      getWindSpeedField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            Speed spd = null;
+            Speed.Units units = Config.getDefaultWindSpeedUnits();
+            if((null != c.getWind()) && (null != c.getWind().getSpeed()))
+               units = c.getWind().getSpeed().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               spd = new Speed(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setWindSpeed(spd);
+         }
+      });
+   }
+
+   private void initLengthEditor()
+   {
+      getLengthField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            FishLength len = null;
+            FishLength.Units units = Config.getDefaultFishLengthUnits();
+            if(null != c.getLength())
+               units = c.getLength().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               len = new FishLength(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setLength(len);
+         }
+      });
+   }
+
+   private void initWeightEditor()
+   {
+      getWeightField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            FishWeight w = null;
+            FishWeight.Units units = Config.getDefaultFishWeightUnits();
+            if(null != c.getWeight())
+               units = c.getWeight().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               w = new FishWeight(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setWeight(w);
+         }
+      });
+   }
+
+   private void initDepthEditor()
+   {
+      getDepthField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+
+            WaterDepth d = null;
+            WaterDepth.Units units = Config.getDefaultWaterDepthUnits();
+            if(null != c.getDepth())
+               units = c.getDepth().getUnits();
+            try
+            {
+               float f = Float.parseFloat(s.toString());
+               d = new WaterDepth(f, units);
+            }
+            catch(NumberFormatException ex) { /* ignore */}
+            c.setDepth(d);
+         }
       });
    }
 
@@ -1094,7 +1541,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Catch c = getCurrentCatch();
             if(null != c)
-               c.setWaterClarity(Config.Clarity.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  c.setWaterClarity(null);
+               else
+                  c.setWaterClarity(Config.Clarity.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -1117,7 +1569,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Catch c = getCurrentCatch();
             if(null != c)
-               c.setPrecip(Config.Precipitation.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  c.setPrecip(null);
+               else
+                  c.setPrecip(Config.Precipitation.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -1140,7 +1597,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Catch c = getCurrentCatch();
             if(null != c)
-               c.setWindDirection(Config.Direction.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  c.setWindDirection(null);
+               else
+                  c.setWindDirection(Config.Direction.valueOf(selectedItem));
+            }
          }
 
          @Override
@@ -1163,7 +1625,12 @@ public class ScrollingActivity
             String selectedItem = (String) parent.getItemAtPosition(pos);
             Catch c = getCurrentCatch();
             if(null != c)
-               c.setWindStrength(Config.WindStrength.valueOf(selectedItem));
+            {
+               if(selectedItem.isEmpty())
+                  c.setWindStrength(null);
+               else
+                  c.setWindStrength(Config.WindStrength.valueOf(selectedItem));
+            }
          }
 
          @Override

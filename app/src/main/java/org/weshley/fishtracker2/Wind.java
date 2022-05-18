@@ -37,7 +37,7 @@ public class Wind
    {
       StringBuilder sb = new StringBuilder();
       if(null != _speed)
-         sb.append("-" + _speed.valueWithUnits());
+         sb.append(_speed.valueWithUnits());
       sb.append(",");
       if(null != _dir)
          sb.append(_dir);

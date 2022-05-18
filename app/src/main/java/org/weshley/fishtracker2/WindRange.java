@@ -163,19 +163,19 @@ public class WindRange
          if(null != _speedEnd)
          {
             if(_speedStart.getUnits() == _speedEnd.getUnits())
-               sb.append(_speedStart.valueString() + "-" + _speedEnd.valueString() + _speedStart.getUnits());
+               sb.append(_speedStart.valueString()).append("-").append(_speedEnd.valueString()).append(_speedStart.getUnits());
             else
-               sb.append(_speedStart.valueWithUnits() + "-" + _speedEnd.valueWithUnits());
+               sb.append(_speedStart.valueWithUnits()).append("-").append(_speedEnd.valueWithUnits());
          }
          else
          {
-            sb.append(_speedStart.valueWithUnits() + "-");
+            sb.append(_speedStart.valueWithUnits()).append("-");
          }
       }
       else
       {
          if(null != _speedEnd)
-            sb.append("-" + _speedEnd.valueWithUnits());
+            sb.append("-").append(_speedEnd.valueWithUnits());
       }
       return sb.toString();
    }

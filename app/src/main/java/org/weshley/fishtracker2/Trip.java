@@ -73,6 +73,8 @@ public class Trip
       _waterTemp = lastTrip.getWaterTemp();
       if(null != lastTrip.getWind())
          _wind = new WindRange(lastTrip.getWind());
+      else
+         _wind = null;
       // TODO - deal with _track once i start logging gps data
    }
 
@@ -83,16 +85,6 @@ public class Trip
 
    public void dumpData(StringBuilder sb)
    {
-      // TODO - just dumping to stdout for now.  need to dump some structured data (xml?) to a file or email or something?
-/*
-      sb.append("--------- Trip ----------\n");
-      sb.append("   start: " + Config.formatTimestamp(_startTime) + "\n");
-      sb.append("   end: " + Config.formatTimestamp(_endTime) + "\n");
-      sb.append("   location: " + _location + "\n");
-      sb.append("   transport: " + _transport + "\n");
-      for(Catch c : _catches)
-         c.dumpData(sb);
- */
       sb.append(toXml());
    }
 
@@ -102,12 +94,12 @@ public class Trip
       // work very well so doing it myself.
       StringBuilder sb = new StringBuilder();
       sb.append("<trip\n");
+      if(null != _location)
+         sb.append("   location=\"").append(Utils.toXmlValue(_location)).append("\"\n");
       if(null != _startTime)
          sb.append("   startTime=\"").append(Utils.toXmlValue(Config.formatTimestamp(_startTime))).append("\"\n");
       if(null != _endTime)
          sb.append("   endTime=\"").append(Utils.toXmlValue(Config.formatTimestamp(_endTime))).append("\"\n");
-      if(null != _location)
-         sb.append("   location=\"").append(Utils.toXmlValue(_location)).append("\"\n");
       if(null != _transport)
          sb.append("   transport=\"").append(Utils.toXmlValue(_transport)).append("\"\n");
       if(null != _distanceTraveled)
@@ -116,18 +108,18 @@ public class Trip
          sb.append("   airTempStart=\"").append(_airTempStart.toXmlValue()).append("\"\n");
       if(null != _airTempEnd)
          sb.append("   airTempEnd=\"").append(_airTempEnd.toXmlValue()).append("\"\n");
-      if(null != _precip)
-         sb.append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
-      if(null != _wind)
-         sb.append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
       if(null != _waterTemp)
          sb.append("   waterTemp=\"").append(_waterTemp.toXmlValue()).append("\"\n");
+      if(null != _waterLevel)
+         sb.append("   waterLevel=\"").append(Utils.toXmlValue(_waterLevel)).append("\"\n");
       if(null != _waterClarity)
          sb.append("   waterClarity=\"").append(Utils.toXmlValue(_waterClarity.toString())).append("\"\n");
       if(null != _secchi)
          sb.append("   secchi=\"").append(_secchi.toXmlValue()).append("\"\n");
-      if(null != _waterLevel)
-         sb.append("   waterLevel=\"").append(Utils.toXmlValue(_waterLevel)).append("\"\n");
+      if(null != _wind)
+         sb.append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
+      if(null != _precip)
+         sb.append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
       if(null != _notes)
          sb.append("   notes=\"").append(Utils.toXmlValue(_notes)).append("\"\n");
       sb.append("   >\n");
@@ -156,7 +148,13 @@ public class Trip
    public Temperature getWaterTemp() { return _waterTemp; }
    public void setWaterTemp(Temperature t) { _waterTemp = t; }
    public String getWaterLevel() { return _waterLevel; }
-   public void setWaterLevel(String s) { _waterLevel = s; }
+   public void setWaterLevel(String s)
+   {
+      if((null == s) || s.isEmpty())
+         _waterLevel = null;
+      else
+         _waterLevel = s;
+   }
    public Config.Clarity getWaterClarity() { return _waterClarity; }
    public void setWaterClarity(Config.Clarity c) { _waterClarity = c; }
    public WaterDepth getSecchi() { return _secchi; }
@@ -170,23 +168,42 @@ public class Trip
 
    public void setWindStrength(Config.WindStrength s)
    {
-      if(null == _wind)
+      if((null == _wind) && (null != s))
          _wind = new WindRange();
-      _wind.setStrength(s);
+      if(null != _wind)
+         _wind.setStrength(s);
    }
 
    public void setWindStartDir(Config.Direction d)
    {
-      if(null == _wind)
+      if((null == _wind) && (null != d))
          _wind = new WindRange();
-      _wind.setDirectionStart(d);
+      if(null != _wind)
+         _wind.setDirectionStart(d);
+   }
+
+   public void setWindStartSpeed(Speed s)
+   {
+      if((null == _wind) && (null != s))
+         _wind = new WindRange();
+      if(null != _wind)
+         _wind.setSpeedStart(s);
    }
 
    public void setWindEndDir(Config.Direction d)
    {
-      if(null == _wind)
+      if((null == _wind) && (null != d))
          _wind = new WindRange();
-      _wind.setDirectionEnd(d);
+      if(null != _wind)
+         _wind.setDirectionEnd(d);
+   }
+
+   public void setWindEndSpeed(Speed s)
+   {
+      if((null == _wind) && (null != s))
+         _wind = new WindRange();
+      if(null != _wind)
+         _wind.setSpeedEnd(s);
    }
 
    public Config.Precipitation getPrecip() { return _precip; }
@@ -277,7 +294,7 @@ public class Trip
    public String getMultilineLabel()
    {
       String catchLabel = _catches.size() == 1 ? " catch" : " catches";
-      return _location + "\n"
+      return (_location == null ? "" : _location + "\n")
          + Config.formatTimestamp(_startTime) + "\n"
          + _catches.size() + catchLabel;
    }
