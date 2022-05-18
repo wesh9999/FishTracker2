@@ -25,7 +25,7 @@ public class Trip
    private WaterDepth _secchi = null;
 
    private Config.Precipitation _precip = null;
-   private WindRange _wind = null;
+   private WindRange _windRange = null;
 
    private LatLon[] _track = null;  // TODO - Trip._track needs implementation
 
@@ -71,10 +71,10 @@ public class Trip
       _waterClarity = lastTrip.getWaterClarity();
       _waterLevel = lastTrip.getWaterLevel();
       _waterTemp = lastTrip.getWaterTemp();
-      if(null != lastTrip.getWind())
-         _wind = new WindRange(lastTrip.getWind());
+      if(null != lastTrip.getWindRange())
+         _windRange = new WindRange(lastTrip.getWindRange());
       else
-         _wind = null;
+         _windRange = null;
       // TODO - deal with _track once i start logging gps data
    }
 
@@ -116,8 +116,8 @@ public class Trip
          sb.append("   waterClarity=\"").append(Utils.toXmlValue(_waterClarity.toString())).append("\"\n");
       if(null != _secchi)
          sb.append("   secchi=\"").append(_secchi.toXmlValue()).append("\"\n");
-      if(null != _wind)
-         sb.append("   wind=\"").append(_wind.toXmlValue()).append("\"\n");
+      if(null != _windRange)
+         sb.append("   wind=\"").append(_windRange.toXmlValue()).append("\"\n");
       if(null != _precip)
          sb.append("   precipitation=\"").append(Utils.toXmlValue(_precip.toString())).append("\"\n");
       if(null != _notes)
@@ -163,47 +163,87 @@ public class Trip
    public Distance getDistanceTraveled() { return _distanceTraveled; }
    public void setDistanceTraveled(Distance d) { _distanceTraveled = d; }
 
-   public WindRange getWind() { return _wind; }
-   public void setWind(WindRange w) { _wind = w; }
+   public WindRange getWindRange() { return _windRange; }
+   public void setWindRange(WindRange w) { _windRange = w; }
 
-   public void setWindStrength(Config.WindStrength s)
+   public Wind getWindStart()
    {
-      if((null == _wind) && (null != s))
-         _wind = new WindRange();
-      if(null != _wind)
-         _wind.setStrength(s);
+      if(null == _windRange)
+         return null;
+      else
+         return _windRange.getStart();
+   }
+
+   public void setWindStart(Wind w)
+   {
+      if((null == _windRange) && (null != w))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setStart(w);
+   }
+
+   public Wind getWindEnd()
+   {
+      if(null == _windRange)
+         return null;
+      else
+         return _windRange.getEnd();
+   }
+
+   public void setWindEnd(Wind w)
+   {
+      if((null == _windRange) && (null != w))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setEnd(w);
+   }
+
+   public void setWindStrengthStart(Config.WindStrength s)
+   {
+      if((null == _windRange) && (null != s))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setStrengthStart(s);
+   }
+
+   public void setWindStrengthEnd(Config.WindStrength s)
+   {
+      if((null == _windRange) && (null != s))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setStrengthEnd(s);
    }
 
    public void setWindStartDir(Config.Direction d)
    {
-      if((null == _wind) && (null != d))
-         _wind = new WindRange();
-      if(null != _wind)
-         _wind.setDirectionStart(d);
+      if((null == _windRange) && (null != d))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setDirectionStart(d);
    }
 
    public void setWindStartSpeed(Speed s)
    {
-      if((null == _wind) && (null != s))
-         _wind = new WindRange();
-      if(null != _wind)
-         _wind.setSpeedStart(s);
+      if((null == _windRange) && (null != s))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setSpeedStart(s);
    }
 
    public void setWindEndDir(Config.Direction d)
    {
-      if((null == _wind) && (null != d))
-         _wind = new WindRange();
-      if(null != _wind)
-         _wind.setDirectionEnd(d);
+      if((null == _windRange) && (null != d))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setDirectionEnd(d);
    }
 
    public void setWindEndSpeed(Speed s)
    {
-      if((null == _wind) && (null != s))
-         _wind = new WindRange();
-      if(null != _wind)
-         _wind.setSpeedEnd(s);
+      if((null == _windRange) && (null != s))
+         _windRange = new WindRange();
+      if(null != _windRange)
+         _windRange.setSpeedEnd(s);
    }
 
    public Config.Precipitation getPrecip() { return _precip; }

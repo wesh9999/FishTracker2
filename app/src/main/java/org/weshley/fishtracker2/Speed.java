@@ -7,6 +7,12 @@ public class Speed
    private float _speed;
    private Speed.Units _units;
 
+   public Speed(Speed other)
+   {
+      _speed = other._speed;
+      _units = other._units;
+   }
+
    public Speed(float speed)
    {
       _speed = speed;

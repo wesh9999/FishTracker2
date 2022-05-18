@@ -349,123 +349,6 @@
                     android:focusable="false"/>
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/tripWindLayout">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Wind:"
-                    android:ems="10"
-                    android:id="@+id/tripWindLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    android:layout_width="60dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            <Spinner
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripWindStartDirField"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripWindLabel"/>
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripWindStartSpeedField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripWindStartDirField"/>
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text=" --> "
-                    android:ems="10"
-                    android:id="@+id/tripWindDashLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold"
-                    android:background="@null"
-                    android:paddingLeft="5dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripWindStartSpeedField"
-                    app:layout_constraintEnd_toStartOf="@+id/tripWindEndDirField"
-                    android:layout_marginStart="10dp" android:layout_marginEnd="10dp"/>
-            <Spinner
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripWindEndDirField"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tripWindEndSpeedField"/>
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripWindEndSpeedField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tripWindSpeedUnitsLabel"/>
-            <TextView
-                    android:text="UUU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripWindSpeedUnitsLabel"
-                    android:editable="false"
-                    android:textSize="18sp"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="5dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="0"
-                android:layout_marginEnd="10dp"
-                android:background="@color/list_separator_band_color">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Wind Strength:"
-                    android:ems="10"
-                    android:id="@+id/tripWindStrengthLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    android:layout_width="130dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/tripWindStrengthField"
-                    android:layout_weight="0"/>
-        </LinearLayout>
-
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -491,6 +374,133 @@
                     android:id="@+id/tripPrecipField"
             />
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/tripStartWindLayout"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Wind 1:"
+                    android:ems="10"
+                    android:id="@+id/tripStartWindLabel"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
+                    android:layout_width="70dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripStartWindDirField"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripStartWindLabel"/>
+            <EditText
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/tripStartWindSpeedField"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripStartWindDirField"/>
+            <TextView
+                    android:text="Units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripStartWindSpeedUnitsLabel"
+                    android:editable="false"
+                    android:textSize="18sp"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripStartWindSpeedField"/>
+            <Spinner
+                    android:layout_height="match_parent"
+                    android:id="@+id/tripStartWindStrengthField"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripStartWindSpeedUnitsLabel"
+                    android:layout_width="0dp" android:layout_marginStart="10dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/tripEndWindLayout">
+            <EditText
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Wind 2:"
+                    android:ems="10"
+                    android:id="@+id/tripEndWindLabel"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="bold" android:background="@null"
+                    android:paddingLeft="5dp"
+                    android:layout_width="70dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripEndWindDirField"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripEndWindLabel"/>
+            <EditText
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/tripEndWindSpeedField"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripEndWindDirField"/>
+            <TextView
+                    android:text="Units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tripEndWindSpeedUnitsLabel"
+                    android:editable="false"
+                    android:textSize="18sp"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripEndWindSpeedField"/>
+            <Spinner
+                    android:layout_height="match_parent"
+                    android:id="@+id/tripEndWindStrengthField"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tripEndWindSpeedUnitsLabel"
+                    android:layout_width="0dp" android:layout_marginStart="10dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
                 android:orientation="horizontal"

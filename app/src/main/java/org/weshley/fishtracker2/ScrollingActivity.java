@@ -255,11 +255,11 @@ public class ScrollingActivity
       getTripWaterLevelField().setText("");
       getTripWaterClarityField().setSelection(0);
       getTripSecchiField().setText("");
-      getTripWindStartDirField().setSelection(0);
-      getTripWindStartSpeedField().setText(0);
-      getTripWindEndDirField().setSelection(0);
-      getTripWindEndSpeedField().setText(0);
-      getTripWindStrengthField().setSelection(0);
+      getTripStartWindDirField().setSelection(0);
+      getTripStartWindSpeedField().setText(0);
+      getTripEndWindDirField().setSelection(0);
+      getTripEndWindSpeedField().setText(0);
+      getTripStartWindStrengthField().setSelection(0);
       getTripPrecipField().setSelection(0);
    }
 
@@ -334,7 +334,8 @@ public class ScrollingActivity
       getTripAirTempUnitsField().setText(Config.getDefaultTempUnits().toString());
       getTripWaterTempUnitsField().setText(Config.getDefaultTempUnits().toString());
       getTripSecchiUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
-      getTripWindSpeedUnits().setText(Config.getDefaultWindSpeedUnits().toString());
+      getTripStartWindSpeedUnits().setText(Config.getDefaultWindSpeedUnits().toString());
+      getTripEndWindSpeedUnits().setText(Config.getDefaultWindSpeedUnits().toString());
 
       // catch units labels
       getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
@@ -364,7 +365,8 @@ public class ScrollingActivity
       initTripWindStartSpeedEditor();
       initTripWindEndDirEditor();
       initTripWindEndSpeedEditor();
-      initTripWindStrengthEditor();
+      initTripStartWindStrengthEditor();
+      initTripEndWindStrengthEditor();
       initTripPrecipEditor();
 
       // catch fields
@@ -390,6 +392,7 @@ public class ScrollingActivity
       initWindSpeedEditor();
       initWindDirectionEditor();
       initWindStrengthEditor();
+      initNotesEditor();
    }
 
    private void enableCatchControls(boolean enabled)
@@ -437,11 +440,11 @@ public class ScrollingActivity
       getTripWaterLevelField().setEnabled(enabled);
       getTripWaterClarityField().setEnabled(enabled);
       getTripSecchiField().setEnabled(enabled);
-      getTripWindStartDirField().setEnabled(enabled);
-      getTripWindStartSpeedField().setEnabled(enabled);
-      getTripWindEndDirField().setEnabled(enabled);
-      getTripWindEndSpeedField().setEnabled(enabled);
-      getTripWindStrengthField().setEnabled(enabled);
+      getTripStartWindDirField().setEnabled(enabled);
+      getTripStartWindSpeedField().setEnabled(enabled);
+      getTripEndWindDirField().setEnabled(enabled);
+      getTripEndWindSpeedField().setEnabled(enabled);
+      getTripStartWindStrengthField().setEnabled(enabled);
       getTripPrecipField().setEnabled(enabled);
    }
 
@@ -555,14 +558,14 @@ public class ScrollingActivity
       });
    }
 
-   private void initTripWindStrengthEditor()
+   private void initTripStartWindStrengthEditor()
    {
       List<String> values = new ArrayList<>();
       for(Config.WindStrength s : Config.WindStrength.values())
          values.add(s.toString());
-      initFixedSpinnerItems(getTripWindStrengthField(), values);
+      initFixedSpinnerItems(getTripStartWindStrengthField(), values);
 
-      getTripWindStrengthField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      getTripStartWindStrengthField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
       {
          @Override
          public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
@@ -572,9 +575,37 @@ public class ScrollingActivity
             if(null != t)
             {
                if(selectedItem.isEmpty())
-                  t.setWindStrength(null);
+                  t.setWindStrengthStart(null);
                else
-                  t.setWindStrength(Config.WindStrength.valueOf(selectedItem));
+                  t.setWindStrengthStart(Config.WindStrength.valueOf(selectedItem));
+            }
+         }
+
+         @Override
+         public void onNothingSelected(AdapterView<?> parent) {}
+      });
+   }
+
+   private void initTripEndWindStrengthEditor()
+   {
+      List<String> values = new ArrayList<>();
+      for(Config.WindStrength s : Config.WindStrength.values())
+         values.add(s.toString());
+      initFixedSpinnerItems(getTripEndWindStrengthField(), values);
+
+      getTripEndWindStrengthField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      {
+         @Override
+         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+         {
+            String selectedItem = (String) parent.getItemAtPosition(pos);
+            Trip t = getCurrentTrip();
+            if(null != t)
+            {
+               if(selectedItem.isEmpty())
+                  t.setWindStrengthEnd(null);
+               else
+                  t.setWindStrengthEnd(Config.WindStrength.valueOf(selectedItem));
             }
          }
 
@@ -588,9 +619,9 @@ public class ScrollingActivity
       List<String> values = new ArrayList<>();
       for(Config.Direction d : Config.Direction.values())
          values.add(d.toString());
-      initFixedSpinnerItems(getTripWindStartDirField(), values);
+      initFixedSpinnerItems(getTripStartWindDirField(), values);
 
-      getTripWindStartDirField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      getTripStartWindDirField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
       {
          @Override
          public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
@@ -616,9 +647,9 @@ public class ScrollingActivity
       List<String> values = new ArrayList<>();
       for(Config.Direction d : Config.Direction.values())
          values.add(d.toString());
-      initFixedSpinnerItems(getTripWindEndDirField(), values);
+      initFixedSpinnerItems(getTripEndWindDirField(), values);
 
-      getTripWindEndDirField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      getTripEndWindDirField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
       {
          @Override
          public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
@@ -781,7 +812,7 @@ public class ScrollingActivity
 
    private void initTripWindStartSpeedEditor()
    {
-      getTripWindStartSpeedField().addTextChangedListener(new TextWatcher()
+      getTripStartWindSpeedField().addTextChangedListener(new TextWatcher()
       {
          public void afterTextChanged(Editable s) {}
          public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -794,8 +825,8 @@ public class ScrollingActivity
 
             Speed spd = null;
             Speed.Units units = Config.getDefaultWindSpeedUnits();
-            if((null != t.getWind()) && (null != t.getWind().getSpeedStart()))
-               units = t.getWind().getSpeedStart().getUnits();
+            if((null != t.getWindRange()) && (null != t.getWindRange().getSpeedStart()))
+               units = t.getWindRange().getSpeedStart().getUnits();
             try
             {
                float f = Float.parseFloat(s.toString());
@@ -809,7 +840,7 @@ public class ScrollingActivity
 
    private void initTripWindEndSpeedEditor()
    {
-      getTripWindEndSpeedField().addTextChangedListener(new TextWatcher()
+      getTripEndWindSpeedField().addTextChangedListener(new TextWatcher()
       {
          public void afterTextChanged(Editable s) {}
          public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -822,8 +853,8 @@ public class ScrollingActivity
 
             Speed spd = null;
             Speed.Units units = Config.getDefaultWindSpeedUnits();
-            if((null != t.getWind()) && (null != t.getWind().getSpeedEnd()))
-               units = t.getWind().getSpeedEnd().getUnits();
+            if((null != t.getWindRange()) && (null != t.getWindRange().getSpeedEnd()))
+               units = t.getWindRange().getSpeedEnd().getUnits();
             try
             {
                float f = Float.parseFloat(s.toString());
@@ -983,6 +1014,23 @@ public class ScrollingActivity
             }
             catch(NumberFormatException ex) { /* ignore */}
             c.setSecchi(d);
+         }
+      });
+   }
+
+   private void initNotesEditor()
+   {
+      getNotesField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Catch c = getCurrentCatch();
+            if(null == c)
+               return;
+            c.setNotes(s.toString());
          }
       });
    }
@@ -1887,47 +1935,47 @@ public class ScrollingActivity
 
    private void setTripWindStartFields(Trip t)
    {
-      if((null != t) && (null != t.getWind()))
+      if((null != t) && (null != t.getWindRange()))
       {
-         Speed spd = t.getWind().getSpeedStart();
+         Speed spd = t.getWindRange().getSpeedStart();
          if(null == spd)
-            getTripWindStartSpeedField().setText("");
+            getTripStartWindSpeedField().setText("");
          else
-            getTripWindStartSpeedField().setText(spd.valueString());
+            getTripStartWindSpeedField().setText(spd.valueString());
 
-         Config.Direction dir = t.getWind().getDirectionStart();
+         Config.Direction dir = t.getWindRange().getDirectionStart();
          if(null == dir)
-            getTripWindStartDirField().setSelection(0);
+            getTripStartWindDirField().setSelection(0);
          else
-            getTripWindStartDirField().setSelection(dir.ordinal());
+            getTripStartWindDirField().setSelection(dir.ordinal());
       }
       else
       {
-         getTripWindStartSpeedField().setText("");
-         getTripWindStartDirField().setSelection(0);
+         getTripStartWindSpeedField().setText("");
+         getTripStartWindDirField().setSelection(0);
       }
    }
 
    private void setTripWindEndFields(Trip t)
    {
-      if((null != t) && (null != t.getWind()))
+      if((null != t) && (null != t.getWindRange()))
       {
-         Speed spd = t.getWind().getSpeedEnd();
+         Speed spd = t.getWindRange().getSpeedEnd();
          if(null == spd)
-            getTripWindEndSpeedField().setText("");
+            getTripEndWindSpeedField().setText("");
          else
-            getTripWindEndSpeedField().setText(spd.valueString());
+            getTripEndWindSpeedField().setText(spd.valueString());
 
-         Config.Direction dir = t.getWind().getDirectionEnd();
+         Config.Direction dir = t.getWindRange().getDirectionEnd();
          if(null == dir)
-            getTripWindEndDirField().setSelection(0);
+            getTripEndWindDirField().setSelection(0);
          else
-            getTripWindEndDirField().setSelection(dir.ordinal());
+            getTripEndWindDirField().setSelection(dir.ordinal());
       }
       else
       {
-         getTripWindStartSpeedField().setText("");
-         getTripWindStartDirField().setSelection(0);
+         getTripStartWindSpeedField().setText("");
+         getTripStartWindDirField().setSelection(0);
       }
    }
 
@@ -1945,12 +1993,12 @@ public class ScrollingActivity
    private void setTripWindStrengthSelection(Trip t)
    {
       Config.WindStrength s = null;
-      if((null != t) && (null != t.getWind()))
-         s = t.getWind().getStrength();
+      if((null != t) && (null != t.getWindRange()))
+         s = t.getWindRange().getStrengthStart();
       if(null == s)
-         getTripWindStrengthField().setSelection(0); // NOTE:  0 is blank element added first to the list
+         getTripStartWindStrengthField().setSelection(0); // NOTE:  0 is blank element added first to the list
       else
-         getTripWindStrengthField().setSelection(s.ordinal());
+         getTripStartWindStrengthField().setSelection(s.ordinal());
    }
 
    private void setTripPrecipSelection(Trip t)
@@ -2282,12 +2330,14 @@ TODO - lure UI not done yet....
    private Spinner getTripWaterClarityField() { return (Spinner) findViewById(R.id.tripWaterClarityField); }
    private EditText getTripSecchiField() { return (EditText) findViewById(R.id.tripWaterSecchiField); }
    private TextView getTripSecchiUnitsField() { return (TextView) findViewById(R.id.tripSecchiUnitsLabel); }
-   private Spinner getTripWindStartDirField() { return (Spinner) findViewById(R.id.tripWindStartDirField); }
-   private EditText getTripWindStartSpeedField() { return (EditText) findViewById(R.id.tripWindStartSpeedField); }
-   private Spinner getTripWindEndDirField() { return (Spinner) findViewById(R.id.tripWindEndDirField); }
-   private EditText getTripWindEndSpeedField() { return (EditText) findViewById(R.id.tripWindEndSpeedField); }
-   private TextView getTripWindSpeedUnits() { return (TextView) findViewById(R.id.tripWindSpeedUnitsLabel); }
-   private Spinner getTripWindStrengthField() { return (Spinner) findViewById(R.id.tripWindStrengthField); }
+   private Spinner getTripStartWindDirField() { return (Spinner) findViewById(R.id.tripStartWindDirField); }
+   private EditText getTripStartWindSpeedField() { return (EditText) findViewById(R.id.tripStartWindSpeedField); }
+   private Spinner getTripEndWindDirField() { return (Spinner) findViewById(R.id.tripEndWindDirField); }
+   private EditText getTripEndWindSpeedField() { return (EditText) findViewById(R.id.tripEndWindSpeedField); }
+   private TextView getTripEndWindSpeedUnits() { return (TextView) findViewById(R.id.tripEndWindSpeedUnitsLabel); }
+   private TextView getTripStartWindSpeedUnits() { return (TextView) findViewById(R.id.tripStartWindSpeedUnitsLabel); }
+   private Spinner getTripStartWindStrengthField() { return (Spinner) findViewById(R.id.tripStartWindStrengthField); }
+   private Spinner getTripEndWindStrengthField() { return (Spinner) findViewById(R.id.tripEndWindStrengthField); }
    private Spinner getTripPrecipField() { return (Spinner) findViewById(R.id.tripPrecipField); }
 
    // catch fields

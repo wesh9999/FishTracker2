@@ -177,7 +177,13 @@ public class Catch
    public void setSecchi(WaterDepth d) { _secchi = d; }
 
    public String getNotes() { return _notes; }
-   public void setNotes(String s) { _notes = s; }
+   public void setNotes(String s)
+   {
+      if((null == s) || s.isEmpty())
+         _notes = null;
+      else
+         _notes = s;
+   }
 
    public LatLon getGpsLocation() { return _gpsLocation; }
    public void setGpsLocation(LatLon loc) { _gpsLocation = loc; }
@@ -376,8 +382,8 @@ public class Catch
          _waterTemp = t.getWaterTemp();
       if(null == _airTemp)
          _airTemp = t.getAirTempStart();
-      if((null == _wind) && (null != t.getWind()))
-         _wind = new Wind(t.getWind().getSpeedEnd(), t.getWind().getDirectionStart(), t.getWind().getStrength());
+      if((null == _wind) && (null != t.getWindStart()))
+         _wind = new Wind(t.getWindStart());
       if(null == _precip)
          _precip = t.getPrecip();
       if(null == _waterClarity)

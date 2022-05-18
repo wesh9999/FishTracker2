@@ -12,14 +12,14 @@ public class Wind
 
    public Wind(Speed sp, Config.Direction dir, Config.WindStrength str)
    {
-      _speed = sp;
+      _speed = new Speed(sp);
       _dir = dir;
       _strength = str;
    }
 
    public Wind(Wind other)
    {
-      _speed = other._speed;
+      _speed = new Speed(other._speed);
       _dir = other._dir;
       _strength = other._strength;
    }
