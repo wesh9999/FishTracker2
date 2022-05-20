@@ -1,14 +1,12 @@
 package org.weshley.fishtracker2;
 
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 // TODO - Some fields are static enums (i.e. clarity) and others are strings that essentially model an editable enum
 //        (i.e. structure).  Should all of these be the editable?
 
-// <a href="https://www.flaticon.com/free-icons/fish" title="fish icons">Fish icons created by Freepik - Flaticon</a>
+// TODO - add credit reference for this somewhere --> <a href="https://www.flaticon.com/free-icons/fish" title="fish icons">Fish icons created by Freepik - Flaticon</a>
 
 public class Config
 {
@@ -120,9 +118,6 @@ public class Config
    public static void addLureType(String s)
    {
       if((null != s) && !s.isEmpty() && !getAllLureTypes().contains(s))
-      {
-         Log.i("Config", "ADDING LURE TYPE <<" + s + ">>");
-      }
          getAllLureTypes().add(s);
    }
 

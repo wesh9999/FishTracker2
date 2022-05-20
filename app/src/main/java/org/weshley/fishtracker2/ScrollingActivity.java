@@ -342,11 +342,63 @@ public class ScrollingActivity
       // catch units labels
       getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
       getWeightUnitsField().setText(Config.getDefaultFishWeightUnits().toString());
-      getDepthUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
-      getAirTempUnitsField().setText(Config.getDefaultTempUnits().toString());
-      getWaterTempUnitsField().setText(Config.getDefaultTempUnits().toString());
-      getSecchiUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
-      getWindSpeedUnitsField().setText(Config.getDefaultWindSpeedUnits().toString());
+      setDepthUnitsLabel();
+      setAirTempUnitsLabel();
+      setWaterTempUnitsLabel();
+      setSecchiUnitsLabel();
+      setWindSpeedUnitsLabel();
+   }
+
+   // TODO - "Wind Speed", "Secchi", "Depth, "Air Temp", and "Water Temp" should be resource strings
+
+   private void setWindSpeedUnitsLabel()
+   {
+      setWindSpeedUnitsLabel(Config.getDefaultWindSpeedUnits());
+   }
+
+   private void setWindSpeedUnitsLabel(Speed.Units  units)
+   {
+      getWindSpeedLabelField().setText("Wind Speed (" + units.toString() + ")");
+   }
+
+   private void setSecchiUnitsLabel()
+   {
+      setSecchiUnitsLabel(Config.getDefaultWaterDepthUnits());
+   }
+
+   private void setSecchiUnitsLabel(WaterDepth.Units units)
+   {
+      getSecchiLabelField().setText("Secchi (" + units.toString() + ")");
+   }
+
+   private void setDepthUnitsLabel()
+   {
+      setDepthUnitsLabel(Config.getDefaultWaterDepthUnits());
+   }
+
+   private void setDepthUnitsLabel(WaterDepth.Units units)
+   {
+      getDepthLabelField().setText("Depth (" + units.toString() + ")");
+   }
+
+   private void setAirTempUnitsLabel()
+   {
+      setAirTempUnitsLabel(Config.getDefaultTempUnits());
+   }
+
+   private void setAirTempUnitsLabel(Temperature.Units units)
+   {
+      getAirTempLabelField().setText("Air Temp (" + units.toString() + ")");
+   }
+
+   private void setWaterTempUnitsLabel()
+   {
+      setWaterTempUnitsLabel(Config.getDefaultTempUnits());
+   }
+
+   private void setWaterTempUnitsLabel(Temperature.Units units)
+   {
+      getWaterTempLabelField().setText("Water Temp (" + units.toString() + ")");
    }
 
    private void initEditors()
@@ -2345,11 +2397,11 @@ public class ScrollingActivity
       if((null == c) || (null == c.getDepth()))
       {
          getDepthField().setText("");
-         getDepthUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
+         setDepthUnitsLabel();
       } else
       {
          getDepthField().setText(c.getDepth().valueString());
-         getDepthUnitsField().setText(c.getDepth().getUnits().toString());
+         setDepthUnitsLabel(c.getDepth().getUnits());
       }
    }
 
@@ -2358,12 +2410,12 @@ public class ScrollingActivity
       if((null == c) || (null == c.getAirTemp()))
       {
          getAirTempField().setText("");
-         getAirTempUnitsField().setText(Config.getDefaultTempUnits().toString());
+         setAirTempUnitsLabel();
       }
       else
       {
          getAirTempField().setText(c.getAirTemp().valueString());
-         getAirTempUnitsField().setText(c.getAirTemp().getUnits().toString());
+         setAirTempUnitsLabel(c.getAirTemp().getUnits());
       }
    }
 
@@ -2372,12 +2424,12 @@ public class ScrollingActivity
       if((null == c) || (null == c.getWaterTemp()))
       {
          getWaterTempField().setText("");
-         getWaterTempUnitsField().setText(Config.getDefaultTempUnits().toString());
+         setWaterTempUnitsLabel();
       }
       else
       {
          getWaterTempField().setText(c.getWaterTemp().valueString());
-         getWaterTempUnitsField().setText(c.getWaterTemp().getUnits().toString());
+         setWaterTempUnitsLabel(c.getWaterTemp().getUnits());
       }
    }
 
@@ -2397,12 +2449,12 @@ public class ScrollingActivity
       if((null == c) || (null == c.getSecchi()))
       {
          getSecchiField().setText("");
-         getSecchiUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
+         setSecchiUnitsLabel();
       }
       else
       {
          getSecchiField().setText(c.getSecchi().valueString());
-         getSecchiUnitsField().setText(c.getSecchi().getUnits().toString());
+         setSecchiUnitsLabel(c.getSecchi().getUnits());
       }
    }
 
@@ -2455,12 +2507,12 @@ public class ScrollingActivity
       if((null == c) || (null == c.getWindSpeed()))
       {
          getWindSpeedField().setText("");
-         getWindSpeedUnitsField().setText(Config.getDefaultWindSpeedUnits().toString());
+         setWindSpeedUnitsLabel();
       }
       else
       {
          getWindSpeedField().setText(c.getWindSpeed().valueString());
-         getWindSpeedUnitsField().setText(c.getWindSpeed().getUnits().toString());
+         setWindSpeedUnitsLabel(c.getWindSpeed().getUnits());
       }
    }
 
@@ -2570,19 +2622,20 @@ public class ScrollingActivity
    private Spinner getTrailerColorField() { return (Spinner) findViewById(R.id.trailerColorField); }
    private Spinner getTrailerSizeField() { return (Spinner) findViewById(R.id.trailerSizeField); }
    private EditText getDepthField() { return (EditText) findViewById(R.id.depthField); }
-   private TextView getDepthUnitsField() { return (TextView) findViewById(R.id.depthUnitsLabel); }
+   private TextView getDepthLabelField() { return (TextView) findViewById(R.id.depthLabel); }
    private EditText getAirTempField() { return (EditText) findViewById(R.id.airTempField); }
-   private TextView getAirTempUnitsField() { return (TextView) findViewById(R.id.airTempUnitsLabel); }
+   private TextView getAirTempLabelField() { return (TextView) findViewById(R.id.airTempLabel); }
    private EditText getWaterTempField() { return (EditText) findViewById(R.id.waterTempField); }
-   private TextView getWaterTempUnitsField() { return (TextView) findViewById(R.id.waterTempUnitsLabel); }
+   private TextView getWaterTempLabelField() { return (TextView) findViewById(R.id.waterTempLabel); }
    private Spinner getWaterClarityField() { return (Spinner) findViewById(R.id.waterClarityField); }
    private EditText getSecchiField() { return (EditText) findViewById(R.id.secchiField); }
-   private TextView getSecchiUnitsField() { return (TextView) findViewById(R.id.secchiUnitsLabel); }
+   private TextView getSecchiLabelField() { return (TextView) findViewById(R.id.secchiLabel); }
    private Spinner getStructureField() { return (Spinner) findViewById(R.id.structureField); }
    private Spinner getCoverField() { return (Spinner) findViewById(R.id.coverField); }
    private Spinner getPrecipField() { return (Spinner) findViewById(R.id.precipField); }
    private EditText getWindSpeedField() { return (EditText) findViewById(R.id.windSpeedField); }
-   private TextView getWindSpeedUnitsField() { return (TextView) findViewById(R.id.windSpeedUnitsLabel); }
+//   private TextView getWindSpeedUnitsField() { return (TextView) findViewById(R.id.windSpeedUnitsLabel); }
+   private TextView getWindSpeedLabelField() { return (TextView) findViewById(R.id.windSpeedLabel); }
    private Spinner getWindDirectionField() { return (Spinner) findViewById(R.id.windDirectionField); }
    private Spinner getWindStrengthField() { return (Spinner) findViewById(R.id.windStrengthField); }
    private EditText getNotesField() { return (EditText) findViewById(R.id.notesField); }

@@ -756,6 +756,7 @@
                     app:layout_constraintStart_toEndOf="@+id/weightField"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- Lure section -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -784,6 +785,7 @@
             </RelativeLayout>
         </LinearLayout>
 
+        <!-- Lure -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -794,6 +796,7 @@
                     android:id="@+id/lureField"/>
         </LinearLayout>
 
+        <!-- Lure type & brand -->
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -823,7 +826,6 @@
                     android:textStyle="italic"
                     android:textSize="12sp"/>
         </LinearLayout>
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -842,6 +844,7 @@
                     android:layout_weight="1"/>
         </LinearLayout>>
 
+        <!-- Lure color & size -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -870,7 +873,6 @@
                 android:textStyle="italic"
                 android:textSize="12sp"/>
         </LinearLayout>
-
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -888,6 +890,7 @@
                     android:layout_weight="1"/>
         </LinearLayout>
 
+        <!-- Lure trailer, trailer color, & trailer size -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -952,6 +955,7 @@
                     android:layout_weight="1"/>
         </LinearLayout>
 
+        <!-- Environment section -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -979,326 +983,273 @@
                         android:textColor="@color/section_title_color" android:textStyle="italic"/>
             </RelativeLayout>
         </LinearLayout>
+
+        <!--  Catch depth, air temp, & water temp -->
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginEnd="10dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
             <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Depth:"
-                    android:ems="10"
+                    android:text="Depth (U)"
                     android:id="@+id/depthLabel"
-                    android:layout_weight="3"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
             <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/depthField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/depthUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Air Temp:"
-                    android:ems="10"
+                    android:text="Air Temp (U)"
                     android:id="@+id/airTempLabel"
-                    android:layout_weight="2"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
             <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/airTempField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/airTempUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Water Temp:"
-                    android:ems="10"
+                    android:text="Water Temp (U)"
                     android:id="@+id/waterTempLabel"
-                    android:layout_weight="1"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
             <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="numberDecimal"
-                    android:ems="10"
+                    android:id="@+id/depthField"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/airTempField"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
                     android:id="@+id/waterTempField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/waterTempUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+        </LinearLayout>>
+
+        <!-- Catch water clarity & secchi -->
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
             <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Water Clarity:"
-                    android:ems="10"
-                    android:id="@+id/waterClarityLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/waterClarityField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="Secchi:"
-                    android:ems="10"
+                    android:text="Water Clarity"
+                    android:id="@+id/waterClarityLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Secchi (U)"
                     android:id="@+id/secchiLabel"
-                    android:layout_weight="2.5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
+            <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/waterClarityField"/>
             <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="numberDecimal"
-                    android:ems="10"
                     android:id="@+id/secchiField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/secchiUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+        </LinearLayout>>
+
+        <!-- Structure & cover fields -->
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
             <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Structure:"
-                    android:ems="10"
+                    android:text="Structure"
                     android:id="@+id/structureLabel"
-                    android:layout_weight="2.5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/structureField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
             <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Cover:"
-                    android:ems="10"
+                    android:text="Cover"
                     android:id="@+id/coverLabel"
-                    android:layout_weight="4"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
             <Spinner
-                    android:layout_width="match_parent"
+                    android:id="@+id/structureField"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <Spinner
                     android:id="@+id/coverField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+        </LinearLayout>>
+
+        <!-- precip field -->
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:background="@color/list_separator_band_color">
             <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Precip:"
-                    android:ems="10"
+                    android:text="Precip"
                     android:id="@+id/precipLabel"
-                    android:layout_weight="4"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/precipField"
-                    android:layout_weight="2"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
         </LinearLayout>
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:background="@color/list_separator_band_color">
+            <Spinner
+                android:id="@+id/precipField"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/section_title_color"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="12dp"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:background="@android:color/white"
-                        android:layout_centerHorizontal="true"
-                        android:text="Wind"
-                        android:textSize="16sp"
-                        android:textColor="@color/section_title_color" android:textStyle="italic"/>
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Speed:"
-                    android:ems="10"
-                    android:id="@+id/windSpeedLabel"
-                    android:layout_weight="2.5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/windSpeedField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/windSpeedUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Direction:"
-                    android:ems="10"
-                    android:id="@+id/windDirectionLabel"
-                    android:layout_weight="2.4"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/windDirectionField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Strength:"
-                    android:ems="10"
-                    android:id="@+id/windStrengthLabel"
-                    android:layout_weight="2.4"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/windStrengthField"
-                    android:layout_weight="2"/>
+                android:layout_weight="1"/>
         </LinearLayout>
 
+        <!-- catch wind fields -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Wind Speed (U)"
+                    android:id="@+id/windSpeedLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Direction"
+                    android:id="@+id/windDirectionLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Strength"
+                    android:id="@+id/windStrengthLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+            <EditText
+                    android:id="@+id/windSpeedField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+            <Spinner
+                    android:id="@+id/windDirectionField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <Spinner
+                    android:id="@+id/windStrengthField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- Catch notes section -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
