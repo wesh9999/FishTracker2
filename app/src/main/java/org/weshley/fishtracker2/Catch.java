@@ -192,15 +192,28 @@ public class Catch
 
    public void setLure(Lure l)
    {
-      _lure = l.copy();
-      Config.addLure(_lure);
+      if((null == l) || (l == Lure.NULL_LURE))
+      {
+         _lure = null;
+      }
+      else
+      {
+         _lure = l.copy();
+         Config.addLure(_lure);
+      }
    }
 
    public void setLureType(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the type value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setType(s);
+      if(null != _lure)
+         _lure.setType(val);
    }
 
    public String getLureType()
@@ -213,9 +226,15 @@ public class Catch
 
    public void setLureBrand(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the brand value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setBrand(s);
+      if(null != _lure)
+         _lure.setBrand(val);
    }
 
    public String getLureBrand()
@@ -228,9 +247,15 @@ public class Catch
 
    public void setLureSize(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the size value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setSize(s);
+      if(null != _lure)
+         _lure.setSize(val);
    }
 
    public String getLureSize()
@@ -243,9 +268,15 @@ public class Catch
 
    public void setLureColor(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the color value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setColor(s);
+      if(null != _lure)
+         _lure.setColor(val);
    }
 
    public String getLureColor()
@@ -258,9 +289,15 @@ public class Catch
 
    public void setTrailerType(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the trailer value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setTrailerType(s);
+      if(null != _lure)
+         _lure.setTrailerType(val);
    }
 
    public String getTrailerType()
@@ -273,9 +310,15 @@ public class Catch
 
    public void setTrailerSize(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the size value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setTrailerSize(s);
+      if(null != _lure)
+         _lure.setTrailerSize(val);
    }
 
    public String getTrailerSize()
@@ -288,9 +331,15 @@ public class Catch
 
    public void setTrailerColor(String s)
    {
-      if(null == _lure)
+      String val = s;
+      if((null == s) || s.isEmpty())
+         val = null;
+
+      // create a new Lure if we don't have one and if the color value is not null
+      if(((null == _lure) || _lure.equals(Lure.NULL_LURE)) && (null != val))
          _lure = new Lure();
-      _lure.setTrailerColor(s);
+      if(null != _lure)
+         _lure.setTrailerColor(val);
    }
 
    public String getTrailerColor()

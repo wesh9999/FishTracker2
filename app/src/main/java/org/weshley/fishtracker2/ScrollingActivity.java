@@ -38,7 +38,7 @@ public class ScrollingActivity
    private HashMap<String,Integer> _tripWaterClarityMap;
 
    private HashMap<String,Integer> _speciesMap;
-   private HashMap<String,Integer> _lureMap;
+   private HashMap<Lure,Integer> _lureMap;
    private HashMap<String,Integer> _lureTypeMap;
    private HashMap<String,Integer> _lureBrandMap;
    private HashMap<String,Integer> _colorMap;
@@ -239,6 +239,7 @@ public class ScrollingActivity
       setTripWindEndFields(t);
       setTripWindStrengthSelection(t);
       setTripPrecipSelection(t);
+      setTripNotesField(t);
    }
 
    private void clearTripFields()
@@ -261,6 +262,7 @@ public class ScrollingActivity
       getTripEndWindSpeedField().setText(0);
       getTripStartWindStrengthField().setSelection(0);
       getTripPrecipField().setSelection(0);
+      getTripNotesField().setText("");
    }
 
    private void updateCatchFields(Catch c)
@@ -339,7 +341,7 @@ public class ScrollingActivity
 
       // catch units labels
       getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
-      getWeightUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
+      getWeightUnitsField().setText(Config.getDefaultFishWeightUnits().toString());
       getDepthUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
       getAirTempUnitsField().setText(Config.getDefaultTempUnits().toString());
       getWaterTempUnitsField().setText(Config.getDefaultTempUnits().toString());
@@ -368,6 +370,7 @@ public class ScrollingActivity
       initTripStartWindStrengthEditor();
       initTripEndWindStrengthEditor();
       initTripPrecipEditor();
+      initTripNotesEditor();
 
       // catch fields
       initSpeciesEditor();
@@ -446,6 +449,7 @@ public class ScrollingActivity
       getTripEndWindSpeedField().setEnabled(enabled);
       getTripStartWindStrengthField().setEnabled(enabled);
       getTripPrecipField().setEnabled(enabled);
+      getTripNotesField().setEnabled(enabled);
    }
 
    private void initTripLocationEditorItems()
@@ -882,6 +886,22 @@ public class ScrollingActivity
       });
    }
 
+   private void initTripNotesEditor()
+   {
+      getTripNotesField().addTextChangedListener(new TextWatcher()
+      {
+         public void afterTextChanged(Editable s) {}
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+         public void onTextChanged(CharSequence s, int start, int before, int count)
+         {
+            Trip t = getCurrentTrip();
+            if(null != t)
+               t.setNotes(s.toString());
+         }
+      });
+   }
+
 
    private void initTripTransportEditorItems()
    {
@@ -1198,11 +1218,6 @@ public class ScrollingActivity
       });
    }
 
-   public void initLureEditor()
-   {
-      // TODO - figure out how to populate this.  maybe with the last 5 or 10 used lures?
-   }
-
    private void initSpinnerItems(Spinner spinner, Collection<String> items, HashMap<String,Integer> positionMap)
    {
       List<String> list = new ArrayList<>();
@@ -1223,6 +1238,56 @@ public class ScrollingActivity
       ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
             getContext(), R.layout.support_simple_spinner_dropdown_item, items);
       spinner.setAdapter(spinnerArrayAdapter);
+   }
+
+   private void initLureEditor()
+   {
+      initLureEditorItems();
+      getLureField().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+      {
+         @Override
+         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+         {
+            final Lure selectedItem = (Lure) parent.getItemAtPosition(pos);
+            Catch c = getCurrentCatch();
+            if(null != c)
+               c.setLure(selectedItem);
+            setLureComponentFields(selectedItem);
+         }
+
+         @Override
+         public void onNothingSelected(AdapterView<?> parent) {}
+      });
+
+   }
+
+   private void initLureEditorItems()
+      {
+      // TODO - put the last 5 or 10 used lures at the top?
+
+      List<Lure> allLures = Trip.getAllLures();
+      if(allLures.isEmpty())
+      {
+         // TODO - remove this, hardcoded for now for testing
+         allLures.add(new Lure("Blade", "Steel Shad", "Shad", "3in"));
+         allLures.add(new Lure("Carolina (unweighted)", "", "", "", "Fluke (paddle-tail)", "White", "4in"));
+         allLures.add(new Lure("Bucktail Jig", "Zoom", "White", "4in", "Fluke (split-tail)", "Red", "4in"));
+      }
+
+      java.util.List<Lure> sortedList = new java.util.ArrayList<>();
+      sortedList.add(Lure.NULL_LURE);
+      java.util.Map<String,Lure> sortMap = new java.util.TreeMap<>();
+      for(Lure lure : allLures)
+         sortMap.put(lure.toString(), lure);
+      for(String k : sortMap.keySet())
+         sortedList.add(sortMap.get(k));
+
+      _lureMap = new HashMap<>();
+      for(int i = 0; i < sortedList.size(); ++i)
+         _lureMap.put(sortedList.get(i), i);
+      ArrayAdapter<Lure> spinnerArrayAdapter = new ArrayAdapter<>(
+            getContext(), R.layout.support_simple_spinner_dropdown_item, sortedList);
+      getLureField().setAdapter(spinnerArrayAdapter);
    }
 
    private void initLureTypeEditorItems()
@@ -1256,9 +1321,14 @@ public class ScrollingActivity
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
                      String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setLureType(newItem);
-                     initLureTypeEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        c.setLureType(newItem);
+                        initLureTypeEditorItems();
+                        initLureEditorItems();
+                        setLureFields(c);
+                     }
                   }
                });
             }
@@ -1266,7 +1336,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setLureType(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1305,10 +1379,16 @@ public class ScrollingActivity
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
-                     String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setLureBrand(newItem);
-                     initLureBrandEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        String newItem = getNewItemInputField().getText().toString();
+                        c.setLureBrand(newItem);
+                        initLureBrandEditorItems();
+                        initLureEditorItems();
+                        setLureFields(c);
+                        //setLureBrandField(getCurrentCatch().getLure());
+                     }
                   }
                });
             }
@@ -1316,7 +1396,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setLureBrand(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1350,10 +1434,16 @@ public class ScrollingActivity
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
-                     String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setLureColor(newItem);
-                     initColorEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        String newItem = getNewItemInputField().getText().toString();
+                        c.setLureColor(newItem);
+                        initColorEditorItems();
+                        initLureEditorItems();
+                        setLureFields(c);
+                        // setLureColorField(getCurrentCatch().getLure());
+                     }
                   }
                });
             }
@@ -1361,7 +1451,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setLureColor(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1401,10 +1495,16 @@ public class ScrollingActivity
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
-                     String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setLureSize(newItem);
-                     initLureSizeEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        String newItem = getNewItemInputField().getText().toString();
+                        c.setLureSize(newItem);
+                        initLureSizeEditorItems();
+                        initLureEditorItems();
+                        setLureFields(c);
+                        // setLureSizeField(getCurrentCatch().getLure());
+                     }
                   }
                });
             }
@@ -1412,7 +1512,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setLureSize(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1452,10 +1556,16 @@ public class ScrollingActivity
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
-                     String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setTrailerType(newItem);
-                     initTrailerEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        String newItem = getNewItemInputField().getText().toString();
+                        c.setTrailerType(newItem);
+                        initTrailerEditorItems();
+                        // setTrailerField(getCurrentCatch().getLure());
+                        initLureEditorItems();
+                        setLureFields(c);
+                     }
                   }
                });
             }
@@ -1463,7 +1573,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setTrailerType(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1504,10 +1618,16 @@ public class ScrollingActivity
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
-                     String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setTrailerColor(newItem);
-                     initColorEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        String newItem = getNewItemInputField().getText().toString();
+                        c.setTrailerColor(newItem);
+                        initColorEditorItems();
+                        initLureEditorItems();
+                        setLureFields(c);
+                        // setTrailerColorField(getCurrentCatch().getLure());
+                     }
                   }
                });
             }
@@ -1515,7 +1635,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setTrailerColor(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1555,10 +1679,16 @@ public class ScrollingActivity
                   @Override
                   public void onClick(DialogInterface dialogInterface, int i)
                   {
-                     String newItem = getNewItemInputField().getText().toString();
-                     getCurrentCatch().setTrailerSize(newItem);
-                     initTrailerSizeEditorItems();
-                     setLureFields(getCurrentCatch());
+                     Catch c = getCurrentCatch();
+                     if(null != c)
+                     {
+                        String newItem = getNewItemInputField().getText().toString();
+                        c.setTrailerSize(newItem);
+                        initTrailerSizeEditorItems();
+                        initLureEditorItems();
+                        setLureFields(c);
+                        // setTrailerSizeField(getCurrentCatch().getLure());
+                     }
                   }
                });
             }
@@ -1566,7 +1696,11 @@ public class ScrollingActivity
             {
                Catch c = getCurrentCatch();
                if(null != c)
+               {
                   c.setTrailerSize(selectedItem);
+                  initLureEditorItems();
+                  setLureFields(c);
+               }
             }
          }
 
@@ -1933,6 +2067,14 @@ public class ScrollingActivity
          getTripSecchiField().setText(t.getSecchi().valueString());
    }
 
+   private void setTripNotesField(Trip t)
+   {
+      if((null == t) || (null == t.getNotes()))
+         getTripNotesField().setText("");
+      else
+         getTripNotesField().setText(t.getNotes());
+   }
+
    private void setTripWindStartFields(Trip t)
    {
       if((null != t) && (null != t.getWindRange()))
@@ -2081,51 +2223,121 @@ public class ScrollingActivity
       }
    }
 
-   void setLureFields(Catch c)
+   private void setLureFields(Catch c)
    {
       Lure lure = null;
-      if(null != c)
+      if(c != null)
          lure = c.getLure();
-      if((null == lure))
-      {
-         // NOTE:  0 is blank element added first to the list
-         getLureField().setSelection(0);
-         getLureTypeField().setSelection(0);
-         getLureBrandField().setSelection(0);
-         getLureColorField().setSelection(0);
-         getLureSizeField().setSelection(0);
-         getTrailerField().setSelection(0);
-         getTrailerColorField().setSelection(0);
-         getTrailerSizeField().setSelection(0);
-      }
+      setLureFields(lure);
+   }
+
+   private void setLureFields(Lure lure)
+   {
+      int curSel = getLureField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure))
+         newSel = 0;
       else
-      {
-/*
-TODO - lure UI not done yet....
-         if(null != lure.description() && _lureMap.containsKey(lure.description()))
-            getLureField().setSelection(_lureMap.get(lure.description()));
- */
-         if(null != lure.getType())
-            getLureTypeField().setSelection(_lureTypeMap.get(lure.getType()));
+         newSel = _lureMap.get(lure);
+      if(newSel != curSel)
+         getLureField().setSelection(newSel);
+      setLureComponentFields(lure);
+   }
 
-         if(null != lure.getBrand())
-            getLureBrandField().setSelection(_lureBrandMap.get(lure.getBrand()));
+   private void setLureTypeField(Lure lure)
+   {
+      int curSel = getLureTypeField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getType()))
+         newSel = 0;
+      else
+         newSel = _lureTypeMap.get(lure.getType());
+      if(newSel != curSel)
+         getLureTypeField().setSelection(newSel);
+   }
 
-         if(null != lure.getColor())
-            getLureColorField().setSelection(_colorMap.get(lure.getColor()));
+   private void setLureBrandField(Lure lure)
+   {
+      int curSel = getLureBrandField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getBrand()))
+         newSel = 0;
+      else
+         newSel = _lureBrandMap.get(lure.getBrand());
+      if(newSel != curSel)
+         getLureBrandField().setSelection(newSel);
+   }
 
-         if(null != lure.getSize())
-            getLureSizeField().setSelection(_lureSizeMap.get(lure.getSize()));
+   private void setLureColorField(Lure lure)
+   {
+      int curSel = getLureColorField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getColor()))
+         newSel = 0;
+      else
+         newSel = _colorMap.get(lure.getColor());
+      if(newSel != curSel)
+         getLureColorField().setSelection(newSel);
+   }
 
-         if(null != lure.getTrailer())
-            getTrailerField().setSelection(_trailerMap.get(lure.getTrailer()));
+   private void setLureSizeField(Lure lure)
+   {
+      int curSel = getLureSizeField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getSize()))
+         newSel = 0;
+      else
+         newSel = _lureSizeMap.get(lure.getSize());
+      if(newSel != curSel)
+         getLureSizeField().setSelection(newSel);
+   }
 
-         if(null != lure.getTrailerColor())
-            getTrailerColorField().setSelection(_colorMap.get(lure.getTrailerColor()));
+   private void setTrailerField(Lure lure)
+   {
+      int curSel = getTrailerField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getTrailer()))
+         newSel = 0;
+      else
+         newSel = _trailerMap.get(lure.getTrailer());
+      if(newSel != curSel)
+         getTrailerField().setSelection(newSel);
+   }
 
-         if(null != lure.getTrailerSize())
-            getTrailerSizeField().setSelection(_trailerSizeMap.get(lure.getTrailerSize()));
-       }
+   private void setTrailerColorField(Lure lure)
+   {
+      int curSel = getTrailerColorField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getTrailerColor()))
+         newSel = 0;
+      else
+         newSel = _colorMap.get(lure.getTrailerColor());
+      if(newSel != curSel)
+         getTrailerColorField().setSelection(newSel);
+   }
+
+   private void setTrailerSizeField(Lure lure)
+   {
+      int curSel = getTrailerSizeField().getSelectedItemPosition();
+      int newSel = -1;
+      if((null == lure) || (Lure.NULL_LURE == lure) || (null == lure.getTrailerSize()))
+         newSel = 0;
+      else
+         newSel = _trailerSizeMap.get(lure.getTrailerSize());
+      if(newSel != curSel)
+         getTrailerSizeField().setSelection(newSel);
+   }
+
+   private void setLureComponentFields(Lure lure)
+   {
+      // this sets everything but the main Lure spinner selection (all the lure component fields)
+      setLureTypeField(lure);
+      setLureBrandField(lure);
+      setLureColorField(lure);
+      setLureSizeField(lure);
+      setTrailerField(lure);
+      setTrailerColorField(lure);
+      setTrailerSizeField(lure);
    }
 
    private void setDepthField(Catch c)
@@ -2339,6 +2551,7 @@ TODO - lure UI not done yet....
    private Spinner getTripStartWindStrengthField() { return (Spinner) findViewById(R.id.tripStartWindStrengthField); }
    private Spinner getTripEndWindStrengthField() { return (Spinner) findViewById(R.id.tripEndWindStrengthField); }
    private Spinner getTripPrecipField() { return (Spinner) findViewById(R.id.tripPrecipField); }
+   private EditText getTripNotesField() { return (EditText) findViewById(R.id.tripNotesField); }
 
    // catch fields
    private EditText getWhenField() { return (EditText) findViewById(R.id.whenField); }

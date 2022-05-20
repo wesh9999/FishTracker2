@@ -49,7 +49,8 @@ public class Config
    private static final String[] DEFAULT_TRANSPORTS =
       { "Kayak", "Boat", "Walking", "Dock", "Ice" };
    private static final String[] DEFAULT_SPECIES =
-      { "Blue Catfish", "Blueback Herring", "Bream", "Carp", "Channel Catfish", "Crappie (Black)", "Flathead Catfish",
+      { "Blue Catfish", "Blueback Herring", "Bream", "Carp", "Channel Catfish", "Crappie (Black)",
+        "Crappie (White)", "Flathead Catfish",
         "Hybrid Bass", "Largemouth Bass", "Longnose Gar", "Rainbow Trout", "Rock Bass", "Skipjack Shad",
         "Smallmouth Bass", "Spotted Bass", "Striped Bass", "Walleye", "White Bass" };
 
@@ -105,8 +106,9 @@ public class Config
 
    public static void addLure(Lure l)
    {
-      if(null == l)
+      if((null == l) || (l == Lure.NULL_LURE))
          return;
+
       addLureType(l.getType());
       addLureBrand(l.getBrand());
       addLureSize(l.getSize());
@@ -117,11 +119,11 @@ public class Config
    }
    public static void addLureType(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allLureTypes.contains(s))
+      if((null != s) && !s.isEmpty() && !getAllLureTypes().contains(s))
       {
          Log.i("Config", "ADDING LURE TYPE <<" + s + ">>");
       }
-         _allLureTypes.add(s);
+         getAllLureTypes().add(s);
    }
 
    public static Set<String> getAllLureTypes()
@@ -137,8 +139,8 @@ public class Config
 
    public static void addLureSize(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allLureSizes.contains(s))
-         _allLureSizes.add(s);
+      if((null != s) && !s.isEmpty() && !getAllLureSizes().contains(s))
+         getAllLureSizes().add(s);
    }
 
    public static Set<String> getAllLureSizes()
@@ -154,8 +156,8 @@ public class Config
 
    public static void addLureBrand(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allLureBrands.contains(s))
-         _allLureBrands.add(s);
+      if((null != s) && !s.isEmpty() && !getAllLureBrands().contains(s))
+         getAllLureBrands().add(s);
    }
 
    public static Set<String> getAllLureBrands()
@@ -171,8 +173,8 @@ public class Config
 
    public static void addLureColor(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allLureColors.contains(s))
-         _allLureColors.add(s);
+      if((null != s) && !s.isEmpty() && !getAllLureColors().contains(s))
+         getAllLureColors().add(s);
    }
 
    public static List<String> getAllLureColors()
@@ -188,8 +190,8 @@ public class Config
 
    public static void addTrailerSize(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allTrailerSizes.contains(s))
-         _allTrailerSizes.add(s);
+      if((null != s) && !s.isEmpty() && !getAllTrailerSizes().contains(s))
+         getAllTrailerSizes().add(s);
    }
 
    public static Set<String> getAllTrailerSizes()
@@ -205,8 +207,8 @@ public class Config
 
    public static void addTrailerType(String s)
    {
-      if((null != s) && !s.isEmpty() && !_allTrailerTypes.contains(s))
-         _allTrailerTypes.add(s);
+      if((null != s) && !s.isEmpty() && !getAllTrailerTypes().contains(s))
+         getAllTrailerTypes().add(s);
    }
 
    public static Set<String> getAllTrailerTypes()

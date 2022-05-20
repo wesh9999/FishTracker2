@@ -77,7 +77,8 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:background="#1262DADA">
+                android:layout_height="match_parent"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
@@ -181,7 +182,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginEnd="10dp" android:background="@color/list_separator_band_color">
+                android:layout_marginEnd="10dp"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_width="98dp"
                     android:layout_height="wrap_content"
@@ -499,8 +501,49 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tripEndWindSpeedUnitsLabel"
                     android:layout_width="0dp" android:layout_marginStart="10dp"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="0"
+                android:layout_marginEnd="10dp"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Notes:"
+                    android:ems="10"
+                    android:id="@+id/tripNotesLabel"
+                    android:layout_weight="0"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="bold"
+                    android:background="@null"
+                    android:paddingLeft="5dp"
+                    android:layout_width="80dp"/>
+            />
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/tripNotesField"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:editable="false" android:textSize="16sp" android:paddingLeft="50dp"/>
+        </LinearLayout>
+
 
         <LinearLayout
                 android:orientation="horizontal"
@@ -559,7 +602,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -581,6 +625,7 @@
                     android:editable="false"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
         </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -608,6 +653,7 @@
                         android:textStyle="italic"/>
             </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -630,70 +676,86 @@
                     android:id="@+id/speciesField"
                     android:layout_weight="2"/>
         </LinearLayout>
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginRight="10dp">
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:id="@+id/lengthWeightLayout"
+                android:background="@color/list_separator_band_color">
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:text="Length:"
                     android:ems="10"
                     android:id="@+id/lengthLabel"
-                    android:layout_weight="2.5"
                     tools:ignore="TouchTargetSizeCheck"
                     android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             <EditText
-                    android:layout_width="match_parent"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
                     android:id="@+id/lengthField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/lengthLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
                     android:text="Units"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/lengthUnitsLabel"
-                    android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" android:layout_marginEnd="10dp">
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/lengthField"/>
+
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:text="Weight:"
                     android:ems="10"
                     android:id="@+id/weightLabel"
-                    android:layout_weight="2.5"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
+                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/lengthUnitsLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="15dp"/>
             <EditText
-                    android:layout_width="match_parent"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
                     android:id="@+id/weightField"
-                    android:layout_weight="2" android:imeOptions="actionDone" android:textSize="16sp"/>
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/weightLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
                     android:text="Units"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/weightUnitsLabel"
-                    android:layout_weight="0"
                     android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"/>
-        </LinearLayout>
+                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/weightField"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -721,182 +783,175 @@
                         android:textColor="@color/section_title_color" android:textStyle="italic"/>
             </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Lure:"
-                    android:ems="10"
-                    android:id="@+id/lureLabel"
-                    android:layout_weight="5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                android:layout_height="35dp">
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/lureField"
-                    android:layout_weight="2"/>
+                    android:id="@+id/lureField"/>
         </LinearLayout>
+
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
             <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Type:"
-                    android:ems="10"
+                    android:text="Type"
                     android:id="@+id/lureTypeLabel"
-                    android:layout_weight="5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Brand"
+                    android:id="@+id/lureBrandLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
             <Spinner
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureTypeField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Brand:"
-                    android:ems="10"
-                    android:id="@+id/lureBrandLabel"
-                    android:layout_weight="4"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:layout_weight="1"/>
             <Spinner
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureBrandField"
-                    android:layout_weight="2"/>
+                    android:layout_weight="1"/>
+        </LinearLayout>>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="Color"
+                android:id="@+id/lureColorLabel"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:textStyle="italic"
+                android:textSize="12sp"/>
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="Size"
+                android:id="@+id/lureSizeLabel"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:textStyle="italic"
+                android:textSize="12sp"/>
         </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Color:"
-                    android:ems="10"
-                    android:id="@+id/lureColorLabel"
-                    android:layout_weight="5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                android:weightSum="2">
             <Spinner
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureColorField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Size:"
-                    android:ems="10"
-                    android:id="@+id/lureSizeLabel"
-                    android:layout_weight="5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:layout_weight="1"/>
             <Spinner
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureSizeField"
-                    android:layout_weight="2"/>
+                    android:layout_weight="1"/>
         </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Trailer:"
-                    android:ems="10"
+                    android:text="Trailer"
                     android:id="@+id/trailerLabel"
-                    android:layout_weight="4.5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/trailerField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="1">
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
             <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Trailer Color:"
+                    android:text="Color"
                     android:ems="10"
                     android:id="@+id/trailerColorLabel"
-                    android:layout_weight="1.5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/trailerColorField"
-                    android:layout_weight="2"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Size"
+                    android:id="@+id/trailerSizeLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Trailer Size:"
-                    android:ems="10"
-                    android:id="@+id/trailerSizeLabel"
-                    android:layout_weight="1.5"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
             <Spinner
-                    android:layout_width="match_parent"
+                    android:id="@+id/trailerField"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <Spinner
+                    android:id="@+id/trailerColorField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <Spinner
                     android:id="@+id/trailerSizeField"
-                    android:layout_weight="2"/>
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
         </LinearLayout>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -1284,7 +1339,7 @@
                     android:id="@+id/notesField"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:textSize="16sp"/>
+                    android:editable="false" android:textSize="16sp" android:paddingLeft="50dp"/>
         </LinearLayout>
 
     </LinearLayout>

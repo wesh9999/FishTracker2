@@ -1,8 +1,6 @@
 package org.weshley.fishtracker2;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Trip
 {
@@ -33,6 +31,11 @@ public class Trip
 
    private List<Catch> _catches = new ArrayList<>();
 
+   public static List<Trip> getAllTrips()
+   {
+      return _allTrips;
+   }
+
    public static Trip getMostRecentTrip()
    {
       // TODO - should probably sort _allTrips by start time, unless i sort them this way when loading them....
@@ -53,6 +56,24 @@ public class Trip
       t.setFieldsFrom(lastTrip);
       _allTrips.add(t);
       return t;
+   }
+
+   public static List<Lure> getAllLures()
+   {
+      // using Lure.toString to collect only one instance of a lure that was found in multiple catches
+      Map<String,Lure> lureMap = new TreeMap<>();
+      for(Trip t : Trip.getAllTrips())
+      {
+         for(Catch c : t.getCatches())
+         {
+            if((null != c.getLure()) && !Lure.NULL_LURE.equals(c.getLure()))
+               lureMap.put(c.getLure().toString(), c.getLure());
+         }
+      }
+
+      List<Lure> lures = new ArrayList<>();
+      lures.addAll(lureMap.values());
+      return lures;
    }
 
    public void setFieldsFrom(Trip lastTrip)
@@ -138,7 +159,13 @@ public class Trip
    // TODO - add fromXml()
 
    public String getNotes() { return _notes; }
-   public void setNotes(String s) { _notes = s; }
+   public void setNotes(String s)
+   {
+      if((null != s) && s.isEmpty())
+         _notes = null;
+      else
+        _notes = s;
+   }
 
    public Temperature getAirTempStart() { return _airTempStart; }
    public void setAirTempStart(Temperature t) { _airTempStart = t; }

@@ -2,6 +2,8 @@ package org.weshley.fishtracker2;
 
 public class Lure
 {
+   public static final Lure NULL_LURE = new Lure();
+
    private String _type = null;
    private String _brand = null;
    private String _color = null;
@@ -12,6 +14,26 @@ public class Lure
 
    public Lure()
    {
+   }
+
+   public Lure(String type, String brand, String color, String size)
+   {
+      setType(type);
+      setBrand(brand);
+      setColor(color);
+      setSize(size);
+   }
+
+   public Lure(String type, String brand, String color, String size,
+               String trailer, String trailerColor, String trailerSize)
+   {
+      setType(type);
+      setBrand(brand);
+      setColor(color);
+      setSize(size);
+      setTrailerType(trailer);
+      setTrailerColor(trailerColor);
+      setTrailerSize(trailerSize);
    }
 
    public Lure copy()
@@ -25,6 +47,67 @@ public class Lure
       l._trailerColor = _trailerColor;
       l._trailerSize = _trailerSize;
       return l;
+   }
+
+   public String toString()
+   {
+      StringBuilder sb = new StringBuilder();
+      boolean needSep = false;
+
+      if((null != _type) && !_type.isEmpty())
+      {
+         sb.append(_type);
+         needSep = true;
+      }
+
+      if((null != _brand) && !_brand.isEmpty())
+      {
+         if(needSep)
+            sb.append(", ");
+         sb.append(_brand);
+         needSep = true;
+      }
+
+      if((null != _color) && !_color.isEmpty())
+      {
+         if(needSep)
+            sb.append(", ");
+         sb.append(_color);
+         needSep = true;
+      }
+
+      if((null != _size) && !_size.isEmpty())
+      {
+         if(needSep)
+            sb.append(", ");
+         sb.append(_size);
+         needSep = true;
+      }
+
+      if((null != _trailer) && !_trailer.isEmpty())
+      {
+         if(needSep)
+            sb.append(" - ");
+         sb.append(_trailer);
+         needSep = true;
+      }
+
+      if((null != _trailerColor) && !_trailerColor.isEmpty())
+      {
+         if(needSep)
+            sb.append(", ");
+         sb.append(_trailerColor);
+         needSep = true;
+      }
+
+      if((null != _trailerSize) && !_trailerSize.isEmpty())
+      {
+         if(needSep)
+            sb.append(", ");
+         sb.append(_trailerSize);
+         needSep = true;
+      }
+      return sb.toString();
    }
 
    public String getType() { return _type; }
@@ -59,12 +142,6 @@ public class Lure
          _brand = s;
          Config.addLureBrand(s);
       }
-   }
-
-   public String description()
-   {
-      // FIXME - clean this up add all fields (?) to deal with optional fields not being populated...
-      return _type;
    }
 
    public void setSize(String s)
