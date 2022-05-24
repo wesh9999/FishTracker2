@@ -80,6 +80,8 @@ public class Trip
    {
       if(null == lastTrip)
          return;
+
+      // NOTE: don't set _startTime & _endTime since we're likely to be starting a new trip
       _transport = lastTrip.getTransport();
       _notes = lastTrip.getNotes();
       _precip = lastTrip.getPrecip();
@@ -87,8 +89,6 @@ public class Trip
       _distanceTraveled = lastTrip.getDistanceTraveled();
       _airTempEnd = lastTrip.getAirTempEnd();
       _airTempStart = lastTrip.getAirTempStart();
-      _endTime = lastTrip.getEndTime();
-      _startTime = lastTrip.getStartTime();
       _waterClarity = lastTrip.getWaterClarity();
       _waterLevel = lastTrip.getWaterLevel();
       _waterTemp = lastTrip.getWaterTemp();

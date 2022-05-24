@@ -12,6 +12,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+        <!-- Trip summary -->
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,11 +26,17 @@
                 android:text="@string/no_trip_message"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textStyle="bold" android:focusableInTouchMode="false" android:focusable="false"/>
+                android:textStyle="bold"
+                android:focusableInTouchMode="false"
+                android:focusable="false"/>
+
+        <!-- Trip info -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginTop="30dp">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -52,467 +60,484 @@
                         android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
+
+        <!-- Location -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Location:"
-                    android:ems="10"
-                    android:id="@+id/tripLocationLabel"
-                    android:layout_weight="3"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:textStyle="bold"
-                    android:background="@null"
-                    android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/tripLocationField"
-                    android:layout_weight="2"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:background="@color/list_separator_band_color">
-            <EditText
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="When:"
-                    android:ems="10"
-                    android:id="@+id/tripStartLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:ems="10"
-                    android:id="@+id/tripStartField"
-                    android:layout_weight="2"
-                    android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
-
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text=" --> "
-                    android:ems="10"
-                    android:id="@+id/tripEndDashLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:ems="10"
-                    android:id="@+id/tripEndField"
-                    android:layout_weight="2"
-                    android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="104dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Transport:"
-                    android:ems="10"
-                    android:id="@+id/tripTransportLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
             <Spinner
-                    android:layout_width="match_parent"
+                 android:id="@+id/tripLocationField"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- trip start & end time -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+            <EditText
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/tripTransportField"
-                    android:layout_weight="3"/>
-            <EditText
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Dist:"
-                    android:ems="10"
-                    android:id="@+id/tripDistanceLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripDistanceField"
-                    android:layout_weight="4" android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripDistanceUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"
-                    android:paddingRight="5dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:background="@color/list_separator_band_color">
-            <EditText
-                    android:layout_width="98dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Air Temp:"
-                    android:ems="10"
-                    android:id="@+id/tripAirTempLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripAirTempStartField"
-                    android:layout_weight="2"
-                    android:imeOptions="actionDone" android:textSize="16sp"/>
-
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text=" --> "
-                    android:ems="10"
-                    android:id="@+id/tripAirTempDashLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripAirTempEndField"
-                    android:layout_weight="2"
-                    android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripAirTempUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Water Temp:"
-                    android:ems="10"
-                    android:id="@+id/tripWaterTempLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    android:layout_width="120dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripWaterTempField"
-                    android:layout_weight="2"
-                    android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="U"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripWaterTempUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"/>
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Level:"
-                    android:ems="10"
-                    android:id="@+id/tripWaterLevelLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    android:layout_width="80dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:ems="10"
-                    android:id="@+id/tripWaterLevelField"
-                    android:layout_weight="2"
-                    android:imeOptions="actionDone" android:textSize="16sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@color/list_separator_band_color" android:paddingRight="10dp">
-            <EditText
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Clarity:"
-                    android:ems="10"
-                    android:id="@+id/tripWaterClarityLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/tripWaterClarityField"
-                    android:layout_weight="2"/>
-            <EditText
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Secchi:"
-                    android:ems="10"
-                    android:id="@+id/tripWaterSecchiLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/tripWaterSecchiField"
                     android:layout_weight="1"
-                    android:imeOptions="actionDone" android:textSize="16sp"/>
-            <TextView
-                    android:text="U"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripSecchiUnitsLabel"
-                    android:layout_weight="0"
-                    android:editable="false"
-                    android:textSize="18sp"
+                    android:inputType="none"
+                    android:text="Start"
+                    android:id="@+id/tripStartLabel"
                     android:focusableInTouchMode="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="End"
+                    android:id="@+id/tripEndLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+            <EditText
+                    android:id="@+id/tripStartField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textAlignment="center"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    android:selectAllOnFocus="true"/>
+            <EditText
+                    android:id="@+id/tripEndField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    android:selectAllOnFocus="true"/>
         </LinearLayout>
 
+        <!-- trip transport & distance -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Transport"
+                    android:id="@+id/tripTransportLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Distance (U)"
+                    android:id="@+id/tripDistanceLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
+            <Spinner
+                    android:id="@+id/tripTransportField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <EditText
+                    android:id="@+id/tripDistanceField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- start & end trip air temp -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Start Air Temp (U)"
+                    android:id="@+id/tripAirTempStartLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="End Air Temp (U)"
+                    android:id="@+id/tripAirTempEndLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+            <EditText
+                    android:id="@+id/tripAirTempStartField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+            <EditText
+                    android:id="@+id/tripAirTempEndField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- trip water temp & level -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Water Temp (U)"
+                    android:id="@+id/tripWaterTempLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Water Level"
+                    android:id="@+id/tripWaterLevelLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:id="@+id/tripWaterTempField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+            <EditText
+                    android:id="@+id/tripWaterLevelField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- trip water clarity & secchi -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+            <EditText
+                    android:id="@+id/tripWaterClarityLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Water Clarity"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:id="@+id/tripSecchiLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Secchi (U)"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+            <Spinner
+                    android:id="@+id/tripWaterClarityField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <EditText
+                    android:id="@+id/tripSecchiField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- trip precip -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:id="@+id/tripPrecipLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Precipitation"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:background="@color/list_separator_band_color">
+            <Spinner
+                    android:id="@+id/tripPrecipField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- trip start wind -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Start Wind Speed (U)"
+                    android:id="@+id/tripStartWindSpeedLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Direction"
+                    android:id="@+id/tripStartWindDirLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Strength"
+                    android:id="@+id/tripStartWindStrengthLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+            <EditText
+                    android:id="@+id/tripStartWindSpeedField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:background="@null"
+                    android:textAlignment="center"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+            <Spinner
+                    android:id="@+id/tripStartWindDirField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <Spinner
+                    android:id="@+id/tripStartWindStrengthField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- trip end wind -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="End Wind Speed (U)"
+                    android:id="@+id/tripEndWindSpeedLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Direction"
+                    android:id="@+id/tripEndWindDirLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Strength"
+                    android:id="@+id/tripEndWindStrengthLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:id="@+id/tripEndWindSpeedField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:background="@null"
+                    android:textAlignment="center"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+            <Spinner
+                    android:id="@+id/tripEndWindDirField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            <Spinner
+                    android:id="@+id/tripEndWindStrengthField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- trip notes -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_weight="0"
                 android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Precip:"
-                    android:ems="10"
-                    android:id="@+id/tripPrecipLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    android:layout_width="80dp"/>
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/tripPrecipField"
-            />
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/tripStartWindLayout"
-                android:background="@color/list_separator_band_color">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Wind 1:"
-                    android:ems="10"
-                    android:id="@+id/tripStartWindLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    android:layout_width="70dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            <Spinner
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripStartWindDirField"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripStartWindLabel"/>
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripStartWindSpeedField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripStartWindDirField"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripStartWindSpeedUnitsLabel"
-                    android:editable="false"
-                    android:textSize="18sp"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripStartWindSpeedField"/>
-            <Spinner
-                    android:layout_height="match_parent"
-                    android:id="@+id/tripStartWindStrengthField"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripStartWindSpeedUnitsLabel"
-                    android:layout_width="0dp" android:layout_marginStart="10dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/tripEndWindLayout">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Wind 2:"
-                    android:ems="10"
-                    android:id="@+id/tripEndWindLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold" android:background="@null"
-                    android:paddingLeft="5dp"
-                    android:layout_width="70dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            <Spinner
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripEndWindDirField"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripEndWindLabel"/>
-            <EditText
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/tripEndWindSpeedField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripEndWindDirField"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tripEndWindSpeedUnitsLabel"
-                    android:editable="false"
-                    android:textSize="18sp"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripEndWindSpeedField"/>
-            <Spinner
-                    android:layout_height="match_parent"
-                    android:id="@+id/tripEndWindStrengthField"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tripEndWindSpeedUnitsLabel"
-                    android:layout_width="0dp" android:layout_marginStart="10dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="0"
-                android:layout_marginEnd="10dp"
-                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_height="wrap_content"
                     android:inputType="none"
@@ -534,8 +559,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/list_separator_band_color">
+                android:layout_weight="1">
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -547,7 +571,7 @@
                     android:editable="false" android:textSize="16sp" android:paddingLeft="50dp"/>
         </LinearLayout>
 
-
+        <!-- catch data -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -595,7 +619,6 @@
                     android:focusable="false"
                     android:textStyle="italic"
                     android:textSize="12sp"
-                    android:background="@null"
                     android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
@@ -605,6 +628,7 @@
                     android:id="@+id/whenField"
                     android:layout_weight="1"
                     android:editable="false"
+                    android:background="@null"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
                     android:textSize="16sp"/>
         </LinearLayout>
@@ -628,7 +652,6 @@
                     android:focusableInTouchMode="false"
                     android:textStyle="italic"
                     android:textSize="12sp"
-                    android:background="@null"
                     android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
@@ -638,7 +661,9 @@
                     android:id="@+id/gpsField"
                     android:layout_weight="1"
                     android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
+                    android:background="@null"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
+                    android:textSize="16sp"/>
         </LinearLayout>
 
         <LinearLayout

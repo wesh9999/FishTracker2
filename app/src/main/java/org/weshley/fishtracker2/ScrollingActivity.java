@@ -258,9 +258,9 @@ public class ScrollingActivity
       getTripWaterClarityField().setSelection(0);
       getTripSecchiField().setText("");
       getTripStartWindDirField().setSelection(0);
-      getTripStartWindSpeedField().setText(0);
+      getTripStartWindSpeedField().setText("");
       getTripEndWindDirField().setSelection(0);
-      getTripEndWindSpeedField().setText(0);
+      getTripEndWindSpeedField().setText("");
       getTripStartWindStrengthField().setSelection(0);
       getTripPrecipField().setSelection(0);
       getTripNotesField().setText("");
@@ -334,7 +334,23 @@ public class ScrollingActivity
    private void initLabelClickListeners()
    {
       // TODO - add catch when and gps fields once those are editable...
-      // TODO - add trip fields once that UI is updated
+      // TODO - add trip start & end time fields once those are editable...
+
+      setSpinnerClickListener(getTripTransportLabelField(), getTripTransportField());
+      setLabelFieldClickListener(getTripDistanceLabelField(), getTripDistanceField());
+      setLabelFieldClickListener(getTripAirTempStartLabelField(), getTripAirTempStartField());
+      setLabelFieldClickListener(getTripAirTempEndLabelField(), getTripAirTempEndField());
+      setLabelFieldClickListener(getTripWaterTempLabelField(), getTripWaterTempField());
+      setLabelFieldClickListener(getTripWaterLevelLabelField(), getTripWaterLevelField());
+      setSpinnerClickListener(getTripWaterClarityLabelField(), getTripWaterClarityField());
+      setLabelFieldClickListener(getTripSecchiLabelField(), getTripSecchiField());
+      setSpinnerClickListener(getTripPrecipLabelField(), getTripPrecipField());
+      setLabelFieldClickListener(getTripStartWindSpeedLabel(), getTripStartWindSpeedField());
+      setSpinnerClickListener(getTripStartWindDirLabel(), getTripStartWindDirField());
+      setSpinnerClickListener(getTripStartWindStrengthLabel(), getTripStartWindStrengthField());
+      setLabelFieldClickListener(getTripEndWindSpeedLabel(), getTripEndWindSpeedField());
+      setSpinnerClickListener(getTripEndWindDirLabel(), getTripEndWindDirField());
+      setSpinnerClickListener(getTripEndWindStrengthLabel(), getTripEndWindStrengthField());
 
       setLabelFieldClickListener(getLengthLabelField(), getLengthField());
       setLabelFieldClickListener(getWeightLabelField(), getWeightField());
@@ -390,16 +406,15 @@ public class ScrollingActivity
    private void initUnitsLabels()
    {
       // trip units labels
-      getTripDistanceUnitsField().setText(Config.getDefaultDistanceUnits().toString());
-      getTripAirTempUnitsField().setText(Config.getDefaultTempUnits().toString());
-      getTripWaterTempUnitsField().setText(Config.getDefaultTempUnits().toString());
-      getTripSecchiUnitsField().setText(Config.getDefaultWaterDepthUnits().toString());
-      getTripStartWindSpeedUnits().setText(Config.getDefaultWindSpeedUnits().toString());
-      getTripEndWindSpeedUnits().setText(Config.getDefaultWindSpeedUnits().toString());
+      setTripDistanceUnitsLabel();
+      setTripAirTempStartUnitsLabel();
+      setTripAirTempEndUnitsLabel();
+      setTripWaterTempUnitsLabel();
+      setTripSecchiUnitsLabel();
+      setTripStartWindSpeedUnitsLabel();
+      setTripEndWindSpeedUnitsLabel();
 
       // catch units labels
-//      getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
-//      getWeightUnitsField().setText(Config.getDefaultFishWeightUnits().toString());
       setLengthUnitsLabel();
       setWeightUnitsLabel();
       setDepthUnitsLabel();
@@ -409,8 +424,80 @@ public class ScrollingActivity
       setWindSpeedUnitsLabel();
    }
 
-   // TODO - "Length", "Weight", "Wind Speed", "Secchi", "Depth, "Air Temp", and "Water Temp"
-   //  should be resource strings
+   // TODO - "Distance", "Start/End Air Temp", "Water Temp", "Secchi", "Start/End Wind Speed",
+   //        "Length", "Weight", "Wind Speed", "Secchi", "Depth, "Air Temp", and "Water Temp"
+   //        should be resource strings
+
+   private void setTripStartWindSpeedUnitsLabel()
+   {
+      setTripStartWindSpeedUnitsLabel(Config.getDefaultWindSpeedUnits());
+   }
+
+   private void setTripStartWindSpeedUnitsLabel(Speed.Units units)
+   {
+      getTripStartWindSpeedLabel().setText("Start Wind Speed (" + units.toString() + ")");
+   }
+
+   private void setTripEndWindSpeedUnitsLabel()
+   {
+      setTripEndWindSpeedUnitsLabel(Config.getDefaultWindSpeedUnits());
+   }
+
+   private void setTripEndWindSpeedUnitsLabel(Speed.Units units)
+   {
+      getTripEndWindSpeedLabel().setText("End Wind Speed (" + units.toString() + ")");
+   }
+
+
+   private void setTripSecchiUnitsLabel()
+   {
+      setTripSecchiUnitsLabel(Config.getDefaultWaterDepthUnits());
+   }
+
+   private void setTripSecchiUnitsLabel(WaterDepth.Units units)
+   {
+      getTripSecchiLabelField().setText("Secchi (" + units.toString() + ")");
+   }
+
+   private void setTripWaterTempUnitsLabel()
+   {
+      setTripWaterTempUnitsLabel(Config.getDefaultTempUnits());
+   }
+
+   private void setTripWaterTempUnitsLabel(Temperature.Units  units)
+   {
+      getTripWaterTempLabelField().setText("Water Temp (" + units.toString() + ")");
+   }
+
+   private void setTripAirTempStartUnitsLabel()
+   {
+      setTripAirTempStartUnitsLabel(Config.getDefaultTempUnits());
+   }
+
+   private void setTripAirTempStartUnitsLabel(Temperature.Units  units)
+   {
+      getTripAirTempStartLabelField().setText("Start Air Temp (" + units.toString() + ")");
+   }
+
+   private void setTripAirTempEndUnitsLabel()
+   {
+      setTripAirTempEndUnitsLabel(Config.getDefaultTempUnits());
+   }
+
+   private void setTripAirTempEndUnitsLabel(Temperature.Units  units)
+   {
+      getTripAirTempEndLabelField().setText("End Air Temp (" + units.toString() + ")");
+   }
+
+   private void setTripDistanceUnitsLabel()
+   {
+      setTripDistanceUnitsLabel(Config.getDefaultDistanceUnits());
+   }
+
+   private void setTripDistanceUnitsLabel(Distance.Units  units)
+   {
+      getTripDistanceLabelField().setText("Distance (" + units.toString() + ")");
+   }
 
    private void setWindSpeedUnitsLabel()
    {
@@ -2169,25 +2256,42 @@ public class ScrollingActivity
    private void setTripDistanceField(Trip t)
    {
       if((null == t) || (null == t.getDistanceTraveled()))
+      {
          getTripDistanceField().setText("");
+         setTripDistanceUnitsLabel();
+      }
       else
+      {
          getTripDistanceField().setText(t.getDistanceTraveled().valueString());
+         setTripDistanceUnitsLabel(t.getDistanceTraveled().getUnits());
+      }
    }
 
    private void setTripAirTempStartField(Trip t)
    {
       if((null == t) || (null == t.getAirTempStart()))
+      {
          getTripAirTempStartField().setText("");
-      else
+         setTripAirTempStartUnitsLabel();
+      } else
+      {
          getTripAirTempStartField().setText(t.getAirTempStart().valueString());
+         setTripAirTempStartUnitsLabel(t.getAirTempEnd().getUnits());
+      }
    }
 
    private void setTripWaterTempField(Trip t)
    {
       if((null == t) || (null == t.getWaterTemp()))
+      {
          getTripWaterTempField().setText("");
+         setTripWaterTempUnitsLabel();
+      }
       else
+      {
          getTripWaterTempField().setText(t.getWaterTemp().valueString());
+         setTripWaterTempUnitsLabel(t.getWaterTemp().getUnits());
+      }
    }
 
    private void setTripWaterLevelField(Trip t)
@@ -2201,9 +2305,15 @@ public class ScrollingActivity
    private void setTripSecchiField(Trip t)
    {
       if((null == t) || (null == t.getSecchi()))
+      {
          getTripSecchiField().setText("");
+         setTripSecchiUnitsLabel();
+      }
       else
+      {
          getTripSecchiField().setText(t.getSecchi().valueString());
+         setTripSecchiUnitsLabel(t.getSecchi().getUnits());
+      }
    }
 
    private void setTripNotesField(Trip t)
@@ -2220,9 +2330,15 @@ public class ScrollingActivity
       {
          Speed spd = t.getWindRange().getSpeedStart();
          if(null == spd)
+         {
             getTripStartWindSpeedField().setText("");
+            setTripStartWindSpeedUnitsLabel();
+         }
          else
+         {
             getTripStartWindSpeedField().setText(spd.valueString());
+            setTripStartWindSpeedUnitsLabel(spd.getUnits());
+         }
 
          Config.Direction dir = t.getWindRange().getDirectionStart();
          if(null == dir)
@@ -2243,9 +2359,15 @@ public class ScrollingActivity
       {
          Speed spd = t.getWindRange().getSpeedEnd();
          if(null == spd)
+         {
             getTripEndWindSpeedField().setText("");
+            setTripEndWindSpeedUnitsLabel();
+         }
          else
+         {
             getTripEndWindSpeedField().setText(spd.valueString());
+            setTripEndWindSpeedUnitsLabel(spd.getUnits());
+         }
 
          Config.Direction dir = t.getWindRange().getDirectionEnd();
          if(null == dir)
@@ -2296,9 +2418,15 @@ public class ScrollingActivity
    private void setTripAirTempEndField(Trip t)
    {
       if((null == t) || (null == t.getAirTempEnd()))
+      {
          getTripAirTempEndField().setText("");
+         setTripAirTempEndUnitsLabel();
+      }
       else
+      {
          getTripAirTempEndField().setText(t.getAirTempEnd().valueString());
+         setTripAirTempEndUnitsLabel(t.getAirTempEnd().getUnits());
+      }
    }
 
    private void setWhenField(Catch c)
@@ -2670,26 +2798,38 @@ public class ScrollingActivity
    private EditText getTripStartField() { return (EditText) findViewById(R.id.tripStartField); }
    private EditText getTripEndField() { return (EditText) findViewById(R.id.tripEndField); }
    private Spinner getTripTransportField() { return (Spinner) findViewById(R.id.tripTransportField); }
+   private TextView getTripTransportLabelField() { return (TextView) findViewById(R.id.tripTransportLabel); }
    private EditText getTripDistanceField() { return (EditText) findViewById(R.id.tripDistanceField); }
-   private TextView getTripDistanceUnitsField() { return (TextView) findViewById(R.id.tripDistanceUnitsLabel); }
+   private TextView getTripDistanceLabelField() { return (TextView) findViewById(R.id.tripDistanceLabel); }
    private EditText getTripAirTempStartField() { return (EditText) findViewById(R.id.tripAirTempStartField); }
    private EditText getTripAirTempEndField() { return (EditText) findViewById(R.id.tripAirTempEndField); }
-   private TextView getTripAirTempUnitsField() { return (TextView) findViewById(R.id.tripAirTempUnitsLabel); }
+   private TextView getTripAirTempStartLabelField() { return (TextView) findViewById(R.id.tripAirTempStartLabel); }
+   private TextView getTripAirTempEndLabelField() { return (TextView) findViewById(R.id.tripAirTempEndLabel); }
    private EditText getTripWaterTempField() { return (EditText) findViewById(R.id.tripWaterTempField); }
-   private TextView getTripWaterTempUnitsField() { return (TextView) findViewById(R.id.tripWaterTempUnitsLabel); }
+   private TextView getTripWaterTempLabelField() { return (TextView) findViewById(R.id.tripWaterTempLabel); }
    private EditText getTripWaterLevelField() { return (EditText) findViewById(R.id.tripWaterLevelField); }
+   private TextView getTripWaterLevelLabelField() { return (TextView) findViewById(R.id.tripWaterLevelLabel); }
+
    private Spinner getTripWaterClarityField() { return (Spinner) findViewById(R.id.tripWaterClarityField); }
-   private EditText getTripSecchiField() { return (EditText) findViewById(R.id.tripWaterSecchiField); }
-   private TextView getTripSecchiUnitsField() { return (TextView) findViewById(R.id.tripSecchiUnitsLabel); }
+   private TextView getTripWaterClarityLabelField() { return (TextView) findViewById(R.id.tripWaterClarityLabel); }
+
+   private EditText getTripSecchiField() { return (EditText) findViewById(R.id.tripSecchiField); }
+   private TextView getTripSecchiLabelField() { return (TextView) findViewById(R.id.tripSecchiLabel); }
    private Spinner getTripStartWindDirField() { return (Spinner) findViewById(R.id.tripStartWindDirField); }
    private EditText getTripStartWindSpeedField() { return (EditText) findViewById(R.id.tripStartWindSpeedField); }
    private Spinner getTripEndWindDirField() { return (Spinner) findViewById(R.id.tripEndWindDirField); }
    private EditText getTripEndWindSpeedField() { return (EditText) findViewById(R.id.tripEndWindSpeedField); }
-   private TextView getTripEndWindSpeedUnits() { return (TextView) findViewById(R.id.tripEndWindSpeedUnitsLabel); }
-   private TextView getTripStartWindSpeedUnits() { return (TextView) findViewById(R.id.tripStartWindSpeedUnitsLabel); }
+   private TextView getTripEndWindSpeedLabel() { return (TextView) findViewById(R.id.tripEndWindSpeedLabel); }
+   private TextView getTripEndWindDirLabel() { return (TextView) findViewById(R.id.tripEndWindDirLabel); }
+   private TextView getTripEndWindStrengthLabel() { return (TextView) findViewById(R.id.tripEndWindStrengthLabel); }
+   private TextView getTripStartWindSpeedLabel() { return (TextView) findViewById(R.id.tripStartWindSpeedLabel); }
+   private TextView getTripStartWindDirLabel() { return (TextView) findViewById(R.id.tripStartWindDirLabel); }
+   private TextView getTripStartWindStrengthLabel() { return (TextView) findViewById(R.id.tripStartWindStrengthLabel); }
    private Spinner getTripStartWindStrengthField() { return (Spinner) findViewById(R.id.tripStartWindStrengthField); }
    private Spinner getTripEndWindStrengthField() { return (Spinner) findViewById(R.id.tripEndWindStrengthField); }
    private Spinner getTripPrecipField() { return (Spinner) findViewById(R.id.tripPrecipField); }
+   private TextView getTripPrecipLabelField() { return (TextView) findViewById(R.id.tripPrecipLabel); }
+
    private EditText getTripNotesField() { return (EditText) findViewById(R.id.tripNotesField); }
 
    // catch fields
