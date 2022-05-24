@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import androidx.core.app.ActivityCompat;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -327,6 +328,63 @@ public class ScrollingActivity
    {
       initEditors();
       initUnitsLabels();
+      initLabelClickListeners();
+   }
+
+   private void initLabelClickListeners()
+   {
+      // TODO - add catch when and gps fields once those are editable...
+      // TODO - add trip fields once that UI is updated
+
+      setLabelFieldClickListener(getLengthLabelField(), getLengthField());
+      setLabelFieldClickListener(getWeightLabelField(), getWeightField());
+
+      setSpinnerClickListener(getLureTypeLabelField(), getLureTypeField());
+      setSpinnerClickListener(getLureBrandLabelField(), getLureBrandField());
+      setSpinnerClickListener(getLureColorLabelField(), getLureColorField());
+      setSpinnerClickListener(getLureSizeLabelField(), getLureSizeField());
+      setSpinnerClickListener(getTrailerLabelField(), getTrailerField());
+      setSpinnerClickListener(getTrailerColorLabelField(), getTrailerColorField());
+      setSpinnerClickListener(getTrailerSizeLabelField(), getTrailerSizeField());
+
+      setLabelFieldClickListener(getDepthLabelField(), getDepthField());
+      setLabelFieldClickListener(getAirTempLabelField(), getAirTempField());
+      setLabelFieldClickListener(getWaterTempLabelField(), getWaterTempField());
+      setSpinnerClickListener(getWaterClarityLabelField(), getWaterClarityField());
+      setLabelFieldClickListener(getSecchiLabelField(), getSecchiField());
+      setSpinnerClickListener(getStructureLabelField(), getStructureField());
+      setSpinnerClickListener(getCoverLabelField(), getCoverField());
+      setSpinnerClickListener(getPrecipLabelField(), getPrecipField());
+      setLabelFieldClickListener(getWindSpeedLabelField(), getWindSpeedField());
+      setSpinnerClickListener(getWindDirectionLabelField(), getWindDirectionField());
+      setSpinnerClickListener(getWindStrengthLabelField(), getWindStrengthField());
+   }
+
+   private void setSpinnerClickListener(TextView labelField, Spinner editField)
+   {
+      labelField.setOnClickListener(new View.OnClickListener()
+      {
+         @Override
+         public void onClick(View view)
+         {
+            editField.requestFocus();
+            editField.performClick();
+         }
+      });
+   }
+
+   private void setLabelFieldClickListener(TextView labelField, TextView editField)
+   {
+      labelField.setOnClickListener(new View.OnClickListener()
+      {
+         @Override
+         public void onClick(View view)
+         {
+            editField.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(editField, InputMethodManager.SHOW_IMPLICIT);
+         }
+      });
    }
 
    private void initUnitsLabels()
@@ -340,8 +398,10 @@ public class ScrollingActivity
       getTripEndWindSpeedUnits().setText(Config.getDefaultWindSpeedUnits().toString());
 
       // catch units labels
-      getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
-      getWeightUnitsField().setText(Config.getDefaultFishWeightUnits().toString());
+//      getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
+//      getWeightUnitsField().setText(Config.getDefaultFishWeightUnits().toString());
+      setLengthUnitsLabel();
+      setWeightUnitsLabel();
       setDepthUnitsLabel();
       setAirTempUnitsLabel();
       setWaterTempUnitsLabel();
@@ -349,7 +409,8 @@ public class ScrollingActivity
       setWindSpeedUnitsLabel();
    }
 
-   // TODO - "Wind Speed", "Secchi", "Depth, "Air Temp", and "Water Temp" should be resource strings
+   // TODO - "Length", "Weight", "Wind Speed", "Secchi", "Depth, "Air Temp", and "Water Temp"
+   //  should be resource strings
 
    private void setWindSpeedUnitsLabel()
    {
@@ -369,6 +430,26 @@ public class ScrollingActivity
    private void setSecchiUnitsLabel(WaterDepth.Units units)
    {
       getSecchiLabelField().setText("Secchi (" + units.toString() + ")");
+   }
+
+   private void setWeightUnitsLabel()
+   {
+      setWeightUnitsLabel(Config.getDefaultFishWeightUnits());
+   }
+
+   private void setWeightUnitsLabel(FishWeight.Units units)
+   {
+      getWeightLabelField().setText("Weight (" + units.toString() + ")");
+   }
+
+   private void setLengthUnitsLabel()
+   {
+      setLengthUnitsLabel(Config.getDefaultFishLengthUnits());
+   }
+
+   private void setLengthUnitsLabel(FishLength.Units units)
+   {
+      getLengthLabelField().setText("Length (" + units.toString() + ")");
    }
 
    private void setDepthUnitsLabel()
@@ -1281,14 +1362,18 @@ public class ScrollingActivity
       for(int i = 0; i < list.size(); ++i)
          positionMap.put(list.get(i), i);
       ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
-            getContext(), R.layout.support_simple_spinner_dropdown_item, list);
+            getContext(), R.layout.spinner_dropdown_item_centered, list);
+//      ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+//            getContext(), R.layout.support_simple_spinner_dropdown_item, list);
       spinner.setAdapter(spinnerArrayAdapter);
    }
 
    private void initFixedSpinnerItems(Spinner spinner, List<String> items)
    {
       ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
-            getContext(), R.layout.support_simple_spinner_dropdown_item, items);
+            getContext(), R.layout.spinner_dropdown_item_centered, items);
+//      ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+//            getContext(), R.layout.support_simple_spinner_dropdown_item, items);
       spinner.setAdapter(spinnerArrayAdapter);
    }
 
@@ -1338,7 +1423,9 @@ public class ScrollingActivity
       for(int i = 0; i < sortedList.size(); ++i)
          _lureMap.put(sortedList.get(i), i);
       ArrayAdapter<Lure> spinnerArrayAdapter = new ArrayAdapter<>(
-            getContext(), R.layout.support_simple_spinner_dropdown_item, sortedList);
+            getContext(), R.layout.spinner_dropdown_item_centered, sortedList);
+//      ArrayAdapter<Lure> spinnerArrayAdapter = new ArrayAdapter<>(
+//            getContext(), R.layout.support_simple_spinner_dropdown_item, sortedList);
       getLureField().setAdapter(spinnerArrayAdapter);
    }
 
@@ -2252,12 +2339,12 @@ public class ScrollingActivity
       if((null == c) || (null == c.getLength()))
       {
          getLengthField().setText("");
-         getLengthUnitsField().setText(Config.getDefaultFishLengthUnits().toString());
+         setLengthUnitsLabel();
       }
       else
       {
          getLengthField().setText(c.getLength().valueString());
-         getLengthUnitsField().setText(c.getLength().getUnits().toString());
+         setLengthUnitsLabel(c.getLength().getUnits());
       }
    }
 
@@ -2266,12 +2353,12 @@ public class ScrollingActivity
       if((null == c) || (null == c.getWeight()))
       {
          getWeightField().setText("");
-         getWeightUnitsField().setText(Config.getDefaultFishWeightUnits().toString());
+         setWeightUnitsLabel();
       }
       else
       {
          getWeightField().setText(c.getWeight().valueString());
-         getWeightUnitsField().setText(c.getWeight().getUnits().toString());
+         setWeightUnitsLabel(c.getWeight().getUnits());
       }
    }
 
@@ -2610,10 +2697,23 @@ public class ScrollingActivity
    private EditText getGpsField() { return (EditText) findViewById(R.id.gpsField); }
    private Spinner getSpeciesField() { return (Spinner) findViewById(R.id.speciesField); }
    private EditText getLengthField() { return (EditText) findViewById(R.id.lengthField); }
-   private TextView getLengthUnitsField() { return (TextView) findViewById(R.id.lengthUnitsLabel); }
+   private EditText getLengthLabelField() { return (EditText) findViewById(R.id.lengthLabel); }
    private EditText getWeightField() { return (EditText) findViewById(R.id.weightField); }
-   private TextView getWeightUnitsField() { return (TextView) findViewById(R.id.weightUnitsLabel); }
+   private EditText getWeightLabelField() { return (EditText) findViewById(R.id.weightLabel); }
    private Spinner getLureField() { return (Spinner) findViewById(R.id.lureField); }
+   private TextView getLureTypeLabelField() { return (TextView) findViewById(R.id.lureTypeLabel); }
+   private TextView getLureBrandLabelField() { return (TextView) findViewById(R.id.lureBrandLabel); }
+   private TextView getLureColorLabelField() { return (TextView) findViewById(R.id.lureColorLabel); }
+   private TextView getLureSizeLabelField() { return (TextView) findViewById(R.id.lureSizeLabel); }
+   private TextView getTrailerLabelField() { return (TextView) findViewById(R.id.trailerLabel); }
+   private TextView getTrailerColorLabelField() { return (TextView) findViewById(R.id.trailerColorLabel); }
+   private TextView getTrailerSizeLabelField() { return (TextView) findViewById(R.id.trailerSizeLabel); }
+   private TextView getWaterClarityLabelField() { return (TextView) findViewById(R.id.waterClarityLabel); }
+   private TextView getPrecipLabelField() { return (TextView) findViewById(R.id.precipLabel); }
+   private TextView getCoverLabelField() { return (TextView) findViewById(R.id.coverLabel); }
+   private TextView getStructureLabelField() { return (TextView) findViewById(R.id.structureLabel); }
+   private TextView getWindDirectionLabelField() { return (TextView) findViewById(R.id.windDirectionLabel); }
+   private TextView getWindStrengthLabelField() { return (TextView) findViewById(R.id.windStrengthLabel); }
    private Spinner getLureTypeField() { return (Spinner) findViewById(R.id.lureTypeField); }
    private Spinner getLureBrandField() { return (Spinner) findViewById(R.id.lureBrandField); }
    private Spinner getLureColorField() { return (Spinner) findViewById(R.id.lureColorField); }
@@ -2634,7 +2734,6 @@ public class ScrollingActivity
    private Spinner getCoverField() { return (Spinner) findViewById(R.id.coverField); }
    private Spinner getPrecipField() { return (Spinner) findViewById(R.id.precipField); }
    private EditText getWindSpeedField() { return (EditText) findViewById(R.id.windSpeedField); }
-//   private TextView getWindSpeedUnitsField() { return (TextView) findViewById(R.id.windSpeedUnitsLabel); }
    private TextView getWindSpeedLabelField() { return (TextView) findViewById(R.id.windSpeedLabel); }
    private Spinner getWindDirectionField() { return (Spinner) findViewById(R.id.windDirectionField); }
    private Spinner getWindStrengthField() { return (Spinner) findViewById(R.id.windStrengthField); }

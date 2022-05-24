@@ -28,7 +28,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1">
+                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -48,7 +48,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Trip"
                         android:textSize="20sp"
-                        android:textColor="@color/section_title_color"
+                        android:textColor="@color/app_banner_color"
                         android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
@@ -66,8 +66,11 @@
                     android:id="@+id/tripLocationLabel"
                     android:layout_weight="3"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textStyle="bold"
+                    android:background="@null"
+                    android:paddingLeft="5dp"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -548,7 +551,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1">
+                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -568,25 +571,32 @@
                         android:layout_centerHorizontal="true"
                         android:text="Catch"
                         android:textSize="20sp"
-                        android:textColor="@color/section_title_color"
+                        android:textColor="@color/app_banner_color"
                         android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
+
+        <!-- catch timestamp -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="When:"
+                    android:text="When"
                     android:ems="10"
                     android:id="@+id/whenLabel"
                     android:layout_weight="2"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"
+                    android:background="@null"
+                    android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -595,26 +605,31 @@
                     android:id="@+id/whenField"
                     android:layout_weight="1"
                     android:editable="false"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" android:textSize="16sp"/>
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
+                    android:textSize="16sp"/>
         </LinearLayout>
 
+        <!-- GPS -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/list_separator_band_color">
+                android:layout_weight="1">
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="GPS:"
+                    android:text="GPS"
                     android:ems="10"
                     android:id="@+id/gpsLabel"
                     android:layout_weight="3"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusable="false" android:focusableInTouchMode="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"
+                    android:background="@null"
+                    android:paddingLeft="5dp"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -629,7 +644,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1">
+                android:layout_height="match_parent" android:layout_weight="1" android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -654,114 +669,82 @@
             </RelativeLayout>
         </LinearLayout>
 
+        <!-- Species -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="1">
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Species:"
-                    android:ems="10"
-                    android:id="@+id/speciesLabel"
-                    android:layout_weight="3"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"/>
+                android:background="@color/list_separator_band_color">
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/speciesField"
-                    android:layout_weight="2"/>
+                    android:id="@+id/speciesField"/>
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="horizontal"
+        <!-- length & weight -->
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:id="@+id/lengthWeightLayout"
-                android:background="@color/list_separator_band_color">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+             <EditText
+                     android:layout_width="0dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1"
+                     android:inputType="none"
+                     android:text="Length (U)"
+                     android:id="@+id/lengthLabel"
+                     android:focusableInTouchMode="false"
+                     android:focusable="false"
+                     android:textStyle="italic"
+                     android:textSize="12sp"/>
             <EditText
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="none"
-                    android:text="Length:"
-                    android:ems="10"
-                    android:id="@+id/lengthLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            <EditText
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/lengthField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@+id/lengthLabel"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lengthUnitsLabel"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/lengthField"/>
-
-            <EditText
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Weight:"
-                    android:ems="10"
+                    android:text="Weight (U)"
                     android:id="@+id/weightLabel"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:focusableInTouchMode="false" android:focusable="false"
-                    android:textStyle="bold" android:background="@null" android:paddingLeft="5dp"
-                    app:layout_constraintStart_toEndOf="@+id/lengthUnitsLabel"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="15dp"/>
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
             <EditText
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/lengthField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textAlignment="center"
                     android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:id="@+id/weightField"
                     android:imeOptions="actionDone"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@+id/weightLabel"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                    android:text="Units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/weightUnitsLabel"
-                    android:editable="false"
-                    android:textSize="18sp" android:focusableInTouchMode="false" android:focusable="false"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/weightField"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:selectAllOnFocus="true"/>
+             <EditText
+                        android:id="@+id/weightField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textAlignment="center"
+                        android:background="@null"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"
+                        android:textSize="16sp"
+                        android:selectAllOnFocus="true"/>
+        </LinearLayout>
 
         <!-- Lure section -->
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1" android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -789,7 +772,8 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp">
+                android:layout_height="35dp"
+                android:background="@color/list_separator_band_color">
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -801,8 +785,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="2">
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -830,8 +813,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="2">
             <Spinner
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -849,7 +831,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:background="@color/list_separator_band_color">
         <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -877,7 +860,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
             <Spinner
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -895,8 +879,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="3"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="3">
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -936,8 +919,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:weightSum="3"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="3">
             <Spinner
                     android:id="@+id/trailerField"
                     android:layout_width="0dp"
@@ -960,7 +942,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1" android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -989,36 +971,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
             <EditText
+                    android:id="@+id/depthLabel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
                     android:text="Depth (U)"
-                    android:id="@+id/depthLabel"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
                     android:textStyle="italic"
                     android:textSize="12sp"/>
             <EditText
+                    android:id="@+id/airTempLabel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
                     android:text="Air Temp (U)"
-                    android:id="@+id/airTempLabel"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
                     android:textStyle="italic"
                     android:textSize="12sp"/>
             <EditText
+                    android:id="@+id/waterTempLabel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
                     android:text="Water Temp (U)"
-                    android:id="@+id/waterTempLabel"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
                     android:textStyle="italic"
@@ -1028,30 +1011,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
             <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="numberDecimal"
                     android:id="@+id/depthField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"/>
-            <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+            <EditText
                     android:id="@+id/airTempField"
-                    android:imeOptions="actionDone"
-                    android:textSize="16sp"/>
-            <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
-                    android:id="@+id/waterTempField"
                     android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16sp"/>
+            <EditText
+                    android:id="@+id/waterTempField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:selectAllOnFocus="true"
                     android:textSize="16sp"/>
         </LinearLayout>>
 
@@ -1060,8 +1053,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="2">
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -1089,8 +1081,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="2">
             <Spinner
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -1103,6 +1094,9 @@
                     android:inputType="numberDecimal"
                     android:id="@+id/secchiField"
                     android:imeOptions="actionDone"
+                    android:background="@null"
+                    android:textAlignment="center"
+                    android:selectAllOnFocus="true"
                     android:textSize="16sp"/>
         </LinearLayout>>
 
@@ -1111,7 +1105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -1139,7 +1134,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
             <Spinner
                     android:id="@+id/structureField"
                     android:layout_width="0dp"
@@ -1157,8 +1153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="1"
-                android:background="@color/list_separator_band_color">
+                android:weightSum="1">
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -1175,8 +1170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:background="@color/list_separator_band_color">
+            android:weightSum="1">
             <Spinner
                 android:id="@+id/precipField"
                 android:layout_width="0dp"
@@ -1189,7 +1183,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -1228,7 +1223,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:background="@color/list_separator_band_color">
             <EditText
                     android:id="@+id/windSpeedField"
                     android:layout_width="0dp"
@@ -1236,6 +1232,9 @@
                     android:layout_weight="1"
                     android:inputType="numberDecimal"
                     android:imeOptions="actionDone"
+                    android:background="@null"
+                    android:textAlignment="center"
+                    android:selectAllOnFocus="true"
                     android:textSize="16sp"/>
             <Spinner
                     android:id="@+id/windDirectionField"
@@ -1254,7 +1253,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1" android:layout_marginTop="30dp">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

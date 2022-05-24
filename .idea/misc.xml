@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../.gradle/caches/transforms-3/4f7fde6443b19e6ece3941e32d79f216/transformed/appcompat-1.2.0/res/layout/support_simple_spinner_dropdown_item.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.101953125" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.1816123188405797" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.21671597633136094" />
+        <entry key="app/src/main/res/layout/spinner_dropdown_item_centered.xml" value="0.11322463768115942" />
         <entry key="app/src/main/res/menu/menu_scrolling.xml" value="0.1" />
       </map>
     </option>
