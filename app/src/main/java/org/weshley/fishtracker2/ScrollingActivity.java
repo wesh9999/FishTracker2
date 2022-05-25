@@ -1,6 +1,7 @@
 package org.weshley.fishtracker2;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +10,7 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
@@ -18,9 +19,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import org.weshley.fishtracker2.databinding.ActivityScrollingBinding;
 
 import java.util.ArrayList;
@@ -64,8 +62,10 @@ public class ScrollingActivity
       
       Toolbar toolbar = _binding.toolbar;
       setSupportActionBar(toolbar);
-      CollapsingToolbarLayout toolBarLayout = _binding.toolbarLayout;
-      toolBarLayout.setTitle(getTitle());
+//      CollapsingToolbarLayout toolBarLayout = _binding.toolbarLayout;
+//      toolBarLayout.setTitle(getTitle());
+      initToolbarAppearance();
+      setToolbarTitle(getString(R.string.no_trip_message));
 
       FloatingActionButton fab = _binding.fab;
       fab.setOnClickListener(new View.OnClickListener()
@@ -122,10 +122,34 @@ public class ScrollingActivity
          dumpTripData();
          return true;
       }
+      else if(id == R.id.action_scroll_test)
+      {
+         _binding.getRoot().scrollTo(0, 0);
+         return true;
+      }
       else
       {
          return super.onOptionsItemSelected(item);
       }
+   }
+
+   private void setToolbarTitle(String title)
+   {
+      CollapsingToolbarLayout toolBarLayout = _binding.toolbarLayout;
+      if((null == title) || title.isEmpty())
+         toolBarLayout.setTitle(getTitle());
+      else
+         toolBarLayout.setTitle(title);
+   }
+
+   @SuppressLint("RestrictedApi")
+   private void initToolbarAppearance()
+   {
+      CollapsingToolbarLayout toolBarLayout = _binding.toolbarLayout;
+      toolBarLayout.setExpandedTitleTextAppearance(R.style.TitlebarStyle);
+      toolBarLayout.setMaxLines(5);
+//      toolBarLayout.setExpandedTitleGravity(Gravity.CENTER);
+          // TODO - figure out how to center the text.  the above doesn't work....
    }
 
    private void dumpTripData()
@@ -202,9 +226,9 @@ public class ScrollingActivity
    private void updateTripSummary(Trip t)
    {
       if(null == t)
-         getTripInfoField().setText(R.string.no_trip_message);
+         setToolbarTitle(getString(R.string.no_trip_message));
       else
-         getTripInfoField().setText(t.getMultilineLabel());
+         setToolbarTitle(t.getMultilineLabel());
    }
 
    private void newCatch()
@@ -245,7 +269,7 @@ public class ScrollingActivity
 
    private void clearTripFields()
    {
-      getTripInfoField().setText(R.string.no_trip_message);
+      setToolbarTitle(getString(R.string.no_trip_message));
       getTripLocationField().setSelection(0);
       getTripStartField().setText("");
       getTripEndField().setText("");
@@ -296,7 +320,6 @@ public class ScrollingActivity
 
    private void clearCatchFields()
    {
-//      getTripInfoField().setText("");
       getWhenField().setText("");
       getGpsField().setText("");
       getSpeciesField().setSelection(0);
@@ -2793,7 +2816,6 @@ public class ScrollingActivity
    }
 
    // trip fields
-   private EditText getTripInfoField() { return (EditText) findViewById(R.id.tripInfoField); }
    private Spinner getTripLocationField() { return (Spinner) findViewById(R.id.tripLocationField); }
    private EditText getTripStartField() { return (EditText) findViewById(R.id.tripStartField); }
    private EditText getTripEndField() { return (EditText) findViewById(R.id.tripEndField); }

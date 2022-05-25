@@ -14,6 +14,7 @@
             android:layout_height="wrap_content">
 
         <!-- Trip summary -->
+<!--
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,6 +30,7 @@
                 android:textStyle="bold"
                 android:focusableInTouchMode="false"
                 android:focusable="false"/>
+-->
 
         <!-- Trip info -->
         <LinearLayout
@@ -65,7 +67,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:background="@color/list_separator_band_color">
             <Spinner
                  android:id="@+id/tripLocationField"
@@ -104,7 +106,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
             <EditText
@@ -167,7 +169,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:background="@color/list_separator_band_color">
@@ -221,7 +223,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
             <EditText
@@ -280,7 +282,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:background="@color/list_separator_band_color">
@@ -339,7 +341,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
             <Spinner
@@ -382,7 +384,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="1"
                 android:background="@color/list_separator_band_color">
@@ -435,7 +437,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
             <EditText
@@ -504,7 +506,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 android:background="@color/list_separator_band_color">
@@ -535,25 +537,30 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_weight="0"
-                android:layout_marginEnd="10dp">
-            <EditText
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="Notes:"
-                    android:ems="10"
-                    android:id="@+id/tripNotesLabel"
-                    android:layout_weight="0"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:textStyle="bold"
-                    android:background="@null"
-                    android:paddingLeft="5dp"
-                    android:layout_width="80dp"/>
-            />
+                android:layout_height="match_parent"
+                android:layout_weight="1" android:layout_marginTop="30dp">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/section_title_color"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:background="@android:color/white"
+                        android:layout_centerHorizontal="true"
+                        android:text="Notes"
+                        android:textSize="16sp"
+                        android:textColor="@color/section_title_color"
+                        android:textStyle="italic"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -564,11 +571,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
+                    android:background="@null"
                     android:ems="10"
                     android:id="@+id/tripNotesField"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:textSize="16sp" android:paddingLeft="50dp"/>
+                    android:textSize="16sp"
+                    android:paddingLeft="50dp"/>
         </LinearLayout>
 
         <!-- catch data -->
@@ -627,7 +636,6 @@
                     android:ems="10"
                     android:id="@+id/whenField"
                     android:layout_weight="1"
-                    android:editable="false"
                     android:background="@null"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
                     android:textSize="16sp"/>
@@ -698,7 +706,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:background="@color/list_separator_band_color">
             <Spinner
                     android:layout_width="match_parent"
@@ -737,7 +745,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
             <EditText
@@ -797,7 +805,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:background="@color/list_separator_band_color">
             <Spinner
                     android:layout_width="match_parent"
@@ -836,7 +844,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
             <Spinner
@@ -884,7 +892,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:weightSum="2"
                 android:background="@color/list_separator_band_color">
             <Spinner
@@ -943,7 +951,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:weightSum="3">
             <Spinner
                     android:id="@+id/trailerField"
@@ -1034,7 +1042,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 android:background="@color/list_separator_band_color">
@@ -1104,7 +1112,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
             <Spinner
@@ -1157,7 +1165,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:background="@color/list_separator_band_color">
@@ -1193,7 +1201,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:orientation="horizontal"
             android:weightSum="1">
             <Spinner
@@ -1246,7 +1254,7 @@
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 android:background="@color/list_separator_band_color">
@@ -1298,7 +1306,8 @@
                         android:layout_centerHorizontal="true"
                         android:text="Notes"
                         android:textSize="16sp"
-                        android:textColor="@color/section_title_color" android:textStyle="italic"/>
+                        android:textColor="@color/section_title_color"
+                        android:textStyle="italic"/>
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -1310,11 +1319,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
+                    android:background="@null"
                     android:ems="10"
                     android:id="@+id/notesField"
                     android:layout_weight="1"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:editable="false" android:textSize="16sp" android:paddingLeft="50dp"/>
+                    android:editable="false"
+                    android:textSize="16sp"
+                    android:paddingLeft="50dp"/>
         </LinearLayout>
 
     </LinearLayout>

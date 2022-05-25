@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+// NOTE:  Files are ending up in /Android/data/org.weshley.fishtracker2/files/Downloads/
+
 public class TripLogger
 {
    private static TripLogger INSTANCE = new TripLogger();

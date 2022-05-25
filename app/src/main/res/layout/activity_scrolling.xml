@@ -22,8 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:toolbarId="@+id/toolbar"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="@color/app_banner_color" android:background="@color/app_banner_color">
+                app:contentScrim="@color/app_banner_color" android:background="@color/app_banner_color"
+                app:layout_scrollFlags="exitUntilCollapsed"
+                app:expandedTitleGravity="center_vertical|center_horizontal">
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -31,7 +32,8 @@
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/Theme.FishTracker2.PopupOverlay"
-                    android:background="@color/app_banner_color"/>
+                    android:background="@color/app_banner_color"
+                    app:titleTextAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
