@@ -13,25 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <!-- Trip summary -->
-<!--
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:gravity="start|top"
-                android:ems="10"
-                android:id="@+id/tripInfoField"
-                android:editable="false"
-                android:singleLine="false"
-                android:text="@string/no_trip_message"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:focusableInTouchMode="false"
-                android:focusable="false"/>
--->
-
         <!-- Trip info -->
         <LinearLayout
                 android:orientation="horizontal"
@@ -70,9 +51,10 @@
                 android:layout_height="25dp"
                 android:background="@color/list_separator_band_color">
             <Spinner
-                 android:id="@+id/tripLocationField"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
+                    android:id="@+id/tripLocationField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- trip start & end time -->
@@ -177,7 +159,8 @@
                     android:id="@+id/tripTransportField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <EditText
                     android:id="@+id/tripDistanceField"
                     android:layout_width="0dp"
@@ -348,7 +331,8 @@
                     android:id="@+id/tripWaterClarityField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <EditText
                     android:id="@+id/tripSecchiField"
                     android:layout_width="0dp"
@@ -392,7 +376,8 @@
                     android:id="@+id/tripPrecipField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- trip start wind -->
@@ -455,12 +440,14 @@
                     android:id="@+id/tripStartWindDirField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:id="@+id/tripStartWindStrengthField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- trip end wind -->
@@ -525,12 +512,14 @@
                     android:id="@+id/tripEndWindDirField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:id="@+id/tripEndWindStrengthField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- trip notes -->
@@ -711,7 +700,8 @@
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/speciesField"/>
+                    android:id="@+id/speciesField"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- length & weight -->
@@ -720,17 +710,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
-             <EditText
-                     android:layout_width="0dp"
-                     android:layout_height="match_parent"
-                     android:layout_weight="1"
-                     android:inputType="none"
-                     android:text="Length (U)"
-                     android:id="@+id/lengthLabel"
-                     android:focusableInTouchMode="false"
-                     android:focusable="false"
-                     android:textStyle="italic"
-                     android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Length (U)"
+                    android:id="@+id/lengthLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -759,17 +749,17 @@
                     android:imeOptions="actionDone"
                     android:textSize="16sp"
                     android:selectAllOnFocus="true"/>
-             <EditText
-                        android:id="@+id/weightField"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:background="@null"
-                        android:inputType="numberDecimal"
-                        android:imeOptions="actionDone"
-                        android:textSize="16sp"
-                        android:selectAllOnFocus="true"/>
+            <EditText
+                    android:id="@+id/weightField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:background="@null"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:textSize="16sp"
+                    android:selectAllOnFocus="true"/>
         </LinearLayout>
 
         <!-- Lure section -->
@@ -810,7 +800,8 @@
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/lureField"/>
+                    android:id="@+id/lureField"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- Lure type & brand -->
@@ -851,43 +842,46 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureTypeField"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureBrandField"
-                    android:layout_weight="1"/>
-        </LinearLayout>>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
+        </LinearLayout>
+        >
 
         <!-- Lure color & size -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:background="@color/list_separator_band_color">
-        <EditText
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="Color"
-                android:id="@+id/lureColorLabel"
-                android:focusableInTouchMode="false"
-                android:focusable="false"
-                android:textStyle="italic"
-                android:textSize="12sp"/>
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="Size"
-                android:id="@+id/lureSizeLabel"
-                android:focusableInTouchMode="false"
-                android:focusable="false"
-                android:textStyle="italic"
-                android:textSize="12sp"/>
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:background="@color/list_separator_band_color">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Color"
+                    android:id="@+id/lureColorLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Size"
+                    android:id="@+id/lureSizeLabel"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:textStyle="italic"
+                    android:textSize="12sp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -899,12 +893,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureColorField"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/lureSizeField"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- Lure trailer, trailer color, & trailer size -->
@@ -957,17 +953,20 @@
                     android:id="@+id/trailerField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:id="@+id/trailerColorField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:id="@+id/trailerSizeField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- Environment section -->
@@ -1079,7 +1078,8 @@
                     android:background="@null"
                     android:selectAllOnFocus="true"
                     android:textSize="16sp"/>
-        </LinearLayout>>
+        </LinearLayout>
+        >
 
         <!-- Catch water clarity & secchi -->
         <LinearLayout
@@ -1119,7 +1119,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:id="@+id/waterClarityField"/>
+                    android:id="@+id/waterClarityField"
+                    android:spinnerMode="dialog"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -1131,7 +1132,8 @@
                     android:textAlignment="center"
                     android:selectAllOnFocus="true"
                     android:textSize="16sp"/>
-        </LinearLayout>>
+        </LinearLayout>
+        >
 
         <!-- Structure & cover fields -->
         <LinearLayout
@@ -1173,13 +1175,16 @@
                     android:id="@+id/structureField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:id="@+id/coverField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-        </LinearLayout>>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
+        </LinearLayout>
+        >
 
         <!-- precip field -->
         <LinearLayout
@@ -1200,15 +1205,16 @@
                     android:textSize="12sp"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
             <Spinner
-                android:id="@+id/precipField"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                    android:id="@+id/precipField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- catch wind fields -->
@@ -1273,12 +1279,14 @@
                     android:id="@+id/windDirectionField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
             <Spinner
                     android:id="@+id/windStrengthField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
         </LinearLayout>
 
         <!-- Catch notes section -->

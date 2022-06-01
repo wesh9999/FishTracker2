@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -124,7 +126,15 @@ public class ScrollingActivity
       }
       else if(id == R.id.action_scroll_test)
       {
-         _binding.getRoot().scrollTo(0, 0);
+         NestedScrollView v = findScrollView();
+         if(null != v)
+         {
+            System.out.println("!!!!!!!!!!!! scrolling");
+//            View sp = getSpeciesField();
+//            v.requestChildFocus(getTripNotesField(), getTripNotesField());
+//            v.pageScroll(View.FOCUS_DOWN);
+            v.scrollTo(0, 2400);
+         }
          return true;
       }
       else
@@ -133,10 +143,21 @@ public class ScrollingActivity
       }
    }
 
+   private NestedScrollView findScrollView()
+   {
+      for(int i = 0; i < _binding.getRoot().getChildCount(); ++i)
+      {
+         View c = _binding.getRoot().getChildAt(i);
+         if(c instanceof NestedScrollView)
+            return (NestedScrollView) c;
+      }
+      return null;
+   }
+
    private void setToolbarTitle(String title)
    {
       CollapsingToolbarLayout toolBarLayout = _binding.toolbarLayout;
-      if((null == title) || title.isEmpty())
+       if((null == title) || title.isEmpty())
          toolBarLayout.setTitle(getTitle());
       else
          toolBarLayout.setTitle(title);
@@ -237,6 +258,17 @@ public class ScrollingActivity
       updateCatchFields(getCurrentTrip().newCatch());
       enableCatchControls(true);
       updateTripSummary(getCurrentTrip()); // to update the catch counter...
+
+      // this is a bit of a hack, but necessary to scroll so catch fields are visible
+      NestedScrollView v = findScrollView();
+      if(null != v)
+      {
+//         v.requestChildFocus(getTripNotesField(), getTripNotesField());
+//         v.pageScroll(View.FOCUS_DOWN);
+         v.scrollTo(0, 2400);
+            // TODO - how can i get the position of the catch fields programatically
+      }
+
       getSpeciesField().performClick();
    }
 

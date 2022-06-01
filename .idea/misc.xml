@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.16614583333333333" />
         <entry key="../../.gradle/caches/transforms-3/4f7fde6443b19e6ece3941e32d79f216/transformed/appcompat-1.2.0/res/layout/support_simple_spinner_dropdown_item.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.1" />

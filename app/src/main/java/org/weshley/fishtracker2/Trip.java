@@ -361,7 +361,7 @@ public class Trip
    public String getMultilineLabel()
    {
       String catchLabel = _catches.size() == 1 ? " catch" : " catches";
-      return (_location == null ? "" : "----- " + _location + " -----\n\n")
+      return (_location == null ? "" : "<----- " + _location + " ----->\n\n")
          + Config.formatTimestamp(_startTime) + "\n\n"
          + _catches.size() + catchLabel;
    }
