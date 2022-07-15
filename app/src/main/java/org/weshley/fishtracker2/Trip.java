@@ -317,10 +317,17 @@ public class Trip
       return _startTime;
    }
 
+   public void setStartTime(Date dt)
+   {
+      _startTime = dt;
+   }
+
    public Date getEndTime()
    {
       return _endTime;
    }
+
+   public void setEndTime(Date dt) { _endTime = dt; }
 
    public void endTrip()
    {

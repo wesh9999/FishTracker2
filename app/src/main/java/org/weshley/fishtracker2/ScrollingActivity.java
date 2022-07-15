@@ -2,15 +2,17 @@ package org.weshley.fishtracker2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.text.format.DateFormat;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -21,12 +23,10 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.snackbar.Snackbar;
 import org.weshley.fishtracker2.databinding.ActivityScrollingBinding;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ScrollingActivity
    extends AppCompatActivity
@@ -34,6 +34,7 @@ public class ScrollingActivity
    private int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
 
    private List<Trip> _trips = new ArrayList<>();
+   private Trip _currentTrip = null;
    private HashMap<String,Integer> _tripLocationMap;
    private HashMap<String,Integer> _tripTransportMap;
    private HashMap<String,Integer> _tripWaterClarityMap;
@@ -105,8 +106,8 @@ public class ScrollingActivity
       //noinspection SimplifiableIfStatement
       if(id == R.id.action_start_trip)
       {
-         startTrip();
-         getTripLocationField().performClick();
+         if(startTrip())
+            getTripLocationField().performClick();
          return true;
       }
       else if(id == R.id.action_end_trip)
@@ -180,11 +181,12 @@ public class ScrollingActivity
          new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
          EXTERNAL_STORAGE_PERMISSION_CODE);
 
-      // NOTE:  These files are ending up in /Android/data/org.weshley.fishtracker2/files/Downloads/
-      TripLogger.instance().setDestinationFolder(
-         this.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
       try
       {
+         // NOTE:  These files are ending up in /Android/data/org.weshley.fishtracker2/files/Downloads/
+         TripLogger.instance().setDestinationFolder(
+            this.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+         TripLogger.instance().writeConfig();
          for(Trip t : _trips)
             TripLogger.instance().writeTrip(t);
          Toast.makeText(this, "Trips stored successfully", Toast.LENGTH_SHORT).show();
@@ -200,30 +202,40 @@ public class ScrollingActivity
 
    private Trip getCurrentTrip()
    {
+      // TODO - currently, the last trip is the active trip.  will need to fix this once i can navigate through trips
+      return _currentTrip;
+/*
       if(_trips.isEmpty())
          return null;
-      Trip lastTrip = _trips.get(_trips.size() - 1);
+      else
+         return _trips.get(_trips.size() - 1);
+ */
+/*
+      Trip lastTrip =
       if(lastTrip.isEnded())
          return null;
       else
          return lastTrip;
+ */
    }
 
-   private void startTrip()
+   private boolean startTrip()
    {
       if(null == getCurrentTrip())
       {
          Trip t = Trip.createNewTrip(Trip.getMostRecentTrip());
          _trips.add(t);
-         t.setLocation("Lake Hartwell");  // TODO - remove this
+         _currentTrip = t;
          updateTripFields(t);
          enableTripControls(true);
+         updateMenuState();
+         return true;
       }
       else
       {
          showMessage("Trip has already been started");
+         return false;
       }
-      updateMenuState();
    }
 
    private void endTrip()
@@ -236,6 +248,7 @@ public class ScrollingActivity
       }
 
       t.endTrip();
+      _currentTrip = null;
       clearCatchFields();
       clearTripFields();
       enableCatchControls(false);
@@ -254,7 +267,8 @@ public class ScrollingActivity
 
    private void newCatch()
    {
-      startTrip();
+      if(null == getCurrentTrip())
+         startTrip();
       updateCatchFields(getCurrentTrip().newCatch());
       enableCatchControls(true);
       updateTripSummary(getCurrentTrip()); // to update the catch counter...
@@ -266,7 +280,7 @@ public class ScrollingActivity
 //         v.requestChildFocus(getTripNotesField(), getTripNotesField());
 //         v.pageScroll(View.FOCUS_DOWN);
          v.scrollTo(0, 2400);
-            // TODO - how can i get the position of the catch fields programatically
+            // TODO - how can i get the position of the catch fields programmatically?
       }
 
       getSpeciesField().performClick();
@@ -626,9 +640,9 @@ public class ScrollingActivity
 
    private void initEditors()
    {
-      // TODO - configure datetime editors for trip & catch start/end fields
-
       // trip fields
+      initTripStartTimeEditor();
+      initTripEndTimeEditor();
       initTripLocationEditor();
       initTripTransportEditor();
       initTripDistanceEditor();
@@ -649,6 +663,7 @@ public class ScrollingActivity
 
       // catch fields
       initSpeciesEditor();
+      initWhenEditor();
       initLengthEditor();
       initWeightEditor();
       initLureEditor();
@@ -732,6 +747,156 @@ public class ScrollingActivity
       // TODO - add most recent locations (maybe last 5 from all trips?) plus a separator at top of list
       _tripLocationMap = new HashMap<>();
       initSpinnerItems(getTripLocationField(), Config.getAllLocations(), _tripLocationMap);
+   }
+
+   private void initTripStartTimeEditor()
+   {
+      TextView startView = getTripStartField();
+      final Activity me = this;
+
+      startView.setOnClickListener(new View.OnClickListener()
+      {
+         @Override
+         public void onClick(View v)
+         {
+            Date start = getCurrentTrip().getStartTime();
+            if(null == start)
+               start = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(start);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+
+            DatePickerDialog picker = new DatePickerDialog(
+               me,
+               new DatePickerDialog.OnDateSetListener()
+                  {
+                     @Override
+                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                     {
+                        int hours = cal.get(Calendar.HOUR_OF_DAY);
+                        int minutes = cal.get(Calendar.MINUTE);
+                        int seconds = cal.get(Calendar.SECOND);
+                        cal.set(year, monthOfYear, dayOfMonth, hours, minutes, seconds);
+                        Date newStart = cal.getTime();
+                        getCurrentTrip().setStartTime(newStart);
+                        setTripStartField(getCurrentTrip());
+                        updateTripSummary(getCurrentTrip());
+                        openTripStartTimeEditor();
+                     }
+                  },
+                  year, month, day);
+            picker.show();
+         }
+      });
+   }
+
+   private void openTripStartTimeEditor()
+   {
+      Activity me = this;
+      Date start = getCurrentTrip().getStartTime();
+      if(null == start)
+         start = new Date();
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(start);
+      int hours = cal.get(Calendar.HOUR_OF_DAY);
+      int minutes = cal.get(Calendar.MINUTE);
+
+      TimePickerDialog picker = new TimePickerDialog(
+         me,
+         new TimePickerDialog.OnTimeSetListener()
+         {
+            @Override
+            public void onTimeSet(TimePicker view, int hours, int minutes)
+            {
+               int day = cal.get(Calendar.DAY_OF_MONTH);
+               int month = cal.get(Calendar.MONTH);
+               int year = cal.get(Calendar.YEAR);
+               int seconds = 0; /* cal.get(Calendar.SECOND)*/
+               cal.set(year, month, day, hours, minutes, seconds);
+               Date newStart = cal.getTime();
+               getCurrentTrip().setStartTime(newStart);
+               setTripStartField(getCurrentTrip());
+               updateTripSummary(getCurrentTrip());
+            }
+         },
+         hours, minutes, DateFormat.is24HourFormat(me));
+      picker.show();
+   }
+
+   private void initTripEndTimeEditor()
+   {
+      final Activity me = this;
+      TextView endView = getTripEndField();
+
+      endView.setOnClickListener(new View.OnClickListener()
+      {
+         @Override
+         public void onClick(View v)
+         {
+            Date end = getCurrentTrip().getEndTime();
+            if(null == end)
+               end = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(end);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+
+            DatePickerDialog picker = new DatePickerDialog(
+               me,
+               new DatePickerDialog.OnDateSetListener()
+               {
+                  @Override
+                  public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                  {
+                     int hours = cal.get(Calendar.HOUR_OF_DAY);
+                     int minutes = cal.get(Calendar.MINUTE);
+                     int seconds = cal.get(Calendar.SECOND);
+                     cal.set(year, monthOfYear, dayOfMonth, hours, minutes, seconds);
+                     Date newEnd = cal.getTime();
+                     getCurrentTrip().setEndTime(newEnd);
+                     setTripEndField(getCurrentTrip());
+                     openTripEndTimeEditor();
+                  }
+               },
+               year, month, day);
+            picker.show();
+         }
+      });
+   }
+
+   private void openTripEndTimeEditor()
+   {
+      Activity me = this;
+      Date end = getCurrentTrip().getEndTime();
+      if(null == end)
+         end = new Date();
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(end);
+      int hours = cal.get(Calendar.HOUR_OF_DAY);
+      int minutes = cal.get(Calendar.MINUTE);
+
+      TimePickerDialog picker = new TimePickerDialog(
+         me,
+         new TimePickerDialog.OnTimeSetListener()
+         {
+            @Override
+            public void onTimeSet(TimePicker view, int hours, int minutes)
+            {
+               int day = cal.get(Calendar.DAY_OF_MONTH);
+               int month = cal.get(Calendar.MONTH);
+               int year = cal.get(Calendar.YEAR);
+               int seconds = 0; /* cal.get(Calendar.SECOND)*/
+               cal.set(year, month, day, hours, minutes, seconds);
+               Date newEnd = cal.getTime();
+               getCurrentTrip().setEndTime(newEnd);
+               setTripEndField(getCurrentTrip());
+            }
+         },
+         hours, minutes, DateFormat.is24HourFormat(me));
+      picker.show();
    }
 
    private void initTripLocationEditor()
@@ -1356,6 +1521,80 @@ public class ScrollingActivity
             c.setWindSpeed(spd);
          }
       });
+   }
+
+   private void initWhenEditor()
+   {
+      TextView view = getWhenField();
+      final Activity me = this;
+
+      view.setOnClickListener(new View.OnClickListener()
+      {
+         @Override
+         public void onClick(View v)
+         {
+            Date dt = getCurrentCatch().getTimestamp();
+            if(null == dt)
+               dt = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dt);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+
+            DatePickerDialog picker = new DatePickerDialog(
+                  me,
+                  new DatePickerDialog.OnDateSetListener()
+                  {
+                     @Override
+                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                     {
+                        int hours = cal.get(Calendar.HOUR_OF_DAY);
+                        int minutes = cal.get(Calendar.MINUTE);
+                        int seconds = cal.get(Calendar.SECOND);
+                        cal.set(year, monthOfYear, dayOfMonth, hours, minutes, seconds);
+                        Date newDt = cal.getTime();
+                        getCurrentCatch().setTimestamp(newDt);
+                        setWhenField(getCurrentCatch());
+                        openWhenTimeEditor();
+                     }
+                  },
+                  year, month, day);
+            picker.show();
+         }
+      });
+   }
+
+   private void openWhenTimeEditor()
+   {
+      Activity me = this;
+      Date dt = getCurrentCatch().getTimestamp();
+      if(null == dt)
+         dt =  new Date();
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(dt);
+      int hours = cal.get(Calendar.HOUR_OF_DAY);
+      int minutes = cal.get(Calendar.MINUTE);
+
+      TimePickerDialog picker = new TimePickerDialog(
+            me,
+            new TimePickerDialog.OnTimeSetListener()
+            {
+               @Override
+               public void onTimeSet(TimePicker view, int hours, int minutes)
+               {
+                  int day = cal.get(Calendar.DAY_OF_MONTH);
+                  int month = cal.get(Calendar.MONTH);
+                  int year = cal.get(Calendar.YEAR);
+                  int seconds = 0; /* cal.get(Calendar.SECOND)*/
+                  cal.set(year, month, day, hours, minutes, seconds);
+                  Date newDt = cal.getTime();
+                  getCurrentCatch().setTimestamp(newDt);
+                  setWhenField(getCurrentCatch());
+               }
+            },
+            hours, minutes, DateFormat.is24HourFormat(me));
+      picker.show();
    }
 
    private void initLengthEditor()
@@ -2841,16 +3080,14 @@ public class ScrollingActivity
 
    private void showMessage(String msg)
    {
-      Log.i("APP MESSAGE", msg);
-      // FIXME - how do i get the view???
-      //Snackbar.make(null, msg, Snackbar.LENGTH_LONG)
-      //        .setAction("Action", null).show();
+      Snackbar.make(_binding.getRoot(), msg, Snackbar.LENGTH_LONG)
+              .setAction("Action", null).show();
    }
 
    // trip fields
    private Spinner getTripLocationField() { return (Spinner) findViewById(R.id.tripLocationField); }
-   private EditText getTripStartField() { return (EditText) findViewById(R.id.tripStartField); }
-   private EditText getTripEndField() { return (EditText) findViewById(R.id.tripEndField); }
+   private TextView getTripStartField() { return (TextView) findViewById(R.id.tripStartField); }
+   private TextView getTripEndField() { return (TextView) findViewById(R.id.tripEndField); }
    private Spinner getTripTransportField() { return (Spinner) findViewById(R.id.tripTransportField); }
    private TextView getTripTransportLabelField() { return (TextView) findViewById(R.id.tripTransportLabel); }
    private EditText getTripDistanceField() { return (EditText) findViewById(R.id.tripDistanceField); }
@@ -2863,10 +3100,8 @@ public class ScrollingActivity
    private TextView getTripWaterTempLabelField() { return (TextView) findViewById(R.id.tripWaterTempLabel); }
    private EditText getTripWaterLevelField() { return (EditText) findViewById(R.id.tripWaterLevelField); }
    private TextView getTripWaterLevelLabelField() { return (TextView) findViewById(R.id.tripWaterLevelLabel); }
-
    private Spinner getTripWaterClarityField() { return (Spinner) findViewById(R.id.tripWaterClarityField); }
    private TextView getTripWaterClarityLabelField() { return (TextView) findViewById(R.id.tripWaterClarityLabel); }
-
    private EditText getTripSecchiField() { return (EditText) findViewById(R.id.tripSecchiField); }
    private TextView getTripSecchiLabelField() { return (TextView) findViewById(R.id.tripSecchiLabel); }
    private Spinner getTripStartWindDirField() { return (Spinner) findViewById(R.id.tripStartWindDirField); }
@@ -2883,11 +3118,10 @@ public class ScrollingActivity
    private Spinner getTripEndWindStrengthField() { return (Spinner) findViewById(R.id.tripEndWindStrengthField); }
    private Spinner getTripPrecipField() { return (Spinner) findViewById(R.id.tripPrecipField); }
    private TextView getTripPrecipLabelField() { return (TextView) findViewById(R.id.tripPrecipLabel); }
-
    private EditText getTripNotesField() { return (EditText) findViewById(R.id.tripNotesField); }
 
    // catch fields
-   private EditText getWhenField() { return (EditText) findViewById(R.id.whenField); }
+   private TextView getWhenField() { return (TextView) findViewById(R.id.whenField); }
    private EditText getGpsField() { return (EditText) findViewById(R.id.gpsField); }
    private Spinner getSpeciesField() { return (Spinner) findViewById(R.id.speciesField); }
    private EditText getLengthField() { return (EditText) findViewById(R.id.lengthField); }

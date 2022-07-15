@@ -102,6 +102,34 @@ public class Config
    private static Set<String> _allTrailerSizes = new TreeSet<>();
    private static List<String> _allLureColors = new ArrayList<>();
 
+   public static void dumpData(StringBuilder sb)
+   {
+      sb.append(toXml());
+   }
+
+   public static String toXml()
+   {
+      // NOTE:  Tried a few ways to use std java libraries to format the xml nicely, but nothing seemed to
+      // work very well so doing it myself.
+      StringBuilder sb = new StringBuilder();
+      sb.append("<config\n");
+      write("locations", getAllLocations(), sb);
+      write("transports", getAllTransports(), sb);
+      write("species", getAllSpecies(), sb);
+      write("structures", getAllStructures(), sb);
+      write("covers", getAllCovers(), sb);
+      write("lureTypes", getAllLureTypes(), sb);
+      write("lureBrands", getAllLureBrands(), sb);
+      write("lureSizes", getAllLureSizes(), sb);
+      write("lureColors", getAllLureColors(), sb);
+      write("trailerTypes", getAllTrailerTypes(), sb);
+      write("trailerSizes", getAllTrailerSizes(), sb);
+      sb.append("</config>\n");
+
+// TODO - write most recent lists
+      return sb.toString();
+   }
+
    public static void addLure(Lure l)
    {
       if((null == l) || (l == Lure.NULL_LURE))
@@ -346,4 +374,21 @@ public class Config
 
    public static Distance.Units getDefaultDistanceUnits() { return Distance.Units.m; }
    public static Temperature.Units getDefaultTempUnits() { return Temperature.Units.F; }
+
+   private static void write(String label, Collection<String> data, StringBuilder sb)
+   {
+      sb.append("   <").append(label).append(">\n");
+      sb.append("      elements=\"");
+      boolean needSep = false;
+      for(String s : data)
+      {
+         if(needSep)
+            sb.append('|');
+         needSep = true;
+         sb.append(Utils.toXmlValue(s));
+      }
+      sb.append("\"\n");
+      sb.append("   </").append(label).append(">\n");
+   }
+
 }

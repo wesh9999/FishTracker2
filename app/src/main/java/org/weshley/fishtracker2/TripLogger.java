@@ -29,10 +29,26 @@ public class TripLogger
    }
 
    public void setDestinationFolder(File dest)
+      throws IOException
    {
       _dest= dest;
       if(!_dest.exists())
          _dest.mkdirs();
+      else if(!_dest.isDirectory())
+         throw new IOException("Destination '" + dest.getAbsolutePath() + "' is an already existing file");
+   }
+
+   public void writeConfig()
+      throws IOException
+   {
+      checkCapabilities();
+      File f = new File(_dest, "config.txt");
+         // FIXME - change extension to xml (txt for now because i can't seem to view xml files in the emulator)
+      backupFile(f);
+      f.createNewFile();
+      StringBuilder sb = new StringBuilder();
+      Config.dumpData(sb);
+      writeDataToFile(sb, f);
    }
 
    public void writeTrip(Trip t)
@@ -41,18 +57,25 @@ public class TripLogger
       checkCapabilities();
       SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd_HHmmss");
       String tripFileName = fmt.format(t.getStartTime()) + ".txt";
+         // FIXME - change extension to xml (txt for now because i can't seem to view xml files in the emulator)
       File file = new File(_dest, tripFileName);
+      backupFile(file);
       file.createNewFile();
-
       StringBuilder sb = new StringBuilder();
       t.dumpData(sb);
-System.out.println("+++++++++ WRITING TO [[" + file.getAbsolutePath() + "]]");
+      writeDataToFile(sb, file);
+   }
+
+   private void writeDataToFile(StringBuilder sb, File f)
+      throws IOException
+   {
+System.out.println("+++++++++ WRITING TO [[" + f.getAbsolutePath() + "]]");
 System.out.println(sb.toString());
 System.out.println("-------");
       FileOutputStream os = null;
       try
       {
-         os = new FileOutputStream(file);
+         os = new FileOutputStream(f);
          os.write(sb.toString().getBytes());
          os.flush();
          os.close();
@@ -73,12 +96,35 @@ System.out.println("---------------");
  */
    }
 
+   private void backupFile(File f)
+   {
+      if(!f.exists() || f.isDirectory())
+         return;
+      String fullPath = f.getAbsolutePath();
+      File backupFile = null;
+      int idx = fullPath.lastIndexOf('.');
+      if(-1 == idx)
+         backupFile = new File(fullPath + ".bak");
+      else
+         backupFile = new File(fullPath.substring(0, idx) + ".bak");
+      if(backupFile.exists())
+         backupFile.delete();
+      f.renameTo(backupFile);
+   }
+
    private void checkCapabilities()
       throws IOException
    {
       String state = Environment.getExternalStorageState();
       if(!Environment.MEDIA_MOUNTED.equals(state))
          throw new IOException("External media not available for writing");
+
+      if(null == _dest)
+         throw new IOException("Destination directory is not set");
+      if(!_dest.exists())
+         throw new IOException("Destination directory'" + _dest.getAbsolutePath() + "' does not exist");
+      if(!_dest.isDirectory())
+         throw new IOException("Destination '" + _dest.getAbsolutePath() + "' is not a directory");
 /*
       System.out.println("------- External Storage State ----------");
        if(Environment.MEDIA_MOUNTED.equals(state))
